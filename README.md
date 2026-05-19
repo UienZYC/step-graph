@@ -6,7 +6,7 @@
 
 - `backend` 将 STEP Part 21 文件解析为 `graph.json`。
 - `frontend` 读取 `graph.json` 并展示 STEP / B-Rep 结构。
-- 当前暂不做 3D 可视化。
+- 当前 3D 视图使用 `model_mesh.json` 作为显示层，不在前端解析 STEP。
 - 当前暂不做孔、圆角、倒角识别。
 - 当前暂不恢复建模历史。
 
@@ -17,16 +17,19 @@ project-root/
 ├─ backend/
 │  ├─ pyproject.toml
 │  ├─ step_entity_graph.py
+│  ├─ generate_model_mesh.py
 │  ├─ examples/
 │  │  └─ example.step
 │  └─ outputs/
-│     └─ graph.json
+│     ├─ graph.json
+│     └─ model_mesh.json
 │
 ├─ frontend/
 │  ├─ package.json
 │  ├─ index.html
 │  ├─ public/
-│  │  └─ graph.json
+│  │  ├─ graph.json
+│  │  └─ model_mesh.json
 │  └─ src/
 │     ├─ main.tsx
 │     ├─ App.tsx
@@ -84,6 +87,18 @@ backend/examples/example.step
 → React UI fetch("/graph.json")
 ```
 
+3D 显示层数据流：
+
+```text
+backend/examples/example.step
++ backend/outputs/graph.json
+→ backend/outputs/model_mesh.json
+→ frontend/public/model_mesh.json
+→ React UI fetch("/model_mesh.json")
+```
+
+`model_mesh.json` 是自定义显示层 JSON，不是 STL。STL 只保存三角面片，无法保留 `ADVANCED_FACE #120`、`EDGE_CURVE #88`、`VERTEX_POINT #20` 这类 STEP/B-Rep 语义映射。
+
 生成后端数据后，把输出复制到前端静态目录：
 
 ```powershell
@@ -121,7 +136,46 @@ http://localhost:5173
 - 显示 references 和 referenced by
 - 如果是 `ADVANCED_FACE`，显示 face neighbors
 
-不要引入 Tailwind、three.js、d3 或复杂 UI 组件库。
+不要引入 Tailwind、d3 或复杂 UI 组件库。3D Viewer 使用原生 three.js 读取 `model_mesh.json`。
+
+## 生成 3D 显示层 mesh
+
+`generate_model_mesh.py` 使用 `OCP / cadquery-ocp` 读取 STEP，三角化 B-Rep，并导出前端 three.js 可渲染的 `model_mesh.json`。它会尽量把显示对象映射回 STEP entity：
+
+- `ADVANCED_FACE` → face mesh
+- `EDGE_CURVE` → edge line
+- `VERTEX_POINT` → vertex marker
+
+映射使用保守签名匹配；如果无法唯一确认，`step_id` 会保留为 `null`，并在 `mapping_quality.notes` 中记录原因。mesh 是显示层，STEP/B-Rep entity 才是语义层。
+
+本方案不使用 `pythonocc-core`，也不使用 `OCC.Core.*` import。请手动在后端 uv 环境中安装 OCP：
+
+```powershell
+cd backend
+uv add cadquery-ocp
+```
+
+如果希望减少 VTK 相关依赖，可以尝试：
+
+```powershell
+cd backend
+uv add cadquery-ocp-novtk
+```
+
+生成数据：
+
+```powershell
+cd backend
+uv run python step_entity_graph.py examples/example.step -o outputs/graph.json
+uv run python generate_model_mesh.py examples/example.step -g outputs/graph.json -o outputs/model_mesh.json
+```
+
+复制到前端静态目录：
+
+```powershell
+Copy-Item .\backend\outputs\graph.json .\frontend\public\graph.json -Force
+Copy-Item .\backend\outputs\model_mesh.json .\frontend\public\model_mesh.json -Force
+```
 
 ## 用户需要手动执行
 

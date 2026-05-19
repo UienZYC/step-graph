@@ -18,6 +18,7 @@ entities = graph["entities"]
 semantic_edges = graph["semantic_edges"]
 brep_tree = graph["brep_tree"]
 face_adjacency_graph = graph["face_adjacency_graph"]
+geometry_attributes = graph["geometry_attributes"]
 type_index = graph["type_index"]
 
 assert summary["entity_count"] == step_count
@@ -30,6 +31,8 @@ assert brep_tree["summary"]["face_count"] == len(type_index.get("ADVANCED_FACE",
 assert summary["solid_count"] == brep_tree["summary"]["solid_count"]
 assert summary["face_count"] == brep_tree["summary"]["face_count"]
 assert summary["face_adjacency_count"] == face_adjacency_graph["summary"]["adjacency_count"]
+assert summary["geometry_attribute_count"] == len(geometry_attributes)
+assert summary["geometry_attribute_count"] > 0
 assert len(face_adjacency_graph["nodes"]) == len(type_index.get("ADVANCED_FACE", []))
 assert face_adjacency_graph["edge_curve_to_faces"]
 assert face_adjacency_graph["summary"]["adjacency_count"] == len(face_adjacency_graph["edges"])
@@ -54,6 +57,13 @@ def first_entity(entity_type: str) -> dict:
     return entities[entity_ids[0]]
 
 
+def first_geometry_attr(entity_type: str) -> dict:
+    entity = first_entity(entity_type)
+    attr = geometry_attributes.get(entity["id"])
+    assert attr, f"Missing geometry attribute for {entity['id']}"
+    return attr
+
+
 advanced_face = first_entity("ADVANCED_FACE")
 assert {"bounds", "face_geometry", "same_sense"} <= set(advanced_face["fields"])
 assert any(edge["from"] == advanced_face["id"] and edge["role"] == "bounds" for edge in semantic_edges)
@@ -67,6 +77,34 @@ assert {"edge_start", "edge_end", "edge_geometry", "same_sense"} <= set(edge_cur
 
 axis = first_entity("AXIS2_PLACEMENT_3D")
 assert {"location", "axis", "ref_direction"} <= set(axis["fields"])
+
+cartesian_point_attr = first_geometry_attr("CARTESIAN_POINT")
+assert "coordinates" in cartesian_point_attr
+assert isinstance(cartesian_point_attr["coordinates"], list)
+
+direction_attr = first_geometry_attr("DIRECTION")
+assert "direction_ratios" in direction_attr
+assert isinstance(direction_attr["direction_ratios"], list)
+
+axis_attr = first_geometry_attr("AXIS2_PLACEMENT_3D")
+assert "origin" in axis_attr
+assert "axis_direction" in axis_attr
+assert "ref_direction_ratios" in axis_attr
+
+if type_index.get("CYLINDRICAL_SURFACE"):
+    cylindrical_surface_attr = first_geometry_attr("CYLINDRICAL_SURFACE")
+    assert "radius" in cylindrical_surface_attr
+
+if type_index.get("CIRCLE"):
+    circle_attr = first_geometry_attr("CIRCLE")
+    assert "radius" in circle_attr
+
+edge_curve_attr = first_geometry_attr("EDGE_CURVE")
+assert "edge_start_coordinates" in edge_curve_attr
+assert "edge_end_coordinates" in edge_curve_attr
+
+advanced_face_attr = first_geometry_attr("ADVANCED_FACE")
+assert "surface_type" in advanced_face_attr
 
 if brep_tree["summary"]["solid_count"]:
     solid = brep_tree["solids"][0]
@@ -133,4 +171,5 @@ print("Faces:", brep_tree["summary"]["face_count"])
 print("Face adjacency edges:", face_adjacency_graph["summary"]["adjacency_count"])
 print("Boundary edges:", face_adjacency_graph["summary"]["boundary_edge_count"])
 print("Non-manifold edges:", face_adjacency_graph["summary"]["non_manifold_edge_count"])
+print("Geometry attributes:", summary["geometry_attribute_count"])
 print("Checks: OK")

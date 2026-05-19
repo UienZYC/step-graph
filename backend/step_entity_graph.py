@@ -10,6 +10,9 @@ ENTITY_RE = re.compile(
 )
 
 REF_RE = re.compile(r"#\d+")
+NUMBER_RE = re.compile(
+    r"^[+-]?(?:(?:\d+(?:\.\d*)?)|(?:\.\d+))(?:[Ee][+-]?\d+)?$"
+)
 
 ROLE_SCHEMAS = {
     "PRODUCT": ["id", "name", "description", "frame_of_reference"],
@@ -233,8 +236,74 @@ def build_semantic_edges(entities: dict) -> list[dict]:
     return semantic_edges
 
 
-def get_entity(entities: dict, entity_id: str) -> dict | None:
+def is_ref(value: object) -> bool:
+    return isinstance(value, str) and REF_RE.fullmatch(value) is not None
+
+
+def first_ref(value: object) -> str | None:
+    if is_ref(value):
+        return value
+    if isinstance(value, list):
+        for item in value:
+            if is_ref(item):
+                return item
+    return None
+
+
+def parse_float(raw: object) -> float | None:
+    if isinstance(raw, bool) or raw is None:
+        return None
+    if isinstance(raw, (int, float)):
+        return float(raw)
+    if not isinstance(raw, str):
+        return None
+
+    text = raw.strip()
+    if text in {"", "$", "*"}:
+        return None
+    if not NUMBER_RE.fullmatch(text):
+        return None
+
+    try:
+        return float(text)
+    except ValueError:
+        return None
+
+
+def parse_number_list(raw: object) -> list[float] | None:
+    if raw is None:
+        return None
+    if isinstance(raw, list):
+        numbers = [parse_float(item) for item in raw]
+        return None if any(item is None for item in numbers) else numbers
+    if not isinstance(raw, str):
+        return None
+
+    text = raw.strip()
+    if text in {"", "$", "*"}:
+        return None
+    if text.startswith("(") and text.endswith(")"):
+        text = text[1:-1].strip()
+    if not text:
+        return []
+
+    parts = split_top_level_args(text)
+    numbers = [parse_float(part) for part in parts]
+    if any(number is None for number in numbers):
+        return None
+    return numbers
+
+
+def get_entity(entities: dict, entity_id: str | None) -> dict | None:
+    if entity_id is None:
+        return None
     return entities.get(entity_id)
+
+
+def get_geometry_attr(attrs: dict, entity_id: str | None) -> dict | None:
+    if entity_id is None:
+        return None
+    return attrs.get(entity_id)
 
 
 def ref_list(value) -> list[str]:
@@ -247,6 +316,389 @@ def ref_list(value) -> list[str]:
             if isinstance(item, str) and REF_RE.fullmatch(item)
         ]
     return []
+
+
+def entity_fields(entity: dict) -> dict:
+    fields = entity.get("fields", {})
+    return fields if isinstance(fields, dict) else {}
+
+
+def coordinates_from_attr(attrs: dict, entity_id: str | None) -> list[float] | None:
+    attr = get_geometry_attr(attrs, entity_id)
+    if attr is None:
+        return None
+    coordinates = attr.get("coordinates")
+    return coordinates if isinstance(coordinates, list) else None
+
+
+def direction_from_attr(attrs: dict, entity_id: str | None) -> list[float] | None:
+    attr = get_geometry_attr(attrs, entity_id)
+    if attr is None:
+        return None
+    direction = attr.get("direction_ratios")
+    return direction if isinstance(direction, list) else None
+
+
+def placement_origin(placement: dict | None) -> list[float] | None:
+    if placement is None:
+        return None
+    origin = placement.get("origin")
+    return origin if isinstance(origin, list) else None
+
+
+def copy_if_present(target: dict, source: dict | None, keys: list[str]) -> None:
+    if source is None:
+        return
+    for key in keys:
+        if key in source:
+            target[key] = source.get(key)
+
+
+def build_cartesian_point_attr(entity: dict) -> dict:
+    fields = entity_fields(entity)
+    coordinates_raw = fields.get("coordinates")
+    coordinates = parse_number_list(coordinates_raw)
+    attr = {
+        "id": entity.get("id"),
+        "type": entity.get("type", "CARTESIAN_POINT"),
+        "coordinates": coordinates,
+    }
+    if coordinates is None:
+        attr["coordinates_raw"] = coordinates_raw
+    return attr
+
+
+def build_direction_attr(entity: dict) -> dict:
+    fields = entity_fields(entity)
+    direction_raw = fields.get("direction_ratios")
+    direction = parse_number_list(direction_raw)
+    attr = {
+        "id": entity.get("id"),
+        "type": entity.get("type", "DIRECTION"),
+        "direction_ratios": direction,
+    }
+    if direction is None:
+        attr["direction_ratios_raw"] = direction_raw
+    return attr
+
+
+def build_vector_attr(entity: dict, attrs: dict) -> dict:
+    fields = entity_fields(entity)
+    orientation = first_ref(fields.get("orientation"))
+    orientation_attr = get_geometry_attr(attrs, orientation)
+    magnitude_raw = fields.get("magnitude")
+    magnitude = parse_float(magnitude_raw)
+
+    attr = {
+        "id": entity.get("id"),
+        "type": entity.get("type", "VECTOR"),
+        "orientation": orientation,
+        "direction_ratios": (
+            orientation_attr.get("direction_ratios") if orientation_attr else None
+        ),
+        "magnitude": magnitude,
+    }
+    if magnitude is None:
+        attr["magnitude_raw"] = magnitude_raw
+    return attr
+
+
+def build_axis2_placement_3d_attr(entity: dict, attrs: dict) -> dict:
+    fields = entity_fields(entity)
+    location = first_ref(fields.get("location"))
+    axis = first_ref(fields.get("axis"))
+    ref_direction = first_ref(fields.get("ref_direction"))
+
+    return {
+        "id": entity.get("id"),
+        "type": entity.get("type", "AXIS2_PLACEMENT_3D"),
+        "location": location,
+        "origin": coordinates_from_attr(attrs, location),
+        "axis": axis,
+        "axis_direction": direction_from_attr(attrs, axis),
+        "ref_direction": ref_direction,
+        "ref_direction_ratios": direction_from_attr(attrs, ref_direction),
+    }
+
+
+def build_axis2_placement_2d_attr(entity: dict, attrs: dict) -> dict:
+    fields = entity_fields(entity)
+    location = first_ref(fields.get("location"))
+    ref_direction = first_ref(fields.get("ref_direction"))
+
+    return {
+        "id": entity.get("id"),
+        "type": entity.get("type", "AXIS2_PLACEMENT_2D"),
+        "location": location,
+        "origin": coordinates_from_attr(attrs, location),
+        "ref_direction": ref_direction,
+        "ref_direction_ratios": direction_from_attr(attrs, ref_direction),
+    }
+
+
+def build_positioned_surface_attr(entity: dict, attrs: dict) -> dict:
+    fields = entity_fields(entity)
+    position = first_ref(fields.get("position"))
+    placement = get_geometry_attr(attrs, position)
+    attr = {
+        "id": entity.get("id"),
+        "type": entity.get("type", "UNKNOWN"),
+        "position": position,
+        "origin": placement_origin(placement),
+        "axis_direction": placement.get("axis_direction") if placement else None,
+        "ref_direction_ratios": (
+            placement.get("ref_direction_ratios") if placement else None
+        ),
+    }
+
+    for field_name in ["radius", "semi_angle", "major_radius", "minor_radius"]:
+        if field_name not in fields:
+            continue
+        raw = fields.get(field_name)
+        value = parse_float(raw)
+        attr[field_name] = value
+        if value is None:
+            attr[f"{field_name}_raw"] = raw
+
+    return attr
+
+
+def build_line_attr(entity: dict, attrs: dict) -> dict:
+    fields = entity_fields(entity)
+    pnt = first_ref(fields.get("pnt"))
+    direction = first_ref(fields.get("dir"))
+    vector_attr = get_geometry_attr(attrs, direction)
+
+    return {
+        "id": entity.get("id"),
+        "type": entity.get("type", "LINE"),
+        "pnt": pnt,
+        "point": coordinates_from_attr(attrs, pnt),
+        "dir": direction,
+        "direction_ratios": (
+            vector_attr.get("direction_ratios") if vector_attr else None
+        ),
+        "magnitude": vector_attr.get("magnitude") if vector_attr else None,
+    }
+
+
+def build_circle_or_ellipse_attr(entity: dict, attrs: dict) -> dict:
+    fields = entity_fields(entity)
+    position = first_ref(fields.get("position"))
+    placement = get_geometry_attr(attrs, position)
+    attr = {
+        "id": entity.get("id"),
+        "type": entity.get("type", "UNKNOWN"),
+        "position": position,
+        "center": placement_origin(placement),
+        "axis_direction": placement.get("axis_direction") if placement else None,
+        "ref_direction_ratios": (
+            placement.get("ref_direction_ratios") if placement else None
+        ),
+    }
+
+    for field_name in ["radius", "semi_axis_1", "semi_axis_2"]:
+        if field_name not in fields:
+            continue
+        raw = fields.get(field_name)
+        value = parse_float(raw)
+        attr[field_name] = value
+        if value is None:
+            attr[f"{field_name}_raw"] = raw
+
+    return attr
+
+
+def build_vertex_point_attr(entity: dict, attrs: dict) -> dict:
+    fields = entity_fields(entity)
+    vertex_geometry = first_ref(fields.get("vertex_geometry"))
+
+    return {
+        "id": entity.get("id"),
+        "type": entity.get("type", "VERTEX_POINT"),
+        "vertex_geometry": vertex_geometry,
+        "coordinates": coordinates_from_attr(attrs, vertex_geometry),
+    }
+
+
+def build_edge_curve_attr(entity: dict, attrs: dict, entities: dict) -> dict:
+    fields = entity_fields(entity)
+    edge_start = first_ref(fields.get("edge_start"))
+    edge_end = first_ref(fields.get("edge_end"))
+    edge_geometry = first_ref(fields.get("edge_geometry"))
+    edge_geometry_attr = get_geometry_attr(attrs, edge_geometry)
+    edge_geometry_entity = get_entity(entities, edge_geometry)
+    attr = {
+        "id": entity.get("id"),
+        "type": entity.get("type", "EDGE_CURVE"),
+        "edge_start": edge_start,
+        "edge_start_coordinates": (
+            get_geometry_attr(attrs, edge_start) or {}
+        ).get("coordinates"),
+        "edge_end": edge_end,
+        "edge_end_coordinates": (
+            get_geometry_attr(attrs, edge_end) or {}
+        ).get("coordinates"),
+        "edge_geometry": edge_geometry,
+        "edge_geometry_type": (
+            edge_geometry_attr.get("type")
+            if edge_geometry_attr
+            else (
+                edge_geometry_entity.get("type")
+                if edge_geometry_entity
+                else None
+            )
+        ),
+        "same_sense": fields.get("same_sense"),
+    }
+
+    if edge_geometry_attr:
+        geometry = {
+            "id": edge_geometry,
+            "type": edge_geometry_attr.get("type"),
+        }
+        copy_if_present(
+            geometry,
+            edge_geometry_attr,
+            [
+                "radius",
+                "center",
+                "point",
+                "direction_ratios",
+                "magnitude",
+                "semi_axis_1",
+                "semi_axis_2",
+            ],
+        )
+        attr["geometry"] = geometry
+
+    return attr
+
+
+def surface_summary(surface_attr: dict | None) -> dict | None:
+    if surface_attr is None:
+        return None
+
+    summary = {}
+    copy_if_present(
+        summary,
+        surface_attr,
+        [
+            "origin",
+            "axis_direction",
+            "ref_direction_ratios",
+            "radius",
+            "semi_angle",
+            "major_radius",
+            "minor_radius",
+            "center",
+            "semi_axis_1",
+            "semi_axis_2",
+        ],
+    )
+    return summary
+
+
+def build_advanced_face_attr(entity: dict, attrs: dict) -> dict:
+    fields = entity_fields(entity)
+    face_geometry = first_ref(fields.get("face_geometry"))
+    surface_attr = get_geometry_attr(attrs, face_geometry)
+
+    return {
+        "id": entity.get("id"),
+        "type": entity.get("type", "ADVANCED_FACE"),
+        "face_geometry": face_geometry,
+        "surface_type": surface_attr.get("type") if surface_attr else None,
+        "same_sense": fields.get("same_sense"),
+        "surface": surface_summary(surface_attr),
+    }
+
+
+def build_bspline_placeholder_attr(entity: dict) -> dict:
+    return {
+        "id": entity.get("id"),
+        "type": entity.get("type", "UNKNOWN"),
+        "fields": entity_fields(entity),
+        "note": "Detailed B-spline geometry is not expanded in this version.",
+    }
+
+
+def build_geometry_attributes(entities: dict, type_index: dict) -> dict:
+    attrs = {}
+
+    for entity_id in type_index.get("CARTESIAN_POINT", []):
+        entity = get_entity(entities, entity_id)
+        if entity:
+            attrs[entity_id] = build_cartesian_point_attr(entity)
+
+    for entity_id in type_index.get("DIRECTION", []):
+        entity = get_entity(entities, entity_id)
+        if entity:
+            attrs[entity_id] = build_direction_attr(entity)
+
+    for entity_id in type_index.get("VECTOR", []):
+        entity = get_entity(entities, entity_id)
+        if entity:
+            attrs[entity_id] = build_vector_attr(entity, attrs)
+
+    for entity_id in type_index.get("AXIS2_PLACEMENT_2D", []):
+        entity = get_entity(entities, entity_id)
+        if entity:
+            attrs[entity_id] = build_axis2_placement_2d_attr(entity, attrs)
+
+    for entity_id in type_index.get("AXIS2_PLACEMENT_3D", []):
+        entity = get_entity(entities, entity_id)
+        if entity:
+            attrs[entity_id] = build_axis2_placement_3d_attr(entity, attrs)
+
+    for entity_type in [
+        "PLANE",
+        "CYLINDRICAL_SURFACE",
+        "CONICAL_SURFACE",
+        "SPHERICAL_SURFACE",
+        "TOROIDAL_SURFACE",
+    ]:
+        for entity_id in type_index.get(entity_type, []):
+            entity = get_entity(entities, entity_id)
+            if entity:
+                attrs[entity_id] = build_positioned_surface_attr(entity, attrs)
+
+    for entity_id in type_index.get("LINE", []):
+        entity = get_entity(entities, entity_id)
+        if entity:
+            attrs[entity_id] = build_line_attr(entity, attrs)
+
+    for entity_type in ["CIRCLE", "ELLIPSE"]:
+        for entity_id in type_index.get(entity_type, []):
+            entity = get_entity(entities, entity_id)
+            if entity:
+                attrs[entity_id] = build_circle_or_ellipse_attr(entity, attrs)
+
+    for entity_type in [
+        "B_SPLINE_CURVE_WITH_KNOTS",
+        "B_SPLINE_SURFACE_WITH_KNOTS",
+    ]:
+        for entity_id in type_index.get(entity_type, []):
+            entity = get_entity(entities, entity_id)
+            if entity:
+                attrs[entity_id] = build_bspline_placeholder_attr(entity)
+
+    for entity_id in type_index.get("VERTEX_POINT", []):
+        entity = get_entity(entities, entity_id)
+        if entity:
+            attrs[entity_id] = build_vertex_point_attr(entity, attrs)
+
+    for entity_id in type_index.get("EDGE_CURVE", []):
+        entity = get_entity(entities, entity_id)
+        if entity:
+            attrs[entity_id] = build_edge_curve_attr(entity, attrs, entities)
+
+    for entity_id in type_index.get("ADVANCED_FACE", []):
+        entity = get_entity(entities, entity_id)
+        if entity:
+            attrs[entity_id] = build_advanced_face_attr(entity, attrs)
+
+    return attrs
 
 
 def basic_entity_node(entities: dict, entity_id: str) -> dict:
@@ -397,11 +849,41 @@ def build_bound_node(entities: dict, bound_id: str) -> dict:
     }
 
 
-def build_surface_node(entities: dict, surface_id: str) -> dict:
-    return basic_entity_node(entities, surface_id)
+def build_surface_node(
+    entities: dict,
+    surface_id: str,
+    geometry_attributes: dict | None = None,
+) -> dict:
+    node = basic_entity_node(entities, surface_id)
+    attr = (
+        get_geometry_attr(geometry_attributes, surface_id)
+        if geometry_attributes is not None
+        else None
+    )
+    copy_if_present(
+        node,
+        attr,
+        [
+            "origin",
+            "axis_direction",
+            "ref_direction_ratios",
+            "radius",
+            "semi_angle",
+            "major_radius",
+            "minor_radius",
+            "center",
+            "semi_axis_1",
+            "semi_axis_2",
+        ],
+    )
+    return node
 
 
-def build_face_node(entities: dict, face_id: str) -> dict:
+def build_face_node(
+    entities: dict,
+    face_id: str,
+    geometry_attributes: dict | None = None,
+) -> dict:
     entity = get_entity(entities, face_id)
     if entity is None:
         return {
@@ -421,7 +903,9 @@ def build_face_node(entities: dict, face_id: str) -> dict:
         "type": entity.get("type", "UNKNOWN"),
         "same_sense": fields.get("same_sense"),
         "surface": (
-            build_surface_node(entities, surface_refs[0]) if surface_refs else None
+            build_surface_node(entities, surface_refs[0], geometry_attributes)
+            if surface_refs
+            else None
         ),
         "bounds": [
             build_bound_node(entities, bound_id) for bound_id in bound_ids
@@ -429,7 +913,11 @@ def build_face_node(entities: dict, face_id: str) -> dict:
     }
 
 
-def build_shell_node(entities: dict, shell_id: str) -> dict:
+def build_shell_node(
+    entities: dict,
+    shell_id: str,
+    geometry_attributes: dict | None = None,
+) -> dict:
     entity = get_entity(entities, shell_id)
     if entity is None:
         return {"id": shell_id, "type": "UNKNOWN", "faces": []}
@@ -440,11 +928,18 @@ def build_shell_node(entities: dict, shell_id: str) -> dict:
     return {
         "id": shell_id,
         "type": entity.get("type", "UNKNOWN"),
-        "faces": [build_face_node(entities, face_id) for face_id in face_ids],
+        "faces": [
+            build_face_node(entities, face_id, geometry_attributes)
+            for face_id in face_ids
+        ],
     }
 
 
-def build_solid_node(entities: dict, solid_id: str) -> dict:
+def build_solid_node(
+    entities: dict,
+    solid_id: str,
+    geometry_attributes: dict | None = None,
+) -> dict:
     entity = get_entity(entities, solid_id)
     if entity is None:
         return {"id": solid_id, "type": "UNKNOWN", "outer_shell": None}
@@ -457,16 +952,25 @@ def build_solid_node(entities: dict, solid_id: str) -> dict:
         "type": entity.get("type", "UNKNOWN"),
         "name": fields.get("name"),
         "outer_shell": (
-            build_shell_node(entities, shell_refs[0]) if shell_refs else None
+            build_shell_node(entities, shell_refs[0], geometry_attributes)
+            if shell_refs
+            else None
         ),
     }
 
 
-def build_brep_tree(entities: dict, type_index: dict) -> dict:
+def build_brep_tree(
+    entities: dict,
+    type_index: dict,
+    geometry_attributes: dict | None = None,
+) -> dict:
     solid_ids = type_index.get("MANIFOLD_SOLID_BREP", [])
 
     return {
-        "solids": [build_solid_node(entities, solid_id) for solid_id in solid_ids],
+        "solids": [
+            build_solid_node(entities, solid_id, geometry_attributes)
+            for solid_id in solid_ids
+        ],
         "summary": {
             "solid_count": len(solid_ids),
             "shell_count": (
@@ -801,7 +1305,8 @@ def parse_step(path: Path) -> dict:
     for entity_id, entity in entities.items():
         type_index.setdefault(entity["type"], []).append(entity_id)
 
-    brep_tree = build_brep_tree(entities, type_index)
+    geometry_attributes = build_geometry_attributes(entities, type_index)
+    brep_tree = build_brep_tree(entities, type_index, geometry_attributes)
     face_adjacency_graph = build_face_adjacency_graph(entities, type_index)
 
     return {
@@ -812,6 +1317,7 @@ def parse_step(path: Path) -> dict:
         "semantic_edges": semantic_edges,
         "brep_tree": brep_tree,
         "face_adjacency_graph": face_adjacency_graph,
+        "geometry_attributes": geometry_attributes,
         "type_index": type_index,
         "order": order,
         "skipped": skipped,
@@ -824,6 +1330,7 @@ def parse_step(path: Path) -> dict:
             "face_adjacency_count": (
                 face_adjacency_graph["summary"]["adjacency_count"]
             ),
+            "geometry_attribute_count": len(geometry_attributes),
             "type_count": len(type_index),
             "skipped_count": len(skipped),
         },
@@ -862,6 +1369,7 @@ def main() -> None:
         "Non-manifold edge 数量: "
         f"{graph['face_adjacency_graph']['summary']['non_manifold_edge_count']}"
     )
+    print(f"几何属性数量: {graph['summary']['geometry_attribute_count']}")
     print(f"实体类型数量: {graph['summary']['type_count']}")
     print(f"跳过语句数量: {graph['summary']['skipped_count']}")
 

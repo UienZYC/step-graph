@@ -17080,7 +17080,23 @@
                   "name": "''",
                   "position": "#33",
                   "radius": "2."
-                }
+                },
+                "origin": [
+                  0.0,
+                  0.0,
+                  -0.7
+                ],
+                "axis_direction": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "ref_direction_ratios": [
+                  1.0,
+                  0.0,
+                  0.0
+                ],
+                "radius": 2.0
               },
               "bounds": [
                 {
@@ -17599,7 +17615,22 @@
                 "fields": {
                   "name": "''",
                   "position": "#97"
-                }
+                },
+                "origin": [
+                  -2.0,
+                  0.4,
+                  -0.1
+                ],
+                "axis_direction": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "ref_direction_ratios": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
               },
               "bounds": [
                 {
@@ -17831,7 +17862,22 @@
                 "fields": {
                   "name": "''",
                   "position": "#232"
-                }
+                },
+                "origin": [
+                  -2.0,
+                  -0.4,
+                  -0.1
+                ],
+                "axis_direction": [
+                  0.0,
+                  -1.0,
+                  0.0
+                ],
+                "ref_direction_ratios": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ]
               },
               "bounds": [
                 {
@@ -18022,7 +18068,22 @@
                 "fields": {
                   "name": "''",
                   "position": "#260"
-                }
+                },
+                "origin": [
+                  0.0,
+                  0.0,
+                  -0.7
+                ],
+                "axis_direction": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "ref_direction_ratios": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
               },
               "bounds": [
                 {
@@ -18131,7 +18192,22 @@
                 "fields": {
                   "name": "''",
                   "position": "#128"
-                }
+                },
+                "origin": [
+                  -2.0,
+                  0.4,
+                  -0.1
+                ],
+                "axis_direction": [
+                  0.0,
+                  -1.0,
+                  0.0
+                ],
+                "ref_direction_ratios": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ]
               },
               "bounds": [
                 {
@@ -18322,7 +18398,22 @@
                 "fields": {
                   "name": "''",
                   "position": "#156"
-                }
+                },
+                "origin": [
+                  0.0,
+                  0.0,
+                  -0.7
+                ],
+                "axis_direction": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "ref_direction_ratios": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
               },
               "bounds": [
                 {
@@ -18431,7 +18522,22 @@
                 "fields": {
                   "name": "''",
                   "position": "#67"
-                }
+                },
+                "origin": [
+                  0.0,
+                  0.0,
+                  0.7
+                ],
+                "axis_direction": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "ref_direction_ratios": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
               },
               "bounds": [
                 {
@@ -18553,7 +18659,23 @@
                   "name": "''",
                   "position": "#454",
                   "radius": "1.5"
-                }
+                },
+                "origin": [
+                  0.0,
+                  -1.13423725372e-16,
+                  0.7
+                ],
+                "axis_direction": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "ref_direction_ratios": [
+                  1.0,
+                  0.0,
+                  0.0
+                ],
+                "radius": 1.5
               },
               "bounds": [
                 {
@@ -18744,7 +18866,22 @@
                 "fields": {
                   "name": "''",
                   "position": "#486"
-                }
+                },
+                "origin": [
+                  0.0,
+                  -1.13423725372e-16,
+                  5.7
+                ],
+                "axis_direction": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "ref_direction_ratios": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
               },
               "bounds": [
                 {
@@ -18866,7 +19003,23 @@
                   "name": "''",
                   "position": "#544",
                   "radius": "1."
-                }
+                },
+                "origin": [
+                  6.661338147751e-16,
+                  -3.073454175185e-16,
+                  5.7
+                ],
+                "axis_direction": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "ref_direction_ratios": [
+                  1.0,
+                  0.0,
+                  0.0
+                ],
+                "radius": 1.0
               },
               "bounds": [
                 {
@@ -19057,7 +19210,22 @@
                 "fields": {
                   "name": "''",
                   "position": "#576"
-                }
+                },
+                "origin": [
+                  6.661338147751e-16,
+                  -3.073454175185e-16,
+                  8.7
+                ],
+                "axis_direction": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "ref_direction_ratios": [
+                  1.0,
+                  0.0,
+                  0.0
+                ]
               },
               "bounds": [
                 {
@@ -20028,6 +20196,4704 @@
       "adjacency_count": 18,
       "boundary_edge_count": 0,
       "non_manifold_edge_count": 0
+    }
+  },
+  "geometry_attributes": {
+    "#12": {
+      "id": "#12",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#23": {
+      "id": "#23",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        2.0,
+        -4.947295403701e-16,
+        -0.1
+      ]
+    },
+    "#25": {
+      "id": "#25",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        2.0,
+        -4.898587196589e-16,
+        0.7
+      ]
+    },
+    "#28": {
+      "id": "#28",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        2.0,
+        -4.898587196589e-16,
+        -0.7
+      ]
+    },
+    "#34": {
+      "id": "#34",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.0,
+        0.0,
+        -0.7
+      ]
+    },
+    "#39": {
+      "id": "#39",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        6.28318530718,
+        -0.0
+      ]
+    },
+    "#46": {
+      "id": "#46",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.0,
+        -0.0
+      ]
+    },
+    "#55": {
+      "id": "#55",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.0,
+        0.0,
+        0.7
+      ]
+    },
+    "#61": {
+      "id": "#61",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.0,
+        1.4
+      ]
+    },
+    "#68": {
+      "id": "#68",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.0,
+        0.0,
+        0.7
+      ]
+    },
+    "#74": {
+      "id": "#74",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.0,
+        0.0
+      ]
+    },
+    "#81": {
+      "id": "#81",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        1.959591794227,
+        0.4,
+        -0.1
+      ]
+    },
+    "#85": {
+      "id": "#85",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.0,
+        0.0,
+        -0.1
+      ]
+    },
+    "#91": {
+      "id": "#91",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.0,
+        0.6
+      ]
+    },
+    "#98": {
+      "id": "#98",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        -2.0,
+        0.4,
+        -0.1
+      ]
+    },
+    "#103": {
+      "id": "#103",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        4.0,
+        0.4
+      ]
+    },
+    "#104": {
+      "id": "#104",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        4.0,
+        -3.064101615138
+      ]
+    },
+    "#105": {
+      "id": "#105",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        1.0,
+        -1.332050807569
+      ]
+    },
+    "#106": {
+      "id": "#106",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        -2.0,
+        0.4
+      ]
+    },
+    "#107": {
+      "id": "#107",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        1.0,
+        2.132050807569
+      ]
+    },
+    "#108": {
+      "id": "#108",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        4.0,
+        3.864101615138
+      ]
+    },
+    "#109": {
+      "id": "#109",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        4.0,
+        0.4
+      ]
+    },
+    "#114": {
+      "id": "#114",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        1.959591794227,
+        0.4,
+        -0.7
+      ]
+    },
+    "#117": {
+      "id": "#117",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        1.959591794227,
+        0.4,
+        -0.7
+      ]
+    },
+    "#123": {
+      "id": "#123",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.20135792079,
+        -6.000000000173e-07
+      ]
+    },
+    "#124": {
+      "id": "#124",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.20135792079,
+        0.66
+      ]
+    },
+    "#129": {
+      "id": "#129",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        -2.0,
+        0.4,
+        -0.1
+      ]
+    },
+    "#134": {
+      "id": "#134",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.6000006,
+        3.959591794227
+      ]
+    },
+    "#135": {
+      "id": "#135",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        -0.06,
+        3.959591794227
+      ]
+    },
+    "#140": {
+      "id": "#140",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        -1.959591794227,
+        0.4,
+        -0.7
+      ]
+    },
+    "#144": {
+      "id": "#144",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.0,
+        0.0,
+        -0.7
+      ]
+    },
+    "#150": {
+      "id": "#150",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.0,
+        0.0
+      ]
+    },
+    "#157": {
+      "id": "#157",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.0,
+        0.0,
+        -0.7
+      ]
+    },
+    "#163": {
+      "id": "#163",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.0,
+        0.0
+      ]
+    },
+    "#169": {
+      "id": "#169",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        -1.959591794227,
+        0.4,
+        -0.1
+      ]
+    },
+    "#172": {
+      "id": "#172",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        -1.959591794227,
+        0.4,
+        -0.7
+      ]
+    },
+    "#178": {
+      "id": "#178",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        2.940234732799,
+        -6.000000000173e-07
+      ]
+    },
+    "#179": {
+      "id": "#179",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        2.940234732799,
+        0.66
+      ]
+    },
+    "#184": {
+      "id": "#184",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.6000006,
+        0.04040820577346
+      ]
+    },
+    "#185": {
+      "id": "#185",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        -0.06,
+        0.04040820577346
+      ]
+    },
+    "#190": {
+      "id": "#190",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        -1.959591794227,
+        -0.4,
+        -0.1
+      ]
+    },
+    "#194": {
+      "id": "#194",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.0,
+        0.0,
+        -0.1
+      ]
+    },
+    "#200": {
+      "id": "#200",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        2.940234732799,
+        0.6
+      ]
+    },
+    "#207": {
+      "id": "#207",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.04040820577346,
+        0.0
+      ]
+    },
+    "#208": {
+      "id": "#208",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        -0.652412117254,
+        3.394112549695
+      ]
+    },
+    "#209": {
+      "id": "#209",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        2.633385735599,
+        2.297056274848
+      ]
+    },
+    "#210": {
+      "id": "#210",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        5.919183588453,
+        1.2
+      ]
+    },
+    "#211": {
+      "id": "#211",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        3.326206058627,
+        -1.097056274848
+      ]
+    },
+    "#212": {
+      "id": "#212",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.733228528801,
+        -3.394112549695
+      ]
+    },
+    "#213": {
+      "id": "#213",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.04040820577346,
+        0.0
+      ]
+    },
+    "#218": {
+      "id": "#218",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        -1.959591794227,
+        -0.4,
+        -0.7
+      ]
+    },
+    "#221": {
+      "id": "#221",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        -1.959591794227,
+        -0.4,
+        -0.7
+      ]
+    },
+    "#227": {
+      "id": "#227",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        3.34295057438,
+        -6.000000000173e-07
+      ]
+    },
+    "#228": {
+      "id": "#228",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        3.34295057438,
+        0.66
+      ]
+    },
+    "#233": {
+      "id": "#233",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        -2.0,
+        -0.4,
+        -0.1
+      ]
+    },
+    "#238": {
+      "id": "#238",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.6000006,
+        0.04040820577346
+      ]
+    },
+    "#239": {
+      "id": "#239",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        -0.06,
+        0.04040820577346
+      ]
+    },
+    "#244": {
+      "id": "#244",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        1.959591794227,
+        -0.4,
+        -0.7
+      ]
+    },
+    "#248": {
+      "id": "#248",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.0,
+        0.0,
+        -0.7
+      ]
+    },
+    "#254": {
+      "id": "#254",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.0,
+        0.0
+      ]
+    },
+    "#261": {
+      "id": "#261",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.0,
+        0.0,
+        -0.7
+      ]
+    },
+    "#267": {
+      "id": "#267",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.0,
+        0.0
+      ]
+    },
+    "#273": {
+      "id": "#273",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        1.959591794227,
+        -0.4,
+        -0.1
+      ]
+    },
+    "#276": {
+      "id": "#276",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        1.959591794227,
+        -0.4,
+        -0.7
+      ]
+    },
+    "#282": {
+      "id": "#282",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        6.081827386389,
+        -6.000000000173e-07
+      ]
+    },
+    "#283": {
+      "id": "#283",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        6.081827386389,
+        0.66
+      ]
+    },
+    "#288": {
+      "id": "#288",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.6000006,
+        3.959591794227
+      ]
+    },
+    "#289": {
+      "id": "#289",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        -0.06,
+        3.959591794227
+      ]
+    },
+    "#296": {
+      "id": "#296",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.0,
+        0.0,
+        -0.1
+      ]
+    },
+    "#302": {
+      "id": "#302",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.0,
+        0.6
+      ]
+    },
+    "#309": {
+      "id": "#309",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        4.0,
+        0.4
+      ]
+    },
+    "#310": {
+      "id": "#310",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        4.0,
+        -3.064101615138
+      ]
+    },
+    "#311": {
+      "id": "#311",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        1.0,
+        -1.332050807569
+      ]
+    },
+    "#312": {
+      "id": "#312",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        -2.0,
+        0.4
+      ]
+    },
+    "#313": {
+      "id": "#313",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        1.0,
+        2.132050807569
+      ]
+    },
+    "#314": {
+      "id": "#314",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        4.0,
+        3.864101615138
+      ]
+    },
+    "#315": {
+      "id": "#315",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        4.0,
+        0.4
+      ]
+    },
+    "#324": {
+      "id": "#324",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        -2.0,
+        -0.4,
+        -0.1
+      ]
+    },
+    "#330": {
+      "id": "#330",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.0,
+        0.8
+      ]
+    },
+    "#337": {
+      "id": "#337",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.0,
+        0.0
+      ]
+    },
+    "#346": {
+      "id": "#346",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        -2.0,
+        0.4,
+        -0.1
+      ]
+    },
+    "#352": {
+      "id": "#352",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.0,
+        0.0
+      ]
+    },
+    "#359": {
+      "id": "#359",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.0,
+        0.0
+      ]
+    },
+    "#374": {
+      "id": "#374",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        -2.0,
+        -0.4,
+        -0.7
+      ]
+    },
+    "#380": {
+      "id": "#380",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.6,
+        0.0
+      ]
+    },
+    "#387": {
+      "id": "#387",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        -2.0,
+        -0.4
+      ]
+    },
+    "#406": {
+      "id": "#406",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        -2.0,
+        0.4,
+        -0.7
+      ]
+    },
+    "#412": {
+      "id": "#412",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.6,
+        0.0
+      ]
+    },
+    "#419": {
+      "id": "#419",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        -2.0,
+        0.4
+      ]
+    },
+    "#438": {
+      "id": "#438",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        1.5,
+        -4.808177651162e-16,
+        0.7
+      ]
+    },
+    "#442": {
+      "id": "#442",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.0,
+        -1.13423725372e-16,
+        0.7
+      ]
+    },
+    "#449": {
+      "id": "#449",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.0,
+        -1.13423725372e-16
+      ]
+    },
+    "#455": {
+      "id": "#455",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.0,
+        -1.13423725372e-16,
+        0.7
+      ]
+    },
+    "#460": {
+      "id": "#460",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.0,
+        0.0
+      ]
+    },
+    "#470": {
+      "id": "#470",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        1.5,
+        -4.808177651162e-16,
+        5.7
+      ]
+    },
+    "#474": {
+      "id": "#474",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.0,
+        -1.13423725372e-16,
+        5.7
+      ]
+    },
+    "#480": {
+      "id": "#480",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.0,
+        5.0
+      ]
+    },
+    "#487": {
+      "id": "#487",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.0,
+        -1.13423725372e-16,
+        5.7
+      ]
+    },
+    "#493": {
+      "id": "#493",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.0,
+        0.0
+      ]
+    },
+    "#500": {
+      "id": "#500",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        1.5,
+        -4.808177651162e-16,
+        0.7
+      ]
+    },
+    "#506": {
+      "id": "#506",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        6.28318530718,
+        -0.0
+      ]
+    },
+    "#513": {
+      "id": "#513",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.0,
+        -0.0
+      ]
+    },
+    "#528": {
+      "id": "#528",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        1.0,
+        -5.52274777348e-16,
+        5.7
+      ]
+    },
+    "#532": {
+      "id": "#532",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        6.661338147751e-16,
+        -3.073454175185e-16,
+        5.7
+      ]
+    },
+    "#539": {
+      "id": "#539",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        6.661338147751e-16,
+        -1.939216921465e-16
+      ]
+    },
+    "#545": {
+      "id": "#545",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        6.661338147751e-16,
+        -3.073454175185e-16,
+        5.7
+      ]
+    },
+    "#550": {
+      "id": "#550",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.0,
+        0.0
+      ]
+    },
+    "#560": {
+      "id": "#560",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        1.0,
+        -5.52274777348e-16,
+        8.7
+      ]
+    },
+    "#564": {
+      "id": "#564",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        6.661338147751e-16,
+        -3.073454175185e-16,
+        8.7
+      ]
+    },
+    "#570": {
+      "id": "#570",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.0,
+        3.0
+      ]
+    },
+    "#577": {
+      "id": "#577",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        6.661338147751e-16,
+        -3.073454175185e-16,
+        8.7
+      ]
+    },
+    "#583": {
+      "id": "#583",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.0,
+        0.0
+      ]
+    },
+    "#590": {
+      "id": "#590",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        1.0,
+        -5.52274777348e-16,
+        5.7
+      ]
+    },
+    "#596": {
+      "id": "#596",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        6.28318530718,
+        -0.0
+      ]
+    },
+    "#603": {
+      "id": "#603",
+      "type": "CARTESIAN_POINT",
+      "coordinates": [
+        0.0,
+        -0.0
+      ]
+    },
+    "#13": {
+      "id": "#13",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "#14": {
+      "id": "#14",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0,
+        -0.0
+      ]
+    },
+    "#30": {
+      "id": "#30",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "#35": {
+      "id": "#35",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "#36": {
+      "id": "#36",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#41": {
+      "id": "#41",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        0.0,
+        1.0
+      ]
+    },
+    "#48": {
+      "id": "#48",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        0.0,
+        1.0
+      ]
+    },
+    "#56": {
+      "id": "#56",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "#57": {
+      "id": "#57",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#63": {
+      "id": "#63",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ]
+    },
+    "#69": {
+      "id": "#69",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "#70": {
+      "id": "#70",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#75": {
+      "id": "#75",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ]
+    },
+    "#86": {
+      "id": "#86",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "#87": {
+      "id": "#87",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0,
+        -0.0
+      ]
+    },
+    "#93": {
+      "id": "#93",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ]
+    },
+    "#99": {
+      "id": "#99",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        -1.0
+      ]
+    },
+    "#100": {
+      "id": "#100",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#119": {
+      "id": "#119",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "#130": {
+      "id": "#130",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        0.0,
+        -1.0,
+        0.0
+      ]
+    },
+    "#131": {
+      "id": "#131",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        -1.0
+      ]
+    },
+    "#145": {
+      "id": "#145",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "#146": {
+      "id": "#146",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#152": {
+      "id": "#152",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ]
+    },
+    "#158": {
+      "id": "#158",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "#159": {
+      "id": "#159",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#164": {
+      "id": "#164",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ]
+    },
+    "#174": {
+      "id": "#174",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "#195": {
+      "id": "#195",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "#196": {
+      "id": "#196",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        -0.979795897113,
+        0.2,
+        0.0
+      ]
+    },
+    "#202": {
+      "id": "#202",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ]
+    },
+    "#223": {
+      "id": "#223",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "#234": {
+      "id": "#234",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        0.0,
+        -1.0,
+        0.0
+      ]
+    },
+    "#235": {
+      "id": "#235",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        -1.0
+      ]
+    },
+    "#249": {
+      "id": "#249",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "#250": {
+      "id": "#250",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#256": {
+      "id": "#256",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ]
+    },
+    "#262": {
+      "id": "#262",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "#263": {
+      "id": "#263",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#268": {
+      "id": "#268",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ]
+    },
+    "#278": {
+      "id": "#278",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "#297": {
+      "id": "#297",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "#298": {
+      "id": "#298",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0,
+        -0.0
+      ]
+    },
+    "#304": {
+      "id": "#304",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ]
+    },
+    "#326": {
+      "id": "#326",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#332": {
+      "id": "#332",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ]
+    },
+    "#339": {
+      "id": "#339",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        0.0,
+        1.0
+      ]
+    },
+    "#348": {
+      "id": "#348",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#354": {
+      "id": "#354",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ]
+    },
+    "#361": {
+      "id": "#361",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        0.0,
+        1.0
+      ]
+    },
+    "#376": {
+      "id": "#376",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#382": {
+      "id": "#382",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        0.0,
+        1.0
+      ]
+    },
+    "#389": {
+      "id": "#389",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ]
+    },
+    "#408": {
+      "id": "#408",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#414": {
+      "id": "#414",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        0.0,
+        1.0
+      ]
+    },
+    "#421": {
+      "id": "#421",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ]
+    },
+    "#443": {
+      "id": "#443",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "#444": {
+      "id": "#444",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#450": {
+      "id": "#450",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ]
+    },
+    "#456": {
+      "id": "#456",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "#457": {
+      "id": "#457",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#462": {
+      "id": "#462",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ]
+    },
+    "#475": {
+      "id": "#475",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "#476": {
+      "id": "#476",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#482": {
+      "id": "#482",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ]
+    },
+    "#488": {
+      "id": "#488",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "#489": {
+      "id": "#489",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#494": {
+      "id": "#494",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ]
+    },
+    "#502": {
+      "id": "#502",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "#508": {
+      "id": "#508",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        0.0,
+        1.0
+      ]
+    },
+    "#515": {
+      "id": "#515",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        0.0,
+        1.0
+      ]
+    },
+    "#533": {
+      "id": "#533",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "#534": {
+      "id": "#534",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#540": {
+      "id": "#540",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ]
+    },
+    "#546": {
+      "id": "#546",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "#547": {
+      "id": "#547",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#552": {
+      "id": "#552",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ]
+    },
+    "#565": {
+      "id": "#565",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "#566": {
+      "id": "#566",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#572": {
+      "id": "#572",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ]
+    },
+    "#578": {
+      "id": "#578",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "#579": {
+      "id": "#579",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#584": {
+      "id": "#584",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ]
+    },
+    "#592": {
+      "id": "#592",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "#598": {
+      "id": "#598",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        0.0,
+        1.0
+      ]
+    },
+    "#605": {
+      "id": "#605",
+      "type": "DIRECTION",
+      "direction_ratios": [
+        0.0,
+        1.0
+      ]
+    },
+    "#29": {
+      "id": "#29",
+      "type": "VECTOR",
+      "orientation": "#30",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "magnitude": 1.0
+    },
+    "#40": {
+      "id": "#40",
+      "type": "VECTOR",
+      "orientation": "#41",
+      "direction_ratios": [
+        0.0,
+        1.0
+      ],
+      "magnitude": 1.0
+    },
+    "#47": {
+      "id": "#47",
+      "type": "VECTOR",
+      "orientation": "#48",
+      "direction_ratios": [
+        0.0,
+        1.0
+      ],
+      "magnitude": 1.0
+    },
+    "#62": {
+      "id": "#62",
+      "type": "VECTOR",
+      "orientation": "#63",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ],
+      "magnitude": 1.0
+    },
+    "#92": {
+      "id": "#92",
+      "type": "VECTOR",
+      "orientation": "#93",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ],
+      "magnitude": 1.0
+    },
+    "#118": {
+      "id": "#118",
+      "type": "VECTOR",
+      "orientation": "#119",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "magnitude": 1.0
+    },
+    "#151": {
+      "id": "#151",
+      "type": "VECTOR",
+      "orientation": "#152",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ],
+      "magnitude": 1.0
+    },
+    "#173": {
+      "id": "#173",
+      "type": "VECTOR",
+      "orientation": "#174",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "magnitude": 1.0
+    },
+    "#201": {
+      "id": "#201",
+      "type": "VECTOR",
+      "orientation": "#202",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ],
+      "magnitude": 1.0
+    },
+    "#222": {
+      "id": "#222",
+      "type": "VECTOR",
+      "orientation": "#223",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "magnitude": 1.0
+    },
+    "#255": {
+      "id": "#255",
+      "type": "VECTOR",
+      "orientation": "#256",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ],
+      "magnitude": 1.0
+    },
+    "#277": {
+      "id": "#277",
+      "type": "VECTOR",
+      "orientation": "#278",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "magnitude": 1.0
+    },
+    "#303": {
+      "id": "#303",
+      "type": "VECTOR",
+      "orientation": "#304",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ],
+      "magnitude": 1.0
+    },
+    "#325": {
+      "id": "#325",
+      "type": "VECTOR",
+      "orientation": "#326",
+      "direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "magnitude": 1.0
+    },
+    "#331": {
+      "id": "#331",
+      "type": "VECTOR",
+      "orientation": "#332",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ],
+      "magnitude": 1.0
+    },
+    "#338": {
+      "id": "#338",
+      "type": "VECTOR",
+      "orientation": "#339",
+      "direction_ratios": [
+        0.0,
+        1.0
+      ],
+      "magnitude": 1.0
+    },
+    "#347": {
+      "id": "#347",
+      "type": "VECTOR",
+      "orientation": "#348",
+      "direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "magnitude": 1.0
+    },
+    "#353": {
+      "id": "#353",
+      "type": "VECTOR",
+      "orientation": "#354",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ],
+      "magnitude": 1.0
+    },
+    "#360": {
+      "id": "#360",
+      "type": "VECTOR",
+      "orientation": "#361",
+      "direction_ratios": [
+        0.0,
+        1.0
+      ],
+      "magnitude": 1.0
+    },
+    "#375": {
+      "id": "#375",
+      "type": "VECTOR",
+      "orientation": "#376",
+      "direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "magnitude": 1.0
+    },
+    "#381": {
+      "id": "#381",
+      "type": "VECTOR",
+      "orientation": "#382",
+      "direction_ratios": [
+        0.0,
+        1.0
+      ],
+      "magnitude": 1.0
+    },
+    "#388": {
+      "id": "#388",
+      "type": "VECTOR",
+      "orientation": "#389",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ],
+      "magnitude": 1.0
+    },
+    "#407": {
+      "id": "#407",
+      "type": "VECTOR",
+      "orientation": "#408",
+      "direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "magnitude": 1.0
+    },
+    "#413": {
+      "id": "#413",
+      "type": "VECTOR",
+      "orientation": "#414",
+      "direction_ratios": [
+        0.0,
+        1.0
+      ],
+      "magnitude": 1.0
+    },
+    "#420": {
+      "id": "#420",
+      "type": "VECTOR",
+      "orientation": "#421",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ],
+      "magnitude": 1.0
+    },
+    "#461": {
+      "id": "#461",
+      "type": "VECTOR",
+      "orientation": "#462",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ],
+      "magnitude": 1.0
+    },
+    "#481": {
+      "id": "#481",
+      "type": "VECTOR",
+      "orientation": "#482",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ],
+      "magnitude": 1.0
+    },
+    "#501": {
+      "id": "#501",
+      "type": "VECTOR",
+      "orientation": "#502",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "magnitude": 1.0
+    },
+    "#507": {
+      "id": "#507",
+      "type": "VECTOR",
+      "orientation": "#508",
+      "direction_ratios": [
+        0.0,
+        1.0
+      ],
+      "magnitude": 1.0
+    },
+    "#514": {
+      "id": "#514",
+      "type": "VECTOR",
+      "orientation": "#515",
+      "direction_ratios": [
+        0.0,
+        1.0
+      ],
+      "magnitude": 1.0
+    },
+    "#551": {
+      "id": "#551",
+      "type": "VECTOR",
+      "orientation": "#552",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ],
+      "magnitude": 1.0
+    },
+    "#571": {
+      "id": "#571",
+      "type": "VECTOR",
+      "orientation": "#572",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ],
+      "magnitude": 1.0
+    },
+    "#591": {
+      "id": "#591",
+      "type": "VECTOR",
+      "orientation": "#592",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "magnitude": 1.0
+    },
+    "#597": {
+      "id": "#597",
+      "type": "VECTOR",
+      "orientation": "#598",
+      "direction_ratios": [
+        0.0,
+        1.0
+      ],
+      "magnitude": 1.0
+    },
+    "#604": {
+      "id": "#604",
+      "type": "VECTOR",
+      "orientation": "#605",
+      "direction_ratios": [
+        0.0,
+        1.0
+      ],
+      "magnitude": 1.0
+    },
+    "#73": {
+      "id": "#73",
+      "type": "AXIS2_PLACEMENT_2D",
+      "location": "#74",
+      "origin": [
+        0.0,
+        0.0
+      ],
+      "ref_direction": "#75",
+      "ref_direction_ratios": [
+        1.0,
+        0.0
+      ]
+    },
+    "#162": {
+      "id": "#162",
+      "type": "AXIS2_PLACEMENT_2D",
+      "location": "#163",
+      "origin": [
+        0.0,
+        0.0
+      ],
+      "ref_direction": "#164",
+      "ref_direction_ratios": [
+        1.0,
+        0.0
+      ]
+    },
+    "#266": {
+      "id": "#266",
+      "type": "AXIS2_PLACEMENT_2D",
+      "location": "#267",
+      "origin": [
+        0.0,
+        0.0
+      ],
+      "ref_direction": "#268",
+      "ref_direction_ratios": [
+        1.0,
+        0.0
+      ]
+    },
+    "#448": {
+      "id": "#448",
+      "type": "AXIS2_PLACEMENT_2D",
+      "location": "#449",
+      "origin": [
+        0.0,
+        -1.13423725372e-16
+      ],
+      "ref_direction": "#450",
+      "ref_direction_ratios": [
+        1.0,
+        0.0
+      ]
+    },
+    "#492": {
+      "id": "#492",
+      "type": "AXIS2_PLACEMENT_2D",
+      "location": "#493",
+      "origin": [
+        0.0,
+        0.0
+      ],
+      "ref_direction": "#494",
+      "ref_direction_ratios": [
+        1.0,
+        0.0
+      ]
+    },
+    "#538": {
+      "id": "#538",
+      "type": "AXIS2_PLACEMENT_2D",
+      "location": "#539",
+      "origin": [
+        6.661338147751e-16,
+        -1.939216921465e-16
+      ],
+      "ref_direction": "#540",
+      "ref_direction_ratios": [
+        1.0,
+        0.0
+      ]
+    },
+    "#582": {
+      "id": "#582",
+      "type": "AXIS2_PLACEMENT_2D",
+      "location": "#583",
+      "origin": [
+        0.0,
+        0.0
+      ],
+      "ref_direction": "#584",
+      "ref_direction_ratios": [
+        1.0,
+        0.0
+      ]
+    },
+    "#11": {
+      "id": "#11",
+      "type": "AXIS2_PLACEMENT_3D",
+      "location": "#12",
+      "origin": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "axis": "#13",
+      "axis_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "ref_direction": "#14",
+      "ref_direction_ratios": [
+        1.0,
+        0.0,
+        -0.0
+      ]
+    },
+    "#33": {
+      "id": "#33",
+      "type": "AXIS2_PLACEMENT_3D",
+      "location": "#34",
+      "origin": [
+        0.0,
+        0.0,
+        -0.7
+      ],
+      "axis": "#35",
+      "axis_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "ref_direction": "#36",
+      "ref_direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#54": {
+      "id": "#54",
+      "type": "AXIS2_PLACEMENT_3D",
+      "location": "#55",
+      "origin": [
+        0.0,
+        0.0,
+        0.7
+      ],
+      "axis": "#56",
+      "axis_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "ref_direction": "#57",
+      "ref_direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#67": {
+      "id": "#67",
+      "type": "AXIS2_PLACEMENT_3D",
+      "location": "#68",
+      "origin": [
+        0.0,
+        0.0,
+        0.7
+      ],
+      "axis": "#69",
+      "axis_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "ref_direction": "#70",
+      "ref_direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#84": {
+      "id": "#84",
+      "type": "AXIS2_PLACEMENT_3D",
+      "location": "#85",
+      "origin": [
+        0.0,
+        0.0,
+        -0.1
+      ],
+      "axis": "#86",
+      "axis_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "ref_direction": "#87",
+      "ref_direction_ratios": [
+        1.0,
+        0.0,
+        -0.0
+      ]
+    },
+    "#97": {
+      "id": "#97",
+      "type": "AXIS2_PLACEMENT_3D",
+      "location": "#98",
+      "origin": [
+        -2.0,
+        0.4,
+        -0.1
+      ],
+      "axis": "#99",
+      "axis_direction": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "ref_direction": "#100",
+      "ref_direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#128": {
+      "id": "#128",
+      "type": "AXIS2_PLACEMENT_3D",
+      "location": "#129",
+      "origin": [
+        -2.0,
+        0.4,
+        -0.1
+      ],
+      "axis": "#130",
+      "axis_direction": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "ref_direction": "#131",
+      "ref_direction_ratios": [
+        0.0,
+        0.0,
+        -1.0
+      ]
+    },
+    "#143": {
+      "id": "#143",
+      "type": "AXIS2_PLACEMENT_3D",
+      "location": "#144",
+      "origin": [
+        0.0,
+        0.0,
+        -0.7
+      ],
+      "axis": "#145",
+      "axis_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "ref_direction": "#146",
+      "ref_direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#156": {
+      "id": "#156",
+      "type": "AXIS2_PLACEMENT_3D",
+      "location": "#157",
+      "origin": [
+        0.0,
+        0.0,
+        -0.7
+      ],
+      "axis": "#158",
+      "axis_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "ref_direction": "#159",
+      "ref_direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#193": {
+      "id": "#193",
+      "type": "AXIS2_PLACEMENT_3D",
+      "location": "#194",
+      "origin": [
+        0.0,
+        0.0,
+        -0.1
+      ],
+      "axis": "#195",
+      "axis_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "ref_direction": "#196",
+      "ref_direction_ratios": [
+        -0.979795897113,
+        0.2,
+        0.0
+      ]
+    },
+    "#232": {
+      "id": "#232",
+      "type": "AXIS2_PLACEMENT_3D",
+      "location": "#233",
+      "origin": [
+        -2.0,
+        -0.4,
+        -0.1
+      ],
+      "axis": "#234",
+      "axis_direction": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "ref_direction": "#235",
+      "ref_direction_ratios": [
+        0.0,
+        0.0,
+        -1.0
+      ]
+    },
+    "#247": {
+      "id": "#247",
+      "type": "AXIS2_PLACEMENT_3D",
+      "location": "#248",
+      "origin": [
+        0.0,
+        0.0,
+        -0.7
+      ],
+      "axis": "#249",
+      "axis_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "ref_direction": "#250",
+      "ref_direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#260": {
+      "id": "#260",
+      "type": "AXIS2_PLACEMENT_3D",
+      "location": "#261",
+      "origin": [
+        0.0,
+        0.0,
+        -0.7
+      ],
+      "axis": "#262",
+      "axis_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "ref_direction": "#263",
+      "ref_direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#295": {
+      "id": "#295",
+      "type": "AXIS2_PLACEMENT_3D",
+      "location": "#296",
+      "origin": [
+        0.0,
+        0.0,
+        -0.1
+      ],
+      "axis": "#297",
+      "axis_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "ref_direction": "#298",
+      "ref_direction_ratios": [
+        1.0,
+        0.0,
+        -0.0
+      ]
+    },
+    "#441": {
+      "id": "#441",
+      "type": "AXIS2_PLACEMENT_3D",
+      "location": "#442",
+      "origin": [
+        0.0,
+        -1.13423725372e-16,
+        0.7
+      ],
+      "axis": "#443",
+      "axis_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "ref_direction": "#444",
+      "ref_direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#454": {
+      "id": "#454",
+      "type": "AXIS2_PLACEMENT_3D",
+      "location": "#455",
+      "origin": [
+        0.0,
+        -1.13423725372e-16,
+        0.7
+      ],
+      "axis": "#456",
+      "axis_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "ref_direction": "#457",
+      "ref_direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#473": {
+      "id": "#473",
+      "type": "AXIS2_PLACEMENT_3D",
+      "location": "#474",
+      "origin": [
+        0.0,
+        -1.13423725372e-16,
+        5.7
+      ],
+      "axis": "#475",
+      "axis_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "ref_direction": "#476",
+      "ref_direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#486": {
+      "id": "#486",
+      "type": "AXIS2_PLACEMENT_3D",
+      "location": "#487",
+      "origin": [
+        0.0,
+        -1.13423725372e-16,
+        5.7
+      ],
+      "axis": "#488",
+      "axis_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "ref_direction": "#489",
+      "ref_direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#531": {
+      "id": "#531",
+      "type": "AXIS2_PLACEMENT_3D",
+      "location": "#532",
+      "origin": [
+        6.661338147751e-16,
+        -3.073454175185e-16,
+        5.7
+      ],
+      "axis": "#533",
+      "axis_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "ref_direction": "#534",
+      "ref_direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#544": {
+      "id": "#544",
+      "type": "AXIS2_PLACEMENT_3D",
+      "location": "#545",
+      "origin": [
+        6.661338147751e-16,
+        -3.073454175185e-16,
+        5.7
+      ],
+      "axis": "#546",
+      "axis_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "ref_direction": "#547",
+      "ref_direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#563": {
+      "id": "#563",
+      "type": "AXIS2_PLACEMENT_3D",
+      "location": "#564",
+      "origin": [
+        6.661338147751e-16,
+        -3.073454175185e-16,
+        8.7
+      ],
+      "axis": "#565",
+      "axis_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "ref_direction": "#566",
+      "ref_direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#576": {
+      "id": "#576",
+      "type": "AXIS2_PLACEMENT_3D",
+      "location": "#577",
+      "origin": [
+        6.661338147751e-16,
+        -3.073454175185e-16,
+        8.7
+      ],
+      "axis": "#578",
+      "axis_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "ref_direction": "#579",
+      "ref_direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#66": {
+      "id": "#66",
+      "type": "PLANE",
+      "position": "#67",
+      "origin": [
+        0.0,
+        0.0,
+        0.7
+      ],
+      "axis_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "ref_direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#96": {
+      "id": "#96",
+      "type": "PLANE",
+      "position": "#97",
+      "origin": [
+        -2.0,
+        0.4,
+        -0.1
+      ],
+      "axis_direction": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "ref_direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#127": {
+      "id": "#127",
+      "type": "PLANE",
+      "position": "#128",
+      "origin": [
+        -2.0,
+        0.4,
+        -0.1
+      ],
+      "axis_direction": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "ref_direction_ratios": [
+        0.0,
+        0.0,
+        -1.0
+      ]
+    },
+    "#155": {
+      "id": "#155",
+      "type": "PLANE",
+      "position": "#156",
+      "origin": [
+        0.0,
+        0.0,
+        -0.7
+      ],
+      "axis_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "ref_direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#231": {
+      "id": "#231",
+      "type": "PLANE",
+      "position": "#232",
+      "origin": [
+        -2.0,
+        -0.4,
+        -0.1
+      ],
+      "axis_direction": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "ref_direction_ratios": [
+        0.0,
+        0.0,
+        -1.0
+      ]
+    },
+    "#259": {
+      "id": "#259",
+      "type": "PLANE",
+      "position": "#260",
+      "origin": [
+        0.0,
+        0.0,
+        -0.7
+      ],
+      "axis_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "ref_direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#485": {
+      "id": "#485",
+      "type": "PLANE",
+      "position": "#486",
+      "origin": [
+        0.0,
+        -1.13423725372e-16,
+        5.7
+      ],
+      "axis_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "ref_direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#575": {
+      "id": "#575",
+      "type": "PLANE",
+      "position": "#576",
+      "origin": [
+        6.661338147751e-16,
+        -3.073454175185e-16,
+        8.7
+      ],
+      "axis_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "ref_direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "#32": {
+      "id": "#32",
+      "type": "CYLINDRICAL_SURFACE",
+      "position": "#33",
+      "origin": [
+        0.0,
+        0.0,
+        -0.7
+      ],
+      "axis_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "ref_direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "radius": 2.0
+    },
+    "#453": {
+      "id": "#453",
+      "type": "CYLINDRICAL_SURFACE",
+      "position": "#454",
+      "origin": [
+        0.0,
+        -1.13423725372e-16,
+        0.7
+      ],
+      "axis_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "ref_direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "radius": 1.5
+    },
+    "#543": {
+      "id": "#543",
+      "type": "CYLINDRICAL_SURFACE",
+      "position": "#544",
+      "origin": [
+        6.661338147751e-16,
+        -3.073454175185e-16,
+        5.7
+      ],
+      "axis_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "ref_direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "radius": 1.0
+    },
+    "#27": {
+      "id": "#27",
+      "type": "LINE",
+      "pnt": "#28",
+      "point": [
+        2.0,
+        -4.898587196589e-16,
+        -0.7
+      ],
+      "dir": "#29",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "magnitude": 1.0
+    },
+    "#38": {
+      "id": "#38",
+      "type": "LINE",
+      "pnt": "#39",
+      "point": [
+        6.28318530718,
+        -0.0
+      ],
+      "dir": "#40",
+      "direction_ratios": [
+        0.0,
+        1.0
+      ],
+      "magnitude": 1.0
+    },
+    "#45": {
+      "id": "#45",
+      "type": "LINE",
+      "pnt": "#46",
+      "point": [
+        0.0,
+        -0.0
+      ],
+      "dir": "#47",
+      "direction_ratios": [
+        0.0,
+        1.0
+      ],
+      "magnitude": 1.0
+    },
+    "#60": {
+      "id": "#60",
+      "type": "LINE",
+      "pnt": "#61",
+      "point": [
+        0.0,
+        1.4
+      ],
+      "dir": "#62",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ],
+      "magnitude": 1.0
+    },
+    "#90": {
+      "id": "#90",
+      "type": "LINE",
+      "pnt": "#91",
+      "point": [
+        0.0,
+        0.6
+      ],
+      "dir": "#92",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ],
+      "magnitude": 1.0
+    },
+    "#116": {
+      "id": "#116",
+      "type": "LINE",
+      "pnt": "#117",
+      "point": [
+        1.959591794227,
+        0.4,
+        -0.7
+      ],
+      "dir": "#118",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "magnitude": 1.0
+    },
+    "#149": {
+      "id": "#149",
+      "type": "LINE",
+      "pnt": "#150",
+      "point": [
+        0.0,
+        0.0
+      ],
+      "dir": "#151",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ],
+      "magnitude": 1.0
+    },
+    "#171": {
+      "id": "#171",
+      "type": "LINE",
+      "pnt": "#172",
+      "point": [
+        -1.959591794227,
+        0.4,
+        -0.7
+      ],
+      "dir": "#173",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "magnitude": 1.0
+    },
+    "#199": {
+      "id": "#199",
+      "type": "LINE",
+      "pnt": "#200",
+      "point": [
+        2.940234732799,
+        0.6
+      ],
+      "dir": "#201",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ],
+      "magnitude": 1.0
+    },
+    "#220": {
+      "id": "#220",
+      "type": "LINE",
+      "pnt": "#221",
+      "point": [
+        -1.959591794227,
+        -0.4,
+        -0.7
+      ],
+      "dir": "#222",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "magnitude": 1.0
+    },
+    "#253": {
+      "id": "#253",
+      "type": "LINE",
+      "pnt": "#254",
+      "point": [
+        0.0,
+        0.0
+      ],
+      "dir": "#255",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ],
+      "magnitude": 1.0
+    },
+    "#275": {
+      "id": "#275",
+      "type": "LINE",
+      "pnt": "#276",
+      "point": [
+        1.959591794227,
+        -0.4,
+        -0.7
+      ],
+      "dir": "#277",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "magnitude": 1.0
+    },
+    "#301": {
+      "id": "#301",
+      "type": "LINE",
+      "pnt": "#302",
+      "point": [
+        0.0,
+        0.6
+      ],
+      "dir": "#303",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ],
+      "magnitude": 1.0
+    },
+    "#323": {
+      "id": "#323",
+      "type": "LINE",
+      "pnt": "#324",
+      "point": [
+        -2.0,
+        -0.4,
+        -0.1
+      ],
+      "dir": "#325",
+      "direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "magnitude": 1.0
+    },
+    "#329": {
+      "id": "#329",
+      "type": "LINE",
+      "pnt": "#330",
+      "point": [
+        0.0,
+        0.8
+      ],
+      "dir": "#331",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ],
+      "magnitude": 1.0
+    },
+    "#336": {
+      "id": "#336",
+      "type": "LINE",
+      "pnt": "#337",
+      "point": [
+        0.0,
+        0.0
+      ],
+      "dir": "#338",
+      "direction_ratios": [
+        0.0,
+        1.0
+      ],
+      "magnitude": 1.0
+    },
+    "#345": {
+      "id": "#345",
+      "type": "LINE",
+      "pnt": "#346",
+      "point": [
+        -2.0,
+        0.4,
+        -0.1
+      ],
+      "dir": "#347",
+      "direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "magnitude": 1.0
+    },
+    "#351": {
+      "id": "#351",
+      "type": "LINE",
+      "pnt": "#352",
+      "point": [
+        0.0,
+        0.0
+      ],
+      "dir": "#353",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ],
+      "magnitude": 1.0
+    },
+    "#358": {
+      "id": "#358",
+      "type": "LINE",
+      "pnt": "#359",
+      "point": [
+        0.0,
+        0.0
+      ],
+      "dir": "#360",
+      "direction_ratios": [
+        0.0,
+        1.0
+      ],
+      "magnitude": 1.0
+    },
+    "#373": {
+      "id": "#373",
+      "type": "LINE",
+      "pnt": "#374",
+      "point": [
+        -2.0,
+        -0.4,
+        -0.7
+      ],
+      "dir": "#375",
+      "direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "magnitude": 1.0
+    },
+    "#379": {
+      "id": "#379",
+      "type": "LINE",
+      "pnt": "#380",
+      "point": [
+        0.6,
+        0.0
+      ],
+      "dir": "#381",
+      "direction_ratios": [
+        0.0,
+        1.0
+      ],
+      "magnitude": 1.0
+    },
+    "#386": {
+      "id": "#386",
+      "type": "LINE",
+      "pnt": "#387",
+      "point": [
+        -2.0,
+        -0.4
+      ],
+      "dir": "#388",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ],
+      "magnitude": 1.0
+    },
+    "#405": {
+      "id": "#405",
+      "type": "LINE",
+      "pnt": "#406",
+      "point": [
+        -2.0,
+        0.4,
+        -0.7
+      ],
+      "dir": "#407",
+      "direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "magnitude": 1.0
+    },
+    "#411": {
+      "id": "#411",
+      "type": "LINE",
+      "pnt": "#412",
+      "point": [
+        0.6,
+        0.0
+      ],
+      "dir": "#413",
+      "direction_ratios": [
+        0.0,
+        1.0
+      ],
+      "magnitude": 1.0
+    },
+    "#418": {
+      "id": "#418",
+      "type": "LINE",
+      "pnt": "#419",
+      "point": [
+        -2.0,
+        0.4
+      ],
+      "dir": "#420",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ],
+      "magnitude": 1.0
+    },
+    "#459": {
+      "id": "#459",
+      "type": "LINE",
+      "pnt": "#460",
+      "point": [
+        0.0,
+        0.0
+      ],
+      "dir": "#461",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ],
+      "magnitude": 1.0
+    },
+    "#479": {
+      "id": "#479",
+      "type": "LINE",
+      "pnt": "#480",
+      "point": [
+        0.0,
+        5.0
+      ],
+      "dir": "#481",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ],
+      "magnitude": 1.0
+    },
+    "#499": {
+      "id": "#499",
+      "type": "LINE",
+      "pnt": "#500",
+      "point": [
+        1.5,
+        -4.808177651162e-16,
+        0.7
+      ],
+      "dir": "#501",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "magnitude": 1.0
+    },
+    "#505": {
+      "id": "#505",
+      "type": "LINE",
+      "pnt": "#506",
+      "point": [
+        6.28318530718,
+        -0.0
+      ],
+      "dir": "#507",
+      "direction_ratios": [
+        0.0,
+        1.0
+      ],
+      "magnitude": 1.0
+    },
+    "#512": {
+      "id": "#512",
+      "type": "LINE",
+      "pnt": "#513",
+      "point": [
+        0.0,
+        -0.0
+      ],
+      "dir": "#514",
+      "direction_ratios": [
+        0.0,
+        1.0
+      ],
+      "magnitude": 1.0
+    },
+    "#549": {
+      "id": "#549",
+      "type": "LINE",
+      "pnt": "#550",
+      "point": [
+        0.0,
+        0.0
+      ],
+      "dir": "#551",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ],
+      "magnitude": 1.0
+    },
+    "#569": {
+      "id": "#569",
+      "type": "LINE",
+      "pnt": "#570",
+      "point": [
+        0.0,
+        3.0
+      ],
+      "dir": "#571",
+      "direction_ratios": [
+        1.0,
+        0.0
+      ],
+      "magnitude": 1.0
+    },
+    "#589": {
+      "id": "#589",
+      "type": "LINE",
+      "pnt": "#590",
+      "point": [
+        1.0,
+        -5.52274777348e-16,
+        5.7
+      ],
+      "dir": "#591",
+      "direction_ratios": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "magnitude": 1.0
+    },
+    "#595": {
+      "id": "#595",
+      "type": "LINE",
+      "pnt": "#596",
+      "point": [
+        6.28318530718,
+        -0.0
+      ],
+      "dir": "#597",
+      "direction_ratios": [
+        0.0,
+        1.0
+      ],
+      "magnitude": 1.0
+    },
+    "#602": {
+      "id": "#602",
+      "type": "LINE",
+      "pnt": "#603",
+      "point": [
+        0.0,
+        -0.0
+      ],
+      "dir": "#604",
+      "direction_ratios": [
+        0.0,
+        1.0
+      ],
+      "magnitude": 1.0
+    },
+    "#53": {
+      "id": "#53",
+      "type": "CIRCLE",
+      "position": "#54",
+      "center": [
+        0.0,
+        0.0,
+        0.7
+      ],
+      "axis_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "ref_direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "radius": 2.0
+    },
+    "#72": {
+      "id": "#72",
+      "type": "CIRCLE",
+      "position": "#73",
+      "center": [
+        0.0,
+        0.0
+      ],
+      "axis_direction": null,
+      "ref_direction_ratios": [
+        1.0,
+        0.0
+      ],
+      "radius": 2.0
+    },
+    "#83": {
+      "id": "#83",
+      "type": "CIRCLE",
+      "position": "#84",
+      "center": [
+        0.0,
+        0.0,
+        -0.1
+      ],
+      "axis_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "ref_direction_ratios": [
+        1.0,
+        0.0,
+        -0.0
+      ],
+      "radius": 2.0
+    },
+    "#142": {
+      "id": "#142",
+      "type": "CIRCLE",
+      "position": "#143",
+      "center": [
+        0.0,
+        0.0,
+        -0.7
+      ],
+      "axis_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "ref_direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "radius": 2.0
+    },
+    "#161": {
+      "id": "#161",
+      "type": "CIRCLE",
+      "position": "#162",
+      "center": [
+        0.0,
+        0.0
+      ],
+      "axis_direction": null,
+      "ref_direction_ratios": [
+        1.0,
+        0.0
+      ],
+      "radius": 2.0
+    },
+    "#192": {
+      "id": "#192",
+      "type": "CIRCLE",
+      "position": "#193",
+      "center": [
+        0.0,
+        0.0,
+        -0.1
+      ],
+      "axis_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "ref_direction_ratios": [
+        -0.979795897113,
+        0.2,
+        0.0
+      ],
+      "radius": 2.0
+    },
+    "#246": {
+      "id": "#246",
+      "type": "CIRCLE",
+      "position": "#247",
+      "center": [
+        0.0,
+        0.0,
+        -0.7
+      ],
+      "axis_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "ref_direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "radius": 2.0
+    },
+    "#265": {
+      "id": "#265",
+      "type": "CIRCLE",
+      "position": "#266",
+      "center": [
+        0.0,
+        0.0
+      ],
+      "axis_direction": null,
+      "ref_direction_ratios": [
+        1.0,
+        0.0
+      ],
+      "radius": 2.0
+    },
+    "#294": {
+      "id": "#294",
+      "type": "CIRCLE",
+      "position": "#295",
+      "center": [
+        0.0,
+        0.0,
+        -0.1
+      ],
+      "axis_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "ref_direction_ratios": [
+        1.0,
+        0.0,
+        -0.0
+      ],
+      "radius": 2.0
+    },
+    "#440": {
+      "id": "#440",
+      "type": "CIRCLE",
+      "position": "#441",
+      "center": [
+        0.0,
+        -1.13423725372e-16,
+        0.7
+      ],
+      "axis_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "ref_direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "radius": 1.5
+    },
+    "#447": {
+      "id": "#447",
+      "type": "CIRCLE",
+      "position": "#448",
+      "center": [
+        0.0,
+        -1.13423725372e-16
+      ],
+      "axis_direction": null,
+      "ref_direction_ratios": [
+        1.0,
+        0.0
+      ],
+      "radius": 1.5
+    },
+    "#472": {
+      "id": "#472",
+      "type": "CIRCLE",
+      "position": "#473",
+      "center": [
+        0.0,
+        -1.13423725372e-16,
+        5.7
+      ],
+      "axis_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "ref_direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "radius": 1.5
+    },
+    "#491": {
+      "id": "#491",
+      "type": "CIRCLE",
+      "position": "#492",
+      "center": [
+        0.0,
+        0.0
+      ],
+      "axis_direction": null,
+      "ref_direction_ratios": [
+        1.0,
+        0.0
+      ],
+      "radius": 1.5
+    },
+    "#530": {
+      "id": "#530",
+      "type": "CIRCLE",
+      "position": "#531",
+      "center": [
+        6.661338147751e-16,
+        -3.073454175185e-16,
+        5.7
+      ],
+      "axis_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "ref_direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "radius": 1.0
+    },
+    "#537": {
+      "id": "#537",
+      "type": "CIRCLE",
+      "position": "#538",
+      "center": [
+        6.661338147751e-16,
+        -1.939216921465e-16
+      ],
+      "axis_direction": null,
+      "ref_direction_ratios": [
+        1.0,
+        0.0
+      ],
+      "radius": 1.0
+    },
+    "#562": {
+      "id": "#562",
+      "type": "CIRCLE",
+      "position": "#563",
+      "center": [
+        6.661338147751e-16,
+        -3.073454175185e-16,
+        8.7
+      ],
+      "axis_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "ref_direction_ratios": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "radius": 1.0
+    },
+    "#581": {
+      "id": "#581",
+      "type": "CIRCLE",
+      "position": "#582",
+      "center": [
+        0.0,
+        0.0
+      ],
+      "axis_direction": null,
+      "ref_direction_ratios": [
+        1.0,
+        0.0
+      ],
+      "radius": 1.0
+    },
+    "#122": {
+      "id": "#122",
+      "type": "B_SPLINE_CURVE_WITH_KNOTS",
+      "fields": {
+        "name": "''",
+        "degree": "1",
+        "control_points_list": [
+          "#123",
+          "#124"
+        ],
+        "curve_form": ".UNSPECIFIED.",
+        "closed_curve": ".F.",
+        "self_intersect": ".F.",
+        "knot_multiplicities": "(2,2)",
+        "knots": "(-6.000000000173E-07,0.66)",
+        "knot_spec": ".PIECEWISE_BEZIER_KNOTS."
+      },
+      "note": "Detailed B-spline geometry is not expanded in this version."
+    },
+    "#133": {
+      "id": "#133",
+      "type": "B_SPLINE_CURVE_WITH_KNOTS",
+      "fields": {
+        "name": "''",
+        "degree": "1",
+        "control_points_list": [
+          "#134",
+          "#135"
+        ],
+        "curve_form": ".UNSPECIFIED.",
+        "closed_curve": ".F.",
+        "self_intersect": ".F.",
+        "knot_multiplicities": "(2,2)",
+        "knots": "(-6.000000000173E-07,0.66)",
+        "knot_spec": ".PIECEWISE_BEZIER_KNOTS."
+      },
+      "note": "Detailed B-spline geometry is not expanded in this version."
+    },
+    "#177": {
+      "id": "#177",
+      "type": "B_SPLINE_CURVE_WITH_KNOTS",
+      "fields": {
+        "name": "''",
+        "degree": "1",
+        "control_points_list": [
+          "#178",
+          "#179"
+        ],
+        "curve_form": ".UNSPECIFIED.",
+        "closed_curve": ".F.",
+        "self_intersect": ".F.",
+        "knot_multiplicities": "(2,2)",
+        "knots": "(-6.000000000173E-07,0.66)",
+        "knot_spec": ".PIECEWISE_BEZIER_KNOTS."
+      },
+      "note": "Detailed B-spline geometry is not expanded in this version."
+    },
+    "#183": {
+      "id": "#183",
+      "type": "B_SPLINE_CURVE_WITH_KNOTS",
+      "fields": {
+        "name": "''",
+        "degree": "1",
+        "control_points_list": [
+          "#184",
+          "#185"
+        ],
+        "curve_form": ".UNSPECIFIED.",
+        "closed_curve": ".F.",
+        "self_intersect": ".F.",
+        "knot_multiplicities": "(2,2)",
+        "knots": "(-6.000000000173E-07,0.66)",
+        "knot_spec": ".PIECEWISE_BEZIER_KNOTS."
+      },
+      "note": "Detailed B-spline geometry is not expanded in this version."
+    },
+    "#226": {
+      "id": "#226",
+      "type": "B_SPLINE_CURVE_WITH_KNOTS",
+      "fields": {
+        "name": "''",
+        "degree": "1",
+        "control_points_list": [
+          "#227",
+          "#228"
+        ],
+        "curve_form": ".UNSPECIFIED.",
+        "closed_curve": ".F.",
+        "self_intersect": ".F.",
+        "knot_multiplicities": "(2,2)",
+        "knots": "(-6.000000000173E-07,0.66)",
+        "knot_spec": ".PIECEWISE_BEZIER_KNOTS."
+      },
+      "note": "Detailed B-spline geometry is not expanded in this version."
+    },
+    "#237": {
+      "id": "#237",
+      "type": "B_SPLINE_CURVE_WITH_KNOTS",
+      "fields": {
+        "name": "''",
+        "degree": "1",
+        "control_points_list": [
+          "#238",
+          "#239"
+        ],
+        "curve_form": ".UNSPECIFIED.",
+        "closed_curve": ".F.",
+        "self_intersect": ".F.",
+        "knot_multiplicities": "(2,2)",
+        "knots": "(-6.000000000173E-07,0.66)",
+        "knot_spec": ".PIECEWISE_BEZIER_KNOTS."
+      },
+      "note": "Detailed B-spline geometry is not expanded in this version."
+    },
+    "#281": {
+      "id": "#281",
+      "type": "B_SPLINE_CURVE_WITH_KNOTS",
+      "fields": {
+        "name": "''",
+        "degree": "1",
+        "control_points_list": [
+          "#282",
+          "#283"
+        ],
+        "curve_form": ".UNSPECIFIED.",
+        "closed_curve": ".F.",
+        "self_intersect": ".F.",
+        "knot_multiplicities": "(2,2)",
+        "knots": "(-6.000000000173E-07,0.66)",
+        "knot_spec": ".PIECEWISE_BEZIER_KNOTS."
+      },
+      "note": "Detailed B-spline geometry is not expanded in this version."
+    },
+    "#287": {
+      "id": "#287",
+      "type": "B_SPLINE_CURVE_WITH_KNOTS",
+      "fields": {
+        "name": "''",
+        "degree": "1",
+        "control_points_list": [
+          "#288",
+          "#289"
+        ],
+        "curve_form": ".UNSPECIFIED.",
+        "closed_curve": ".F.",
+        "self_intersect": ".F.",
+        "knot_multiplicities": "(2,2)",
+        "knots": "(-6.000000000173E-07,0.66)",
+        "knot_spec": ".PIECEWISE_BEZIER_KNOTS."
+      },
+      "note": "Detailed B-spline geometry is not expanded in this version."
+    },
+    "#22": {
+      "id": "#22",
+      "type": "VERTEX_POINT",
+      "vertex_geometry": "#23",
+      "coordinates": [
+        2.0,
+        -4.947295403701e-16,
+        -0.1
+      ]
+    },
+    "#24": {
+      "id": "#24",
+      "type": "VERTEX_POINT",
+      "vertex_geometry": "#25",
+      "coordinates": [
+        2.0,
+        -4.898587196589e-16,
+        0.7
+      ]
+    },
+    "#80": {
+      "id": "#80",
+      "type": "VERTEX_POINT",
+      "vertex_geometry": "#81",
+      "coordinates": [
+        1.959591794227,
+        0.4,
+        -0.1
+      ]
+    },
+    "#113": {
+      "id": "#113",
+      "type": "VERTEX_POINT",
+      "vertex_geometry": "#114",
+      "coordinates": [
+        1.959591794227,
+        0.4,
+        -0.7
+      ]
+    },
+    "#139": {
+      "id": "#139",
+      "type": "VERTEX_POINT",
+      "vertex_geometry": "#140",
+      "coordinates": [
+        -1.959591794227,
+        0.4,
+        -0.7
+      ]
+    },
+    "#168": {
+      "id": "#168",
+      "type": "VERTEX_POINT",
+      "vertex_geometry": "#169",
+      "coordinates": [
+        -1.959591794227,
+        0.4,
+        -0.1
+      ]
+    },
+    "#189": {
+      "id": "#189",
+      "type": "VERTEX_POINT",
+      "vertex_geometry": "#190",
+      "coordinates": [
+        -1.959591794227,
+        -0.4,
+        -0.1
+      ]
+    },
+    "#217": {
+      "id": "#217",
+      "type": "VERTEX_POINT",
+      "vertex_geometry": "#218",
+      "coordinates": [
+        -1.959591794227,
+        -0.4,
+        -0.7
+      ]
+    },
+    "#243": {
+      "id": "#243",
+      "type": "VERTEX_POINT",
+      "vertex_geometry": "#244",
+      "coordinates": [
+        1.959591794227,
+        -0.4,
+        -0.7
+      ]
+    },
+    "#272": {
+      "id": "#272",
+      "type": "VERTEX_POINT",
+      "vertex_geometry": "#273",
+      "coordinates": [
+        1.959591794227,
+        -0.4,
+        -0.1
+      ]
+    },
+    "#437": {
+      "id": "#437",
+      "type": "VERTEX_POINT",
+      "vertex_geometry": "#438",
+      "coordinates": [
+        1.5,
+        -4.808177651162e-16,
+        0.7
+      ]
+    },
+    "#469": {
+      "id": "#469",
+      "type": "VERTEX_POINT",
+      "vertex_geometry": "#470",
+      "coordinates": [
+        1.5,
+        -4.808177651162e-16,
+        5.7
+      ]
+    },
+    "#527": {
+      "id": "#527",
+      "type": "VERTEX_POINT",
+      "vertex_geometry": "#528",
+      "coordinates": [
+        1.0,
+        -5.52274777348e-16,
+        5.7
+      ]
+    },
+    "#559": {
+      "id": "#559",
+      "type": "VERTEX_POINT",
+      "vertex_geometry": "#560",
+      "coordinates": [
+        1.0,
+        -5.52274777348e-16,
+        8.7
+      ]
+    },
+    "#21": {
+      "id": "#21",
+      "type": "EDGE_CURVE",
+      "edge_start": "#22",
+      "edge_start_coordinates": [
+        2.0,
+        -4.947295403701e-16,
+        -0.1
+      ],
+      "edge_end": "#24",
+      "edge_end_coordinates": [
+        2.0,
+        -4.898587196589e-16,
+        0.7
+      ],
+      "edge_geometry": "#26",
+      "edge_geometry_type": "SEAM_CURVE",
+      "same_sense": ".T."
+    },
+    "#51": {
+      "id": "#51",
+      "type": "EDGE_CURVE",
+      "edge_start": "#24",
+      "edge_start_coordinates": [
+        2.0,
+        -4.898587196589e-16,
+        0.7
+      ],
+      "edge_end": "#24",
+      "edge_end_coordinates": [
+        2.0,
+        -4.898587196589e-16,
+        0.7
+      ],
+      "edge_geometry": "#52",
+      "edge_geometry_type": "SURFACE_CURVE",
+      "same_sense": ".T."
+    },
+    "#79": {
+      "id": "#79",
+      "type": "EDGE_CURVE",
+      "edge_start": "#22",
+      "edge_start_coordinates": [
+        2.0,
+        -4.947295403701e-16,
+        -0.1
+      ],
+      "edge_end": "#80",
+      "edge_end_coordinates": [
+        1.959591794227,
+        0.4,
+        -0.1
+      ],
+      "edge_geometry": "#82",
+      "edge_geometry_type": "SURFACE_CURVE",
+      "same_sense": ".T."
+    },
+    "#112": {
+      "id": "#112",
+      "type": "EDGE_CURVE",
+      "edge_start": "#113",
+      "edge_start_coordinates": [
+        1.959591794227,
+        0.4,
+        -0.7
+      ],
+      "edge_end": "#80",
+      "edge_end_coordinates": [
+        1.959591794227,
+        0.4,
+        -0.1
+      ],
+      "edge_geometry": "#115",
+      "edge_geometry_type": "SURFACE_CURVE",
+      "same_sense": ".T."
+    },
+    "#138": {
+      "id": "#138",
+      "type": "EDGE_CURVE",
+      "edge_start": "#113",
+      "edge_start_coordinates": [
+        1.959591794227,
+        0.4,
+        -0.7
+      ],
+      "edge_end": "#139",
+      "edge_end_coordinates": [
+        -1.959591794227,
+        0.4,
+        -0.7
+      ],
+      "edge_geometry": "#141",
+      "edge_geometry_type": "SURFACE_CURVE",
+      "same_sense": ".T."
+    },
+    "#167": {
+      "id": "#167",
+      "type": "EDGE_CURVE",
+      "edge_start": "#139",
+      "edge_start_coordinates": [
+        -1.959591794227,
+        0.4,
+        -0.7
+      ],
+      "edge_end": "#168",
+      "edge_end_coordinates": [
+        -1.959591794227,
+        0.4,
+        -0.1
+      ],
+      "edge_geometry": "#170",
+      "edge_geometry_type": "SURFACE_CURVE",
+      "same_sense": ".T."
+    },
+    "#188": {
+      "id": "#188",
+      "type": "EDGE_CURVE",
+      "edge_start": "#168",
+      "edge_start_coordinates": [
+        -1.959591794227,
+        0.4,
+        -0.1
+      ],
+      "edge_end": "#189",
+      "edge_end_coordinates": [
+        -1.959591794227,
+        -0.4,
+        -0.1
+      ],
+      "edge_geometry": "#191",
+      "edge_geometry_type": "SURFACE_CURVE",
+      "same_sense": ".T."
+    },
+    "#216": {
+      "id": "#216",
+      "type": "EDGE_CURVE",
+      "edge_start": "#217",
+      "edge_start_coordinates": [
+        -1.959591794227,
+        -0.4,
+        -0.7
+      ],
+      "edge_end": "#189",
+      "edge_end_coordinates": [
+        -1.959591794227,
+        -0.4,
+        -0.1
+      ],
+      "edge_geometry": "#219",
+      "edge_geometry_type": "SURFACE_CURVE",
+      "same_sense": ".T."
+    },
+    "#242": {
+      "id": "#242",
+      "type": "EDGE_CURVE",
+      "edge_start": "#217",
+      "edge_start_coordinates": [
+        -1.959591794227,
+        -0.4,
+        -0.7
+      ],
+      "edge_end": "#243",
+      "edge_end_coordinates": [
+        1.959591794227,
+        -0.4,
+        -0.7
+      ],
+      "edge_geometry": "#245",
+      "edge_geometry_type": "SURFACE_CURVE",
+      "same_sense": ".T."
+    },
+    "#271": {
+      "id": "#271",
+      "type": "EDGE_CURVE",
+      "edge_start": "#243",
+      "edge_start_coordinates": [
+        1.959591794227,
+        -0.4,
+        -0.7
+      ],
+      "edge_end": "#272",
+      "edge_end_coordinates": [
+        1.959591794227,
+        -0.4,
+        -0.1
+      ],
+      "edge_geometry": "#274",
+      "edge_geometry_type": "SURFACE_CURVE",
+      "same_sense": ".T."
+    },
+    "#292": {
+      "id": "#292",
+      "type": "EDGE_CURVE",
+      "edge_start": "#272",
+      "edge_start_coordinates": [
+        1.959591794227,
+        -0.4,
+        -0.1
+      ],
+      "edge_end": "#22",
+      "edge_end_coordinates": [
+        2.0,
+        -4.947295403701e-16,
+        -0.1
+      ],
+      "edge_geometry": "#293",
+      "edge_geometry_type": "SURFACE_CURVE",
+      "same_sense": ".T."
+    },
+    "#321": {
+      "id": "#321",
+      "type": "EDGE_CURVE",
+      "edge_start": "#189",
+      "edge_start_coordinates": [
+        -1.959591794227,
+        -0.4,
+        -0.1
+      ],
+      "edge_end": "#272",
+      "edge_end_coordinates": [
+        1.959591794227,
+        -0.4,
+        -0.1
+      ],
+      "edge_geometry": "#322",
+      "edge_geometry_type": "SURFACE_CURVE",
+      "same_sense": ".T."
+    },
+    "#343": {
+      "id": "#343",
+      "type": "EDGE_CURVE",
+      "edge_start": "#168",
+      "edge_start_coordinates": [
+        -1.959591794227,
+        0.4,
+        -0.1
+      ],
+      "edge_end": "#80",
+      "edge_end_coordinates": [
+        1.959591794227,
+        0.4,
+        -0.1
+      ],
+      "edge_geometry": "#344",
+      "edge_geometry_type": "SURFACE_CURVE",
+      "same_sense": ".T."
+    },
+    "#371": {
+      "id": "#371",
+      "type": "EDGE_CURVE",
+      "edge_start": "#217",
+      "edge_start_coordinates": [
+        -1.959591794227,
+        -0.4,
+        -0.7
+      ],
+      "edge_end": "#243",
+      "edge_end_coordinates": [
+        1.959591794227,
+        -0.4,
+        -0.7
+      ],
+      "edge_geometry": "#372",
+      "edge_geometry_type": "SURFACE_CURVE",
+      "same_sense": ".T."
+    },
+    "#403": {
+      "id": "#403",
+      "type": "EDGE_CURVE",
+      "edge_start": "#139",
+      "edge_start_coordinates": [
+        -1.959591794227,
+        0.4,
+        -0.7
+      ],
+      "edge_end": "#113",
+      "edge_end_coordinates": [
+        1.959591794227,
+        0.4,
+        -0.7
+      ],
+      "edge_geometry": "#404",
+      "edge_geometry_type": "SURFACE_CURVE",
+      "same_sense": ".T."
+    },
+    "#436": {
+      "id": "#436",
+      "type": "EDGE_CURVE",
+      "edge_start": "#437",
+      "edge_start_coordinates": [
+        1.5,
+        -4.808177651162e-16,
+        0.7
+      ],
+      "edge_end": "#437",
+      "edge_end_coordinates": [
+        1.5,
+        -4.808177651162e-16,
+        0.7
+      ],
+      "edge_geometry": "#439",
+      "edge_geometry_type": "SURFACE_CURVE",
+      "same_sense": ".T."
+    },
+    "#468": {
+      "id": "#468",
+      "type": "EDGE_CURVE",
+      "edge_start": "#469",
+      "edge_start_coordinates": [
+        1.5,
+        -4.808177651162e-16,
+        5.7
+      ],
+      "edge_end": "#469",
+      "edge_end_coordinates": [
+        1.5,
+        -4.808177651162e-16,
+        5.7
+      ],
+      "edge_geometry": "#471",
+      "edge_geometry_type": "SURFACE_CURVE",
+      "same_sense": ".T."
+    },
+    "#497": {
+      "id": "#497",
+      "type": "EDGE_CURVE",
+      "edge_start": "#437",
+      "edge_start_coordinates": [
+        1.5,
+        -4.808177651162e-16,
+        0.7
+      ],
+      "edge_end": "#469",
+      "edge_end_coordinates": [
+        1.5,
+        -4.808177651162e-16,
+        5.7
+      ],
+      "edge_geometry": "#498",
+      "edge_geometry_type": "SEAM_CURVE",
+      "same_sense": ".T."
+    },
+    "#526": {
+      "id": "#526",
+      "type": "EDGE_CURVE",
+      "edge_start": "#527",
+      "edge_start_coordinates": [
+        1.0,
+        -5.52274777348e-16,
+        5.7
+      ],
+      "edge_end": "#527",
+      "edge_end_coordinates": [
+        1.0,
+        -5.52274777348e-16,
+        5.7
+      ],
+      "edge_geometry": "#529",
+      "edge_geometry_type": "SURFACE_CURVE",
+      "same_sense": ".T."
+    },
+    "#558": {
+      "id": "#558",
+      "type": "EDGE_CURVE",
+      "edge_start": "#559",
+      "edge_start_coordinates": [
+        1.0,
+        -5.52274777348e-16,
+        8.7
+      ],
+      "edge_end": "#559",
+      "edge_end_coordinates": [
+        1.0,
+        -5.52274777348e-16,
+        8.7
+      ],
+      "edge_geometry": "#561",
+      "edge_geometry_type": "SURFACE_CURVE",
+      "same_sense": ".T."
+    },
+    "#587": {
+      "id": "#587",
+      "type": "EDGE_CURVE",
+      "edge_start": "#527",
+      "edge_start_coordinates": [
+        1.0,
+        -5.52274777348e-16,
+        5.7
+      ],
+      "edge_end": "#559",
+      "edge_end_coordinates": [
+        1.0,
+        -5.52274777348e-16,
+        8.7
+      ],
+      "edge_geometry": "#588",
+      "edge_geometry_type": "SEAM_CURVE",
+      "same_sense": ".T."
+    },
+    "#17": {
+      "id": "#17",
+      "type": "ADVANCED_FACE",
+      "face_geometry": "#32",
+      "surface_type": "CYLINDRICAL_SURFACE",
+      "same_sense": ".T.",
+      "surface": {
+        "origin": [
+          0.0,
+          0.0,
+          -0.7
+        ],
+        "axis_direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "ref_direction_ratios": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "radius": 2.0
+      }
+    },
+    "#317": {
+      "id": "#317",
+      "type": "ADVANCED_FACE",
+      "face_geometry": "#96",
+      "surface_type": "PLANE",
+      "same_sense": ".T.",
+      "surface": {
+        "origin": [
+          -2.0,
+          0.4,
+          -0.1
+        ],
+        "axis_direction": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "ref_direction_ratios": [
+          1.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "#365": {
+      "id": "#365",
+      "type": "ADVANCED_FACE",
+      "face_geometry": "#231",
+      "surface_type": "PLANE",
+      "same_sense": ".F.",
+      "surface": {
+        "origin": [
+          -2.0,
+          -0.4,
+          -0.1
+        ],
+        "axis_direction": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "ref_direction_ratios": [
+          0.0,
+          0.0,
+          -1.0
+        ]
+      }
+    },
+    "#392": {
+      "id": "#392",
+      "type": "ADVANCED_FACE",
+      "face_geometry": "#259",
+      "surface_type": "PLANE",
+      "same_sense": ".F.",
+      "surface": {
+        "origin": [
+          0.0,
+          0.0,
+          -0.7
+        ],
+        "axis_direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "ref_direction_ratios": [
+          1.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "#397": {
+      "id": "#397",
+      "type": "ADVANCED_FACE",
+      "face_geometry": "#127",
+      "surface_type": "PLANE",
+      "same_sense": ".T.",
+      "surface": {
+        "origin": [
+          -2.0,
+          0.4,
+          -0.1
+        ],
+        "axis_direction": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "ref_direction_ratios": [
+          0.0,
+          0.0,
+          -1.0
+        ]
+      }
+    },
+    "#424": {
+      "id": "#424",
+      "type": "ADVANCED_FACE",
+      "face_geometry": "#155",
+      "surface_type": "PLANE",
+      "same_sense": ".F.",
+      "surface": {
+        "origin": [
+          0.0,
+          0.0,
+          -0.7
+        ],
+        "axis_direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "ref_direction_ratios": [
+          1.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "#429": {
+      "id": "#429",
+      "type": "ADVANCED_FACE",
+      "face_geometry": "#66",
+      "surface_type": "PLANE",
+      "same_sense": ".T.",
+      "surface": {
+        "origin": [
+          0.0,
+          0.0,
+          0.7
+        ],
+        "axis_direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "ref_direction_ratios": [
+          1.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "#464": {
+      "id": "#464",
+      "type": "ADVANCED_FACE",
+      "face_geometry": "#453",
+      "surface_type": "CYLINDRICAL_SURFACE",
+      "same_sense": ".T.",
+      "surface": {
+        "origin": [
+          0.0,
+          -1.13423725372e-16,
+          0.7
+        ],
+        "axis_direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "ref_direction_ratios": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "radius": 1.5
+      }
+    },
+    "#519": {
+      "id": "#519",
+      "type": "ADVANCED_FACE",
+      "face_geometry": "#485",
+      "surface_type": "PLANE",
+      "same_sense": ".T.",
+      "surface": {
+        "origin": [
+          0.0,
+          -1.13423725372e-16,
+          5.7
+        ],
+        "axis_direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "ref_direction_ratios": [
+          1.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "#554": {
+      "id": "#554",
+      "type": "ADVANCED_FACE",
+      "face_geometry": "#543",
+      "surface_type": "CYLINDRICAL_SURFACE",
+      "same_sense": ".T.",
+      "surface": {
+        "origin": [
+          6.661338147751e-16,
+          -3.073454175185e-16,
+          5.7
+        ],
+        "axis_direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "ref_direction_ratios": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "radius": 1.0
+      }
+    },
+    "#609": {
+      "id": "#609",
+      "type": "ADVANCED_FACE",
+      "face_geometry": "#575",
+      "surface_type": "PLANE",
+      "same_sense": ".T.",
+      "surface": {
+        "origin": [
+          6.661338147751e-16,
+          -3.073454175185e-16,
+          8.7
+        ],
+        "axis_direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "ref_direction_ratios": [
+          1.0,
+          0.0,
+          0.0
+        ]
+      }
     }
   },
   "type_index": {
@@ -21348,6 +26214,7 @@
     "solid_count": 1,
     "face_count": 11,
     "face_adjacency_count": 18,
+    "geometry_attribute_count": 382,
     "type_count": 35,
     "skipped_count": 0
   }

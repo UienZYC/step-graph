@@ -4,4 +4,6 @@ version = "0.1.0"
 description = "STEP Part 21 entity graph extractor"
 readme = "../README.md"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "cadquery-ocp>=7.9.3.1",
+]
