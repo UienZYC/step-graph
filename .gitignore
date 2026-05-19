@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.env
+
+# uv
+# This app keeps backend/uv.lock for reproducible backend runs.
+# If this becomes a library, decide whether to commit or ignore uv.lock.
+uv.lock
+!backend/uv.lock
+
+# Backend outputs
+backend/outputs/
+outputs/
+
+# Node / frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
