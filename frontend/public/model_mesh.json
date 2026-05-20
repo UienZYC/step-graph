@@ -1,27 +1,35 @@
 {
   "source": {
     "step_file": "examples\\example.step",
-    "graph_file": "outputs\\graph.json"
+    "step_file_name": "example.step",
+    "step_file_sha256": "dcb0d5674adbf3eecb6afbf970ed3d470313e1fde6495cd20ecfd33712257379",
+    "graph_file": "outputs\\graph.json",
+    "graph_file_sha256": "d4ed3f0796404adf1f103935c19a2fbac00c20631be6a407b262207c9aea087b",
+    "generator": "generate_model_mesh.py",
+    "generated_at": "2026-05-20T10:45:23.578410+00:00"
   },
   "backend": "OCP",
   "units": "unknown",
   "mapping_quality": {
-    "face_mapping_method": "signature",
-    "face_mapped_count": 9,
-    "face_unmapped_count": 2,
-    "face_ambiguous_count": 2,
-    "edge_mapping_method": "geometry_signature",
-    "edge_mapped_count": 0,
-    "edge_unmapped_count": 42,
+    "face_mapping_method": "boundary_edge_set",
+    "face_mapped_count": 11,
+    "face_unmapped_count": 0,
+    "face_ambiguous_count": 0,
+    "face_boundary_edge_set_mapped_count": 11,
+    "face_boundary_edge_set_partial_mapped_count": 0,
+    "face_surface_signature_mapped_count": 0,
+    "edge_mapping_method": "endpoint_curve_signature",
+    "edge_mapped_count": 42,
+    "edge_unmapped_count": 0,
     "edge_ambiguous_count": 0,
+    "edge_endpoint_fallback_count": 0,
     "vertex_mapping_method": "coordinate_signature",
     "vertex_mapped_count": 84,
     "vertex_unmapped_count": 0,
     "vertex_ambiguous_count": 0,
     "notes": [
-      "Ambiguous ADVANCED_FACE signature ('PLANE', None, (0.0, 0.0, -0.7), (0.0, 0.0, 1.0)): ['#392', '#424']",
-      "Ambiguous EDGE_CURVE signature ('SURFACE_CURVE', ((-1.959592, 0.4, -0.7), (1.959592, 0.4, -0.7)), None): ['#138', '#403']",
-      "Ambiguous EDGE_CURVE signature ('SURFACE_CURVE', ((-1.959592, -0.4, -0.7), (1.959592, -0.4, -0.7)), None): ['#242', '#371']"
+      "Endpoint-only EDGE_CURVE fallback would be ambiguous for signature ((-1.959592, 0.4, -0.7), (1.959592, 0.4, -0.7)): candidates ['#138', '#403']; typed endpoint_curve_signature may still resolve these edges.",
+      "Endpoint-only EDGE_CURVE fallback would be ambiguous for signature ((-1.959592, -0.4, -0.7), (1.959592, -0.4, -0.7)): candidates ['#242', '#371']; typed endpoint_curve_signature may still resolve these edges."
     ]
   },
   "faces": [
@@ -684,7 +692,74 @@
         ],
         "radius": 2.0
       },
-      "mapping_confidence": "high"
+      "edge_indices": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "mapping_source": "backend",
+      "mapping_method": "boundary_edge_set",
+      "mapping_confidence": "high",
+      "boundary_edge_step_ids": [
+        "#112",
+        "#138",
+        "#167",
+        "#188",
+        "#21",
+        "#216",
+        "#242",
+        "#271",
+        "#292",
+        "#51",
+        "#79"
+      ],
+      "mapping_evidence": {
+        "boundary_edge_step_ids": [
+          "#112",
+          "#138",
+          "#167",
+          "#188",
+          "#21",
+          "#216",
+          "#242",
+          "#271",
+          "#292",
+          "#51",
+          "#79"
+        ],
+        "matched_step_face_edge_ids": [
+          "#112",
+          "#138",
+          "#167",
+          "#188",
+          "#21",
+          "#216",
+          "#242",
+          "#271",
+          "#292",
+          "#51",
+          "#79"
+        ],
+        "edge_set_jaccard": 1.0,
+        "candidate_step_faces": [
+          {
+            "step_id": "#17",
+            "score": 1.0,
+            "reason": "exact boundary edge set match"
+          }
+        ],
+        "surface_type_match": true,
+        "bbox_similarity": null,
+        "reason": "exact boundary edge set match"
+      }
     },
     {
       "step_id": "#317",
@@ -824,7 +899,50 @@
           -1.0
         ]
       },
-      "mapping_confidence": "high"
+      "edge_indices": [
+        3,
+        7,
+        11,
+        12,
+        14
+      ],
+      "mapping_source": "backend",
+      "mapping_method": "boundary_edge_set",
+      "mapping_confidence": "high",
+      "boundary_edge_step_ids": [
+        "#188",
+        "#292",
+        "#321",
+        "#343",
+        "#79"
+      ],
+      "mapping_evidence": {
+        "boundary_edge_step_ids": [
+          "#188",
+          "#292",
+          "#321",
+          "#343",
+          "#79"
+        ],
+        "matched_step_face_edge_ids": [
+          "#188",
+          "#292",
+          "#321",
+          "#343",
+          "#79"
+        ],
+        "edge_set_jaccard": 1.0,
+        "candidate_step_faces": [
+          {
+            "step_id": "#317",
+            "score": 1.0,
+            "reason": "exact boundary edge set match"
+          }
+        ],
+        "surface_type_match": true,
+        "bbox_similarity": null,
+        "reason": "exact boundary edge set match"
+      }
     },
     {
       "step_id": "#365",
@@ -894,10 +1012,49 @@
           0.0
         ]
       },
-      "mapping_confidence": "high"
+      "edge_indices": [
+        8,
+        10,
+        12,
+        19
+      ],
+      "mapping_source": "backend",
+      "mapping_method": "boundary_edge_set",
+      "mapping_confidence": "high",
+      "boundary_edge_step_ids": [
+        "#216",
+        "#271",
+        "#321",
+        "#371"
+      ],
+      "mapping_evidence": {
+        "boundary_edge_step_ids": [
+          "#216",
+          "#271",
+          "#321",
+          "#371"
+        ],
+        "matched_step_face_edge_ids": [
+          "#216",
+          "#271",
+          "#321",
+          "#371"
+        ],
+        "edge_set_jaccard": 1.0,
+        "candidate_step_faces": [
+          {
+            "step_id": "#365",
+            "score": 1.0,
+            "reason": "exact boundary edge set match"
+          }
+        ],
+        "surface_type_match": true,
+        "bbox_similarity": null,
+        "reason": "exact boundary edge set match"
+      }
     },
     {
-      "step_id": null,
+      "step_id": "#392",
       "face_index": 3,
       "kind": "ADVANCED_FACE",
       "surface_type": "PLANE",
@@ -1044,7 +1201,38 @@
           1.0
         ]
       },
-      "mapping_confidence": "ambiguous"
+      "edge_indices": [
+        9,
+        19
+      ],
+      "mapping_source": "backend",
+      "mapping_method": "boundary_edge_set",
+      "mapping_confidence": "high",
+      "boundary_edge_step_ids": [
+        "#242",
+        "#371"
+      ],
+      "mapping_evidence": {
+        "boundary_edge_step_ids": [
+          "#242",
+          "#371"
+        ],
+        "matched_step_face_edge_ids": [
+          "#242",
+          "#371"
+        ],
+        "edge_set_jaccard": 1.0,
+        "candidate_step_faces": [
+          {
+            "step_id": "#392",
+            "score": 1.0,
+            "reason": "exact boundary edge set match"
+          }
+        ],
+        "surface_type_match": true,
+        "bbox_similarity": null,
+        "reason": "exact boundary edge set match"
+      }
     },
     {
       "step_id": "#397",
@@ -1114,10 +1302,49 @@
           0.0
         ]
       },
-      "mapping_confidence": "high"
+      "edge_indices": [
+        4,
+        6,
+        14,
+        25
+      ],
+      "mapping_source": "backend",
+      "mapping_method": "boundary_edge_set",
+      "mapping_confidence": "high",
+      "boundary_edge_step_ids": [
+        "#112",
+        "#167",
+        "#343",
+        "#403"
+      ],
+      "mapping_evidence": {
+        "boundary_edge_step_ids": [
+          "#112",
+          "#167",
+          "#343",
+          "#403"
+        ],
+        "matched_step_face_edge_ids": [
+          "#112",
+          "#167",
+          "#343",
+          "#403"
+        ],
+        "edge_set_jaccard": 1.0,
+        "candidate_step_faces": [
+          {
+            "step_id": "#397",
+            "score": 1.0,
+            "reason": "exact boundary edge set match"
+          }
+        ],
+        "surface_type_match": true,
+        "bbox_similarity": null,
+        "reason": "exact boundary edge set match"
+      }
     },
     {
-      "step_id": null,
+      "step_id": "#424",
       "face_index": 5,
       "kind": "ADVANCED_FACE",
       "surface_type": "PLANE",
@@ -1264,7 +1491,38 @@
           1.0
         ]
       },
-      "mapping_confidence": "ambiguous"
+      "edge_indices": [
+        5,
+        25
+      ],
+      "mapping_source": "backend",
+      "mapping_method": "boundary_edge_set",
+      "mapping_confidence": "high",
+      "boundary_edge_step_ids": [
+        "#138",
+        "#403"
+      ],
+      "mapping_evidence": {
+        "boundary_edge_step_ids": [
+          "#138",
+          "#403"
+        ],
+        "matched_step_face_edge_ids": [
+          "#138",
+          "#403"
+        ],
+        "edge_set_jaccard": 1.0,
+        "candidate_step_faces": [
+          {
+            "step_id": "#424",
+            "score": 1.0,
+            "reason": "exact boundary edge set match"
+          }
+        ],
+        "surface_type_match": true,
+        "bbox_similarity": null,
+        "reason": "exact boundary edge set match"
+      }
     },
     {
       "step_id": "#429",
@@ -1824,7 +2082,38 @@
           1.0
         ]
       },
-      "mapping_confidence": "high"
+      "edge_indices": [
+        1,
+        30
+      ],
+      "mapping_source": "backend",
+      "mapping_method": "boundary_edge_set",
+      "mapping_confidence": "high",
+      "boundary_edge_step_ids": [
+        "#436",
+        "#51"
+      ],
+      "mapping_evidence": {
+        "boundary_edge_step_ids": [
+          "#436",
+          "#51"
+        ],
+        "matched_step_face_edge_ids": [
+          "#436",
+          "#51"
+        ],
+        "edge_set_jaccard": 1.0,
+        "candidate_step_faces": [
+          {
+            "step_id": "#429",
+            "score": 1.0,
+            "reason": "exact boundary edge set match"
+          }
+        ],
+        "surface_type_match": true,
+        "bbox_similarity": null,
+        "reason": "exact boundary edge set match"
+      }
     },
     {
       "step_id": "#464",
@@ -2395,7 +2684,42 @@
         ],
         "radius": 1.5
       },
-      "mapping_confidence": "high"
+      "edge_indices": [
+        30,
+        31,
+        32
+      ],
+      "mapping_source": "backend",
+      "mapping_method": "boundary_edge_set",
+      "mapping_confidence": "high",
+      "boundary_edge_step_ids": [
+        "#436",
+        "#468",
+        "#497"
+      ],
+      "mapping_evidence": {
+        "boundary_edge_step_ids": [
+          "#436",
+          "#468",
+          "#497"
+        ],
+        "matched_step_face_edge_ids": [
+          "#436",
+          "#468",
+          "#497"
+        ],
+        "edge_set_jaccard": 1.0,
+        "candidate_step_faces": [
+          {
+            "step_id": "#464",
+            "score": 1.0,
+            "reason": "exact boundary edge set match"
+          }
+        ],
+        "surface_type_match": true,
+        "bbox_similarity": null,
+        "reason": "exact boundary edge set match"
+      }
     },
     {
       "step_id": "#519",
@@ -2955,7 +3279,38 @@
           1.0
         ]
       },
-      "mapping_confidence": "high"
+      "edge_indices": [
+        31,
+        36
+      ],
+      "mapping_source": "backend",
+      "mapping_method": "boundary_edge_set",
+      "mapping_confidence": "high",
+      "boundary_edge_step_ids": [
+        "#468",
+        "#526"
+      ],
+      "mapping_evidence": {
+        "boundary_edge_step_ids": [
+          "#468",
+          "#526"
+        ],
+        "matched_step_face_edge_ids": [
+          "#468",
+          "#526"
+        ],
+        "edge_set_jaccard": 1.0,
+        "candidate_step_faces": [
+          {
+            "step_id": "#519",
+            "score": 1.0,
+            "reason": "exact boundary edge set match"
+          }
+        ],
+        "surface_type_match": true,
+        "bbox_similarity": null,
+        "reason": "exact boundary edge set match"
+      }
     },
     {
       "step_id": "#554",
@@ -3526,7 +3881,42 @@
         ],
         "radius": 1.0
       },
-      "mapping_confidence": "high"
+      "edge_indices": [
+        36,
+        37,
+        38
+      ],
+      "mapping_source": "backend",
+      "mapping_method": "boundary_edge_set",
+      "mapping_confidence": "high",
+      "boundary_edge_step_ids": [
+        "#526",
+        "#558",
+        "#587"
+      ],
+      "mapping_evidence": {
+        "boundary_edge_step_ids": [
+          "#526",
+          "#558",
+          "#587"
+        ],
+        "matched_step_face_edge_ids": [
+          "#526",
+          "#558",
+          "#587"
+        ],
+        "edge_set_jaccard": 1.0,
+        "candidate_step_faces": [
+          {
+            "step_id": "#554",
+            "score": 1.0,
+            "reason": "exact boundary edge set match"
+          }
+        ],
+        "surface_type_match": true,
+        "bbox_similarity": null,
+        "reason": "exact boundary edge set match"
+      }
     },
     {
       "step_id": "#609",
@@ -3816,12 +4206,39 @@
           1.0
         ]
       },
-      "mapping_confidence": "high"
+      "edge_indices": [
+        37
+      ],
+      "mapping_source": "backend",
+      "mapping_method": "boundary_edge_set",
+      "mapping_confidence": "high",
+      "boundary_edge_step_ids": [
+        "#558"
+      ],
+      "mapping_evidence": {
+        "boundary_edge_step_ids": [
+          "#558"
+        ],
+        "matched_step_face_edge_ids": [
+          "#558"
+        ],
+        "edge_set_jaccard": 1.0,
+        "candidate_step_faces": [
+          {
+            "step_id": "#609",
+            "score": 1.0,
+            "reason": "exact boundary edge set match"
+          }
+        ],
+        "surface_type_match": true,
+        "bbox_similarity": null,
+        "reason": "exact boundary edge set match"
+      }
     }
   ],
   "edges": [
     {
-      "step_id": null,
+      "step_id": "#21",
       "edge_index": 0,
       "kind": "EDGE_CURVE",
       "curve_type": "LINE",
@@ -3959,10 +4376,13 @@
           0.7
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "LINE"
     },
     {
-      "step_id": null,
+      "step_id": "#51",
       "edge_index": 1,
       "kind": "EDGE_CURVE",
       "curve_type": "CIRCLE",
@@ -4100,10 +4520,13 @@
           0.7
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "CIRCLE"
     },
     {
-      "step_id": null,
+      "step_id": "#21",
       "edge_index": 2,
       "kind": "EDGE_CURVE",
       "curve_type": "LINE",
@@ -4241,10 +4664,13 @@
           0.7
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "LINE"
     },
     {
-      "step_id": null,
+      "step_id": "#79",
       "edge_index": 3,
       "kind": "EDGE_CURVE",
       "curve_type": "CIRCLE",
@@ -4382,10 +4808,13 @@
           -0.1
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "CIRCLE"
     },
     {
-      "step_id": null,
+      "step_id": "#112",
       "edge_index": 4,
       "kind": "EDGE_CURVE",
       "curve_type": "LINE",
@@ -4523,10 +4952,13 @@
           -0.09999999999999998
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "LINE"
     },
     {
-      "step_id": null,
+      "step_id": "#138",
       "edge_index": 5,
       "kind": "EDGE_CURVE",
       "curve_type": "CIRCLE",
@@ -4664,10 +5096,13 @@
           -0.7
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "CIRCLE"
     },
     {
-      "step_id": null,
+      "step_id": "#167",
       "edge_index": 6,
       "kind": "EDGE_CURVE",
       "curve_type": "LINE",
@@ -4805,10 +5240,13 @@
           -0.09999999999999998
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "LINE"
     },
     {
-      "step_id": null,
+      "step_id": "#188",
       "edge_index": 7,
       "kind": "EDGE_CURVE",
       "curve_type": "CIRCLE",
@@ -4946,10 +5384,13 @@
           -0.1
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "CIRCLE"
     },
     {
-      "step_id": null,
+      "step_id": "#216",
       "edge_index": 8,
       "kind": "EDGE_CURVE",
       "curve_type": "LINE",
@@ -5087,10 +5528,13 @@
           -0.09999999999999998
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "LINE"
     },
     {
-      "step_id": null,
+      "step_id": "#242",
       "edge_index": 9,
       "kind": "EDGE_CURVE",
       "curve_type": "CIRCLE",
@@ -5228,10 +5672,13 @@
           -0.7
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "CIRCLE"
     },
     {
-      "step_id": null,
+      "step_id": "#271",
       "edge_index": 10,
       "kind": "EDGE_CURVE",
       "curve_type": "LINE",
@@ -5369,10 +5816,13 @@
           -0.09999999999999998
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "LINE"
     },
     {
-      "step_id": null,
+      "step_id": "#292",
       "edge_index": 11,
       "kind": "EDGE_CURVE",
       "curve_type": "CIRCLE",
@@ -5510,10 +5960,13 @@
           -0.1
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "CIRCLE"
     },
     {
-      "step_id": null,
+      "step_id": "#321",
       "edge_index": 12,
       "kind": "EDGE_CURVE",
       "curve_type": "LINE",
@@ -5651,10 +6104,13 @@
           -0.1
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "LINE"
     },
     {
-      "step_id": null,
+      "step_id": "#188",
       "edge_index": 13,
       "kind": "EDGE_CURVE",
       "curve_type": "CIRCLE",
@@ -5792,10 +6248,13 @@
           -0.1
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "CIRCLE"
     },
     {
-      "step_id": null,
+      "step_id": "#343",
       "edge_index": 14,
       "kind": "EDGE_CURVE",
       "curve_type": "LINE",
@@ -5933,10 +6392,13 @@
           -0.1
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "LINE"
     },
     {
-      "step_id": null,
+      "step_id": "#79",
       "edge_index": 15,
       "kind": "EDGE_CURVE",
       "curve_type": "CIRCLE",
@@ -6074,10 +6536,13 @@
           -0.1
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "CIRCLE"
     },
     {
-      "step_id": null,
+      "step_id": "#292",
       "edge_index": 16,
       "kind": "EDGE_CURVE",
       "curve_type": "CIRCLE",
@@ -6215,10 +6680,13 @@
           -0.1
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "CIRCLE"
     },
     {
-      "step_id": null,
+      "step_id": "#321",
       "edge_index": 17,
       "kind": "EDGE_CURVE",
       "curve_type": "LINE",
@@ -6356,10 +6824,13 @@
           -0.1
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "LINE"
     },
     {
-      "step_id": null,
+      "step_id": "#216",
       "edge_index": 18,
       "kind": "EDGE_CURVE",
       "curve_type": "LINE",
@@ -6497,10 +6968,13 @@
           -0.09999999999999998
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "LINE"
     },
     {
-      "step_id": null,
+      "step_id": "#371",
       "edge_index": 19,
       "kind": "EDGE_CURVE",
       "curve_type": "LINE",
@@ -6638,10 +7112,13 @@
           -0.7
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "LINE"
     },
     {
-      "step_id": null,
+      "step_id": "#271",
       "edge_index": 20,
       "kind": "EDGE_CURVE",
       "curve_type": "LINE",
@@ -6779,10 +7256,13 @@
           -0.09999999999999998
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "LINE"
     },
     {
-      "step_id": null,
+      "step_id": "#242",
       "edge_index": 21,
       "kind": "EDGE_CURVE",
       "curve_type": "CIRCLE",
@@ -6920,10 +7400,13 @@
           -0.7
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "CIRCLE"
     },
     {
-      "step_id": null,
+      "step_id": "#371",
       "edge_index": 22,
       "kind": "EDGE_CURVE",
       "curve_type": "LINE",
@@ -7061,10 +7544,13 @@
           -0.7
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "LINE"
     },
     {
-      "step_id": null,
+      "step_id": "#343",
       "edge_index": 23,
       "kind": "EDGE_CURVE",
       "curve_type": "LINE",
@@ -7202,10 +7688,13 @@
           -0.1
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "LINE"
     },
     {
-      "step_id": null,
+      "step_id": "#167",
       "edge_index": 24,
       "kind": "EDGE_CURVE",
       "curve_type": "LINE",
@@ -7343,10 +7832,13 @@
           -0.09999999999999998
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "LINE"
     },
     {
-      "step_id": null,
+      "step_id": "#403",
       "edge_index": 25,
       "kind": "EDGE_CURVE",
       "curve_type": "LINE",
@@ -7484,10 +7976,13 @@
           -0.7
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "LINE"
     },
     {
-      "step_id": null,
+      "step_id": "#112",
       "edge_index": 26,
       "kind": "EDGE_CURVE",
       "curve_type": "LINE",
@@ -7625,10 +8120,13 @@
           -0.09999999999999998
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "LINE"
     },
     {
-      "step_id": null,
+      "step_id": "#403",
       "edge_index": 27,
       "kind": "EDGE_CURVE",
       "curve_type": "LINE",
@@ -7766,10 +8264,13 @@
           -0.7
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "LINE"
     },
     {
-      "step_id": null,
+      "step_id": "#138",
       "edge_index": 28,
       "kind": "EDGE_CURVE",
       "curve_type": "CIRCLE",
@@ -7907,10 +8408,13 @@
           -0.7
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "CIRCLE"
     },
     {
-      "step_id": null,
+      "step_id": "#51",
       "edge_index": 29,
       "kind": "EDGE_CURVE",
       "curve_type": "CIRCLE",
@@ -8048,10 +8552,13 @@
           0.7
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "CIRCLE"
     },
     {
-      "step_id": null,
+      "step_id": "#436",
       "edge_index": 30,
       "kind": "EDGE_CURVE",
       "curve_type": "CIRCLE",
@@ -8189,10 +8696,13 @@
           0.7
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "CIRCLE"
     },
     {
-      "step_id": null,
+      "step_id": "#468",
       "edge_index": 31,
       "kind": "EDGE_CURVE",
       "curve_type": "CIRCLE",
@@ -8330,10 +8840,13 @@
           5.7
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "CIRCLE"
     },
     {
-      "step_id": null,
+      "step_id": "#497",
       "edge_index": 32,
       "kind": "EDGE_CURVE",
       "curve_type": "LINE",
@@ -8471,10 +8984,13 @@
           5.7
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "LINE"
     },
     {
-      "step_id": null,
+      "step_id": "#436",
       "edge_index": 33,
       "kind": "EDGE_CURVE",
       "curve_type": "CIRCLE",
@@ -8612,10 +9128,13 @@
           0.7
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "CIRCLE"
     },
     {
-      "step_id": null,
+      "step_id": "#497",
       "edge_index": 34,
       "kind": "EDGE_CURVE",
       "curve_type": "LINE",
@@ -8753,10 +9272,13 @@
           5.7
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "LINE"
     },
     {
-      "step_id": null,
+      "step_id": "#468",
       "edge_index": 35,
       "kind": "EDGE_CURVE",
       "curve_type": "CIRCLE",
@@ -8894,10 +9416,13 @@
           5.7
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "CIRCLE"
     },
     {
-      "step_id": null,
+      "step_id": "#526",
       "edge_index": 36,
       "kind": "EDGE_CURVE",
       "curve_type": "CIRCLE",
@@ -9035,10 +9560,13 @@
           5.7
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "CIRCLE"
     },
     {
-      "step_id": null,
+      "step_id": "#558",
       "edge_index": 37,
       "kind": "EDGE_CURVE",
       "curve_type": "CIRCLE",
@@ -9176,10 +9704,13 @@
           8.7
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "CIRCLE"
     },
     {
-      "step_id": null,
+      "step_id": "#587",
       "edge_index": 38,
       "kind": "EDGE_CURVE",
       "curve_type": "LINE",
@@ -9317,10 +9848,13 @@
           8.7
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "LINE"
     },
     {
-      "step_id": null,
+      "step_id": "#526",
       "edge_index": 39,
       "kind": "EDGE_CURVE",
       "curve_type": "CIRCLE",
@@ -9458,10 +9992,13 @@
           5.7
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "CIRCLE"
     },
     {
-      "step_id": null,
+      "step_id": "#587",
       "edge_index": 40,
       "kind": "EDGE_CURVE",
       "curve_type": "LINE",
@@ -9599,10 +10136,13 @@
           8.7
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "LINE"
     },
     {
-      "step_id": null,
+      "step_id": "#558",
       "edge_index": 41,
       "kind": "EDGE_CURVE",
       "curve_type": "CIRCLE",
@@ -9740,7 +10280,10 @@
           8.7
         ]
       },
-      "mapping_confidence": "unmapped"
+      "mapping_source": "backend",
+      "mapping_method": "endpoint_curve_signature",
+      "mapping_confidence": "high",
+      "resolved_curve_type": "CIRCLE"
     }
   ],
   "vertices": [
@@ -9753,6 +10296,8 @@
         -4.947295403701e-16,
         -0.1
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -9764,6 +10309,8 @@
         -4.898587196589e-16,
         0.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -9775,6 +10322,8 @@
         -4.898587196589e-16,
         0.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -9786,6 +10335,8 @@
         -4.898587196589e-16,
         0.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -9797,6 +10348,8 @@
         -4.947295403701e-16,
         -0.1
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -9808,6 +10361,8 @@
         -4.898587196589e-16,
         0.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -9819,6 +10374,8 @@
         -4.947295403701e-16,
         -0.1
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -9830,6 +10387,8 @@
         0.4,
         -0.1
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -9841,6 +10400,8 @@
         0.4,
         -0.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -9852,6 +10413,8 @@
         0.4,
         -0.1
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -9863,6 +10426,8 @@
         0.4,
         -0.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -9874,6 +10439,8 @@
         0.4,
         -0.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -9885,6 +10452,8 @@
         0.4,
         -0.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -9896,6 +10465,8 @@
         0.4,
         -0.1
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -9907,6 +10478,8 @@
         0.4,
         -0.1
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -9918,6 +10491,8 @@
         -0.4,
         -0.1
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -9929,6 +10504,8 @@
         -0.4,
         -0.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -9940,6 +10517,8 @@
         -0.4,
         -0.1
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -9951,6 +10530,8 @@
         -0.4,
         -0.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -9962,6 +10543,8 @@
         -0.4,
         -0.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -9973,6 +10556,8 @@
         -0.4,
         -0.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -9984,6 +10569,8 @@
         -0.4,
         -0.1
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -9995,6 +10582,8 @@
         -0.4,
         -0.1
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10006,6 +10595,8 @@
         -4.947295403701e-16,
         -0.1
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10017,6 +10608,8 @@
         -0.4,
         -0.1
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10028,6 +10621,8 @@
         -0.4,
         -0.1
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10039,6 +10634,8 @@
         0.4,
         -0.1
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10050,6 +10647,8 @@
         -0.4,
         -0.1
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10061,6 +10660,8 @@
         0.4,
         -0.1
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10072,6 +10673,8 @@
         0.4,
         -0.1
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10083,6 +10686,8 @@
         -4.947295403701e-16,
         -0.1
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10094,6 +10699,8 @@
         0.4,
         -0.1
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10105,6 +10712,8 @@
         -0.4,
         -0.1
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10116,6 +10725,8 @@
         -4.947295403701e-16,
         -0.1
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10127,6 +10738,8 @@
         -0.4,
         -0.1
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10138,6 +10751,8 @@
         -0.4,
         -0.1
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10149,6 +10764,8 @@
         -0.4,
         -0.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10160,6 +10777,8 @@
         -0.4,
         -0.1
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10171,6 +10790,8 @@
         -0.4,
         -0.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10182,6 +10803,8 @@
         -0.4,
         -0.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10193,6 +10816,8 @@
         -0.4,
         -0.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10204,6 +10829,8 @@
         -0.4,
         -0.1
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10215,6 +10842,8 @@
         -0.4,
         -0.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10226,6 +10855,8 @@
         -0.4,
         -0.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10237,6 +10868,8 @@
         -0.4,
         -0.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10248,6 +10881,8 @@
         -0.4,
         -0.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10259,6 +10894,8 @@
         0.4,
         -0.1
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10270,6 +10907,8 @@
         0.4,
         -0.1
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10281,6 +10920,8 @@
         0.4,
         -0.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10292,6 +10933,8 @@
         0.4,
         -0.1
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10303,6 +10946,8 @@
         0.4,
         -0.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10314,6 +10959,8 @@
         0.4,
         -0.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10325,6 +10972,8 @@
         0.4,
         -0.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10336,6 +10985,8 @@
         0.4,
         -0.1
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10347,6 +10998,8 @@
         0.4,
         -0.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10358,6 +11011,8 @@
         0.4,
         -0.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10369,6 +11024,8 @@
         0.4,
         -0.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10380,6 +11037,8 @@
         0.4,
         -0.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10391,6 +11050,8 @@
         -4.898587196589e-16,
         0.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10402,6 +11063,8 @@
         -4.898587196589e-16,
         0.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10413,6 +11076,8 @@
         -4.808177651162e-16,
         0.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10424,6 +11089,8 @@
         -4.808177651162e-16,
         0.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10435,6 +11102,8 @@
         -4.808177651162e-16,
         5.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10446,6 +11115,8 @@
         -4.808177651162e-16,
         5.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10457,6 +11128,8 @@
         -4.808177651162e-16,
         0.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10468,6 +11141,8 @@
         -4.808177651162e-16,
         5.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10479,6 +11154,8 @@
         -4.808177651162e-16,
         0.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10490,6 +11167,8 @@
         -4.808177651162e-16,
         0.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10501,6 +11180,8 @@
         -4.808177651162e-16,
         0.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10512,6 +11193,8 @@
         -4.808177651162e-16,
         5.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10523,6 +11206,8 @@
         -4.808177651162e-16,
         5.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10534,6 +11219,8 @@
         -4.808177651162e-16,
         5.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10545,6 +11232,8 @@
         -5.52274777348e-16,
         5.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10556,6 +11245,8 @@
         -5.52274777348e-16,
         5.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10567,6 +11258,8 @@
         -5.52274777348e-16,
         8.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10578,6 +11271,8 @@
         -5.52274777348e-16,
         8.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10589,6 +11284,8 @@
         -5.52274777348e-16,
         5.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10600,6 +11297,8 @@
         -5.52274777348e-16,
         8.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10611,6 +11310,8 @@
         -5.52274777348e-16,
         5.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10622,6 +11323,8 @@
         -5.52274777348e-16,
         5.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10633,6 +11336,8 @@
         -5.52274777348e-16,
         5.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10644,6 +11349,8 @@
         -5.52274777348e-16,
         8.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10655,6 +11362,8 @@
         -5.52274777348e-16,
         8.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     },
     {
@@ -10666,6 +11375,8 @@
         -5.52274777348e-16,
         8.7
       ],
+      "mapping_source": "backend",
+      "mapping_method": "coordinate_signature",
       "mapping_confidence": "high"
     }
   ]

@@ -1,6 +1,8 @@
 import argparse
+import hashlib
 import json
 import re
+from datetime import datetime, timezone
 from pathlib import Path
 
 
@@ -87,6 +89,18 @@ def read_step(path: Path) -> str:
         return path.read_text(encoding="utf-8")
     except UnicodeDecodeError:
         return path.read_text(encoding="latin-1")
+
+
+def compute_file_sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as file:
+        for chunk in iter(lambda: file.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def utc_timestamp() -> str:
+    return datetime.now(timezone.utc).isoformat()
 
 
 def get_section(text: str, name: str) -> str:
@@ -1310,7 +1324,13 @@ def parse_step(path: Path) -> dict:
     face_adjacency_graph = build_face_adjacency_graph(entities, type_index)
 
     return {
-        "source": str(path),
+        "source": {
+            "step_file": str(path),
+            "step_file_name": path.name,
+            "step_file_sha256": compute_file_sha256(path),
+            "generator": "step_entity_graph.py",
+            "generated_at": utc_timestamp(),
+        },
         "header_raw": header,
         "entities": entities,
         "edges": edges,

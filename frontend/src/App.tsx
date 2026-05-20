@@ -1,7 +1,16 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { HelpBadge, HelpBar, HelpLabel, HelpProvider, Tooltip } from './components/Tooltip'
+import {
+  TOOLTIP_TEXT,
+  geometryTooltip,
+  mappingValueTooltip,
+  stepTypeTooltip,
+  summaryTooltip,
+  treeLabelTooltip,
+} from './tooltips'
 import './App.css'
 
 type Entity = {
@@ -36,8 +45,20 @@ type GeometryAttribute = Record<string, unknown> & {
 
 type UnknownRecord = Record<string, unknown>
 
+type SourceMetadata = {
+  file?: string
+  file_name?: string
+  step_file?: string
+  step_file_name?: string
+  step_file_sha256?: string | null
+  graph_file?: string | null
+  graph_file_sha256?: string | null
+  generator?: string
+  generated_at?: string
+}
+
 type GraphData = {
-  source?: string | { file?: string; file_name?: string }
+  source?: string | SourceMetadata
   entities?: Record<string, Entity>
   edges?: BasicEdge[]
   semantic_edges?: SemanticEdge[]
@@ -56,6 +77,10 @@ type MeshFace = {
   triangles?: number[][]
   normal?: number[]
   bbox?: MeshBbox
+  mapping_source?: string | null
+  mapping_method?: string | null
+  mapping_confidence?: string | null
+  mapping_evidence?: UnknownRecord
   surface?: {
     origin?: number[]
     axis_direction?: number[]
@@ -69,6 +94,10 @@ type MeshEdge = {
   kind?: string
   curve_type?: string
   points?: number[][]
+  mapping_source?: string | null
+  mapping_method?: string | null
+  mapping_confidence?: string | null
+  mapping_evidence?: UnknownRecord
 }
 
 type MeshVertex = {
@@ -76,12 +105,38 @@ type MeshVertex = {
   vertex_index?: number
   kind?: string
   position?: number[]
+  mapping_source?: string | null
+  mapping_method?: string | null
+  mapping_confidence?: string | null
+  mapping_evidence?: UnknownRecord
 }
 
 type ModelMeshData = {
+  source?: SourceMetadata
   faces?: MeshFace[]
   edges?: MeshEdge[]
   vertices?: MeshVertex[]
+}
+
+type SourceConsistencyStatus = 'ok' | 'mismatch' | 'unknown'
+
+type SourceConsistency = {
+  status: SourceConsistencyStatus
+  graphStepHash: string | null
+  meshStepHash: string | null
+  meshGraphHash: string | null
+  message: string
+}
+
+type VisualElement = {
+  stepId: string | null
+  kind: VisualKind
+  index?: number
+  mappingSource: string
+  mappingMethod: string
+  mappingConfidence: string
+  mappingEvidence?: UnknownRecord
+  raw: MeshFace | MeshEdge | MeshVertex
 }
 
 type MeshBbox = {
@@ -98,6 +153,7 @@ type GraphFaceCandidate = {
 }
 
 type VisualKind = 'face' | 'edge' | 'vertex'
+type PickMode = 'auto' | VisualKind
 
 type SelectableUserData = {
   stepId?: string | null
@@ -105,6 +161,9 @@ type SelectableUserData = {
   edgeIndex?: number
   faceIndex?: number
   vertexIndex?: number
+  mappingSource?: string
+  mappingMethod?: string
+  mappingConfidence?: string
   edgeHighlight?: boolean
   edgeHover?: boolean
   edgePickTarget?: boolean
@@ -128,7 +187,14 @@ type VisualPickResult = {
   distance: number
   debug: VisualPickDebug
 }
+type ResolvedVisualMapping = {
+  stepId: string | null
+  mappingSource: string
+  mappingMethod: string
+  mappingConfidence: string
+}
 type VisualPickDebug = {
+  pickMode: PickMode
   transparentFaces: boolean
   faceHitsCount: number
   edgeHitsCount: number
@@ -145,13 +211,17 @@ type EntitySelect = (id: string) => void
 type EntityPreviewSelect = (id: string | null) => void
 
 const refPattern = /^#\d+$/
+const TreeSharedIdsContext = createContext<Set<string>>(new Set())
 
 function App() {
   const [graph, setGraph] = useState<GraphData | null>(null)
+  const [modelMesh, setModelMesh] = useState<ModelMeshData | null>(null)
   const [selectedEntityId, setSelectedEntityId] = useState<string | null>(null)
   const [previewEntityId, setPreviewEntityId] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
+  const [modelMeshLoading, setModelMeshLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [modelMeshError, setModelMeshError] = useState<string | null>(null)
 
   useEffect(() => {
     let cancelled = false
@@ -188,71 +258,122 @@ function App() {
     }
   }, [])
 
+  useEffect(() => {
+    let cancelled = false
+
+    async function loadModelMesh() {
+      try {
+        const response = await fetch('/model_mesh.json')
+        if (!response.ok) {
+          throw new Error('3D mesh not available. Please generate public/model_mesh.json first.')
+        }
+
+        const parsed = (await response.json()) as ModelMeshData
+        if (!cancelled) {
+          setModelMesh(parsed)
+          setModelMeshError(null)
+        }
+      } catch (err) {
+        if (!cancelled) {
+          setModelMesh(null)
+          setModelMeshError(err instanceof Error ? err.message : '3D mesh not available.')
+        }
+      } finally {
+        if (!cancelled) setModelMeshLoading(false)
+      }
+    }
+
+    loadModelMesh()
+
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
   if (loading) {
     return (
-      <div className="app app-state">
-        <div className="panel state-panel">Loading graph.json...</div>
-      </div>
+      <HelpProvider>
+        <div className="app app-state">
+          <div className="panel state-panel">Loading graph.json...</div>
+          <HelpBar />
+        </div>
+      </HelpProvider>
     )
   }
 
   if (error || !graph) {
     return (
-      <div className="app app-state">
-        <div className="panel state-panel">
-          <h1 className="state-title">STEP Graph Viewer</h1>
-          <p className="muted">Failed to load public/graph.json.</p>
-          <pre className="raw-block">{error ?? 'No graph data returned.'}</pre>
+      <HelpProvider>
+        <div className="app app-state">
+          <div className="panel state-panel">
+            <h1 className="state-title">STEP Graph Viewer</h1>
+            <p className="muted">Failed to load public/graph.json.</p>
+            <pre className="raw-block">{error ?? 'No graph data returned.'}</pre>
+          </div>
+          <HelpBar />
         </div>
-      </div>
+      </HelpProvider>
     )
   }
 
   return (
-    <div className="app">
-      <Header graph={graph} selectedEntityId={selectedEntityId} />
-      <div className="layout">
-        <aside className="sidebar">
-          <SummaryPanel graph={graph} />
-          <BrepTree
-            graph={graph}
-            selectedEntityId={selectedEntityId}
-            setSelectedEntityId={setSelectedEntityId}
-          />
-        </aside>
+    <HelpProvider>
+      <div className="app">
+        <Header graph={graph} selectedEntityId={selectedEntityId} />
+        <div className="layout">
+          <aside className="sidebar">
+            <SummaryPanel graph={graph} />
+            <BrepTree
+              graph={graph}
+              selectedEntityId={selectedEntityId}
+              setSelectedEntityId={setSelectedEntityId}
+            />
+          </aside>
 
-        <main className="main-panel">
-          <EntityDetail
-            graph={graph}
-            selectedEntityId={selectedEntityId}
-            setSelectedEntityId={setSelectedEntityId}
-            setPreviewEntityId={setPreviewEntityId}
-          />
-          <GeometryAttributesPanel
-            graph={graph}
-            selectedEntityId={selectedEntityId}
-            setSelectedEntityId={setSelectedEntityId}
-            setPreviewEntityId={setPreviewEntityId}
-          />
-          <RelationPanel
-            graph={graph}
-            selectedEntityId={selectedEntityId}
-            setSelectedEntityId={setSelectedEntityId}
-            setPreviewEntityId={setPreviewEntityId}
-          />
-          <RawStepPanel graph={graph} selectedEntityId={selectedEntityId} />
-        </main>
+          <main className="main-panel">
+            <EntityDetail
+              graph={graph}
+              selectedEntityId={selectedEntityId}
+              setSelectedEntityId={setSelectedEntityId}
+              setPreviewEntityId={setPreviewEntityId}
+            />
+            <GeometryAttributesPanel
+              graph={graph}
+              selectedEntityId={selectedEntityId}
+              setSelectedEntityId={setSelectedEntityId}
+              setPreviewEntityId={setPreviewEntityId}
+            />
+            <MappingEvidencePanel
+              graph={graph}
+              selectedEntityId={selectedEntityId}
+              modelMesh={modelMesh}
+              setSelectedEntityId={setSelectedEntityId}
+              setPreviewEntityId={setPreviewEntityId}
+            />
+            <RelationPanel
+              graph={graph}
+              selectedEntityId={selectedEntityId}
+              setSelectedEntityId={setSelectedEntityId}
+              setPreviewEntityId={setPreviewEntityId}
+            />
+            <RawStepPanel graph={graph} selectedEntityId={selectedEntityId} />
+          </main>
 
-        <aside className="right-panel">
-          <ThreeDViewer
-            graph={graph}
-            selectedEntityId={selectedEntityId}
-            previewEntityId={previewEntityId}
-            setSelectedEntityId={setSelectedEntityId}
-          />
-        </aside>
+          <aside className="right-panel">
+            <ThreeDViewer
+              graph={graph}
+              modelMesh={modelMesh}
+              modelMeshLoading={modelMeshLoading}
+              modelMeshError={modelMeshError}
+              selectedEntityId={selectedEntityId}
+              previewEntityId={previewEntityId}
+              setSelectedEntityId={setSelectedEntityId}
+            />
+          </aside>
+        </div>
+        <HelpBar />
       </div>
-    </div>
+    </HelpProvider>
   )
 }
 
@@ -268,12 +389,12 @@ function Header({ graph, selectedEntityId }: { graph: GraphData; selectedEntityI
         <h1 className="header-title">STEP Graph Viewer</h1>
         <div className="header-meta">
           <span>{source}</span>
-          <span>selected {selectedEntityId ?? '-'}</span>
-          <span>entities {formatStat(summary.entity_count)}</span>
-          <span>faces {formatStat(brepSummary.face_count)}</span>
-          <span>edges {formatStat(brepSummary.edge_curve_count)}</span>
-          <span>vertices {formatStat(brepSummary.vertex_point_count)}</span>
-          <span>adjacent {formatStat(adjacencySummary.adjacency_count)}</span>
+          <HelpBadge label={`selected ${selectedEntityId ?? '-'}`} tooltip={TOOLTIP_TEXT.brep.selectedTreeNode} />
+          <HelpBadge label={`entities ${formatStat(summary.entity_count)}`} tooltip={summaryTooltip('entities')} />
+          <HelpBadge label={`faces ${formatStat(brepSummary.face_count)}`} tooltip={summaryTooltip('faces')} />
+          <HelpBadge label={`edges ${formatStat(brepSummary.edge_curve_count)}`} tooltip={summaryTooltip('edges')} />
+          <HelpBadge label={`vertices ${formatStat(brepSummary.vertex_point_count)}`} tooltip={summaryTooltip('vertices')} />
+          <HelpBadge label={`adjacent ${formatStat(adjacencySummary.adjacency_count)}`} tooltip={summaryTooltip('adjacent')} />
         </div>
       </div>
     </header>
@@ -318,18 +439,23 @@ function SummaryPanel({ graph }: { graph: GraphData }) {
       >
         Summary {open ? '▲' : '▼'}
       </button>
+      <div className="panel-help">
+        <HelpLabel label="Summary help" tooltip={TOOLTIP_TEXT.panels.summary} />
+      </div>
       <div className="compact-summary">
         {compactItems.map(([label, value]) => (
-          <span className="viewer-badge" key={label}>
-            {label}: {formatStat(value)}
-          </span>
+          <HelpBadge
+            key={label}
+            label={`${label}: ${formatStat(value)}`}
+            tooltip={summaryTooltip(label)}
+          />
         ))}
       </div>
       {open ? (
         <dl className="summary-grid">
           {items.map(([label, value]) => (
             <div className="summary-row" key={label}>
-              <dt>{label}</dt>
+              <dt><HelpLabel label={label} tooltip={summaryTooltip(label)} /></dt>
               <dd>{formatStat(value)}</dd>
             </div>
           ))}
@@ -374,10 +500,17 @@ function BrepTree({
     if (!treeMaps.allNodeIds.has(selectedEntityId)) return
 
     window.setTimeout(() => {
+      const scrollContainer = treeRef.current
       const selectedElement = Array.from(
-        treeRef.current?.querySelectorAll<HTMLElement>('[data-entity-id]') ?? [],
+        scrollContainer?.querySelectorAll<HTMLElement>('[data-entity-id]') ?? [],
       ).find((element) => element.dataset.entityId === selectedEntityId)
-      selectedElement?.scrollIntoView({ block: 'center', behavior: 'smooth' })
+
+      if (!scrollContainer || !selectedElement) return
+
+      const containerRect = scrollContainer.getBoundingClientRect()
+      const nodeRect = selectedElement.getBoundingClientRect()
+      const offset = nodeRect.top - containerRect.top
+      scrollContainer.scrollTop += offset - scrollContainer.clientHeight / 2 + nodeRect.height / 2
     }, 80)
   }, [selectedEntityId, treeMaps])
 
@@ -402,37 +535,41 @@ function BrepTree({
 
   return (
     <section className="panel tree-panel">
-      <h2 className="panel-title">B-Rep Tree</h2>
+      <h2 className="panel-title">
+        <HelpLabel label="B-Rep Tree" tooltip={TOOLTIP_TEXT.panels.brepTree} />
+      </h2>
       {!graph.brep_tree ? (
         <p className="muted">B-Rep tree not available.</p>
       ) : solids.length === 0 ? (
         <p className="muted">No solids found.</p>
       ) : (
-        <div className="tree tree-scroll" ref={treeRef}>
-          {solids.map((solid, index) => {
-            const solidNode = asRecord(solid)
+        <TreeSharedIdsContext.Provider value={treeMaps.sharedNodeIds}>
+          <div className="tree tree-scroll" ref={treeRef}>
+            {solids.map((solid, index) => {
+              const solidNode = asRecord(solid)
 
-            return (
-              <TreeNode
-                key={stringOrFallback(solidNode.id, `solid-${index}`)}
-                id={stringOrUnknown(solidNode.id)}
-                label={`Solid ${stringOrUnknown(solidNode.id)}`}
-                selectedEntityId={selectedEntityId}
-                setSelectedEntityId={setSelectedEntityId}
-                expandedNodeIds={expandedNodeIds}
-                onToggle={toggleNode}
-              >
-                <ShellNode
-                  shell={solidNode.outer_shell}
+              return (
+                <TreeNode
+                  key={stringOrFallback(solidNode.id, `solid-${index}`)}
+                  id={stringOrUnknown(solidNode.id)}
+                  label={`Solid ${stringOrUnknown(solidNode.id)}`}
                   selectedEntityId={selectedEntityId}
                   setSelectedEntityId={setSelectedEntityId}
                   expandedNodeIds={expandedNodeIds}
                   onToggle={toggleNode}
-                />
-              </TreeNode>
-            )
-          })}
-        </div>
+                >
+                  <ShellNode
+                    shell={solidNode.outer_shell}
+                    selectedEntityId={selectedEntityId}
+                    setSelectedEntityId={setSelectedEntityId}
+                    expandedNodeIds={expandedNodeIds}
+                    onToggle={toggleNode}
+                  />
+                </TreeNode>
+              )
+            })}
+          </div>
+        </TreeSharedIdsContext.Provider>
       )}
     </section>
   )
@@ -724,6 +861,8 @@ function TreeNode({
   const selectable = Boolean(id && id !== 'UNKNOWN')
   const selected = selectable && selectedEntityId === id
   const open = Boolean(id && expandedNodeIds.has(id))
+  const sharedNodeIds = useContext(TreeSharedIdsContext)
+  const shared = selectable && Boolean(id && sharedNodeIds.has(id))
 
   return (
     <div className="tree-node" data-entity-id={selectable ? id : undefined}>
@@ -747,7 +886,10 @@ function TreeNode({
           }}
           disabled={!selectable}
         >
-          {label}
+          <Tooltip text={treeLabelTooltip(label)}>
+            <span>{label}</span>
+          </Tooltip>
+          {shared ? <SharedEntityBadge /> : null}
         </button>
       </div>
       {hasChildren && open ? <div className="tree-children">{children}</div> : null}
@@ -768,6 +910,8 @@ function TreeLeaf({
 }) {
   const selectable = Boolean(id && id !== 'UNKNOWN')
   const selected = selectable && selectedEntityId === id
+  const sharedNodeIds = useContext(TreeSharedIdsContext)
+  const shared = selectable && Boolean(id && sharedNodeIds.has(id))
 
   return (
     <div className="tree-node tree-leaf" data-entity-id={selectable ? id : undefined}>
@@ -779,8 +923,47 @@ function TreeLeaf({
         }}
         disabled={!selectable}
       >
-        {label}
+        <Tooltip text={treeLabelTooltip(label)}>
+          <span>{label}</span>
+        </Tooltip>
+        {shared ? <SharedEntityBadge /> : null}
       </button>
+    </div>
+  )
+}
+
+function SharedEntityBadge() {
+  return (
+    <span
+      className="tree-shared-badge"
+    >
+      <Tooltip text={TOOLTIP_TEXT.brep.sharedInTree}>
+        <span>(shared)</span>
+      </Tooltip>
+    </span>
+  )
+}
+
+function DataConsistencyPanel({ consistency }: { consistency: SourceConsistency }) {
+  const statusText = consistency.status === 'ok'
+    ? 'Source consistency: OK'
+    : consistency.status === 'mismatch'
+      ? '⚠ Source mismatch detected.'
+      : 'Source consistency: Unknown'
+
+  return (
+    <div className={`source-consistency source-consistency-${consistency.status}`}>
+      <div className="source-consistency-title">
+        <HelpLabel label={statusText} tooltip={TOOLTIP_TEXT.source.consistency} />
+      </div>
+      <div className="source-consistency-grid">
+        <HelpLabel label={`Graph STEP hash: ${shortHash(consistency.graphStepHash)}`} tooltip={TOOLTIP_TEXT.source.hash} />
+        <HelpLabel label={`Mesh STEP hash: ${shortHash(consistency.meshStepHash)}`} tooltip={TOOLTIP_TEXT.source.hash} />
+        <HelpLabel label={`Mesh graph hash: ${shortHash(consistency.meshGraphHash)}`} tooltip={TOOLTIP_TEXT.source.hash} />
+      </div>
+      {consistency.status !== 'ok' ? (
+        <div className="source-consistency-message">{consistency.message}</div>
+      ) : null}
     </div>
   )
 }
@@ -789,10 +972,12 @@ function buildTreeMaps(solids: unknown[]) {
   const parentMap = new Map<string, string>()
   const allNodeIds = new Set<string>()
   const initialExpandedIds: string[] = []
+  const occurrenceCount = new Map<string, number>()
 
   function remember(id: unknown, parentId?: string, expanded = false) {
     if (typeof id !== 'string' || id.length === 0 || id === 'UNKNOWN') return
     allNodeIds.add(id)
+    occurrenceCount.set(id, (occurrenceCount.get(id) ?? 0) + 1)
     if (parentId) parentMap.set(id, parentId)
     if (expanded) initialExpandedIds.push(id)
   }
@@ -841,7 +1026,13 @@ function buildTreeMaps(solids: unknown[]) {
     }
   }
 
-  return { parentMap, allNodeIds, initialExpandedIds }
+  const sharedNodeIds = new Set(
+    Array.from(occurrenceCount)
+      .filter(([, count]) => count > 1)
+      .map(([id]) => id),
+  )
+
+  return { parentMap, allNodeIds, initialExpandedIds, occurrenceCount, sharedNodeIds }
 }
 
 function getAncestors(entityId: string, parentMap: Map<string, string>) {
@@ -877,6 +1068,9 @@ function EntityDetail({
       >
         Entity Detail {open ? '▲' : '▼'}
       </button>
+      <div className="panel-help">
+        <HelpLabel label="Entity Detail help" tooltip={TOOLTIP_TEXT.panels.entityDetail} />
+      </div>
       {open ? (!selectedEntityId ? (
         <p className="muted">No entity selected.</p>
       ) : !entity ? (
@@ -884,17 +1078,21 @@ function EntityDetail({
       ) : (
         <>
           <div className="entity-heading">
-            <span className="entity-id">{entity.id}</span>
-            <span className="badge">{entity.type ?? 'UNKNOWN'}</span>
+            <Tooltip text={TOOLTIP_TEXT.entity.id}>
+              <span className="entity-id">{entity.id}</span>
+            </Tooltip>
+            <Tooltip text={stepTypeTooltip(entity.type) ?? TOOLTIP_TEXT.entity.type}>
+              <span className="badge">{entity.type ?? 'UNKNOWN'}</span>
+            </Tooltip>
           </div>
 
           <div className="detail-section">
-            <div className="detail-label">args_raw</div>
+            <div className="detail-label"><HelpLabel label="args_raw" tooltip={TOOLTIP_TEXT.entity.args_raw} /></div>
             <pre className="inline-raw">{entity.args_raw || '-'}</pre>
           </div>
 
           <div className="detail-section">
-            <div className="detail-label">refs</div>
+            <div className="detail-label"><HelpLabel label="refs" tooltip={TOOLTIP_TEXT.entity.refs} /></div>
             {Array.isArray(entity.refs) && entity.refs.length > 0 ? (
               <div className="button-list">
                 {entity.refs.map((ref) => (
@@ -913,19 +1111,19 @@ function EntityDetail({
           </div>
 
           <div className="detail-section">
-            <div className="detail-label">fields</div>
+            <div className="detail-label"><HelpLabel label="fields" tooltip={TOOLTIP_TEXT.entity.fields} /></div>
             {entity.fields && Object.keys(entity.fields).length > 0 ? (
               <table className="field-table">
                 <thead>
                   <tr>
-                    <th>Field</th>
-                    <th>Value</th>
+                    <th><HelpLabel label="Field" tooltip={TOOLTIP_TEXT.entity.field} /></th>
+                    <th><HelpLabel label="Value" tooltip={TOOLTIP_TEXT.entity.value} /></th>
                   </tr>
                 </thead>
                 <tbody>
                   {Object.entries(entity.fields).map(([field, value]) => (
                     <tr key={field}>
-                      <td>{field}</td>
+                      <td><HelpLabel label={field} tooltip={geometryTooltip(field)} /></td>
                       <td>
                         <ValueView
                           value={value}
@@ -973,6 +1171,9 @@ function GeometryAttributesPanel({
       >
         Geometry Attributes {open ? '▲' : '▼'}
       </button>
+      <div className="panel-help">
+        <HelpLabel label="Geometry Attributes help" tooltip={TOOLTIP_TEXT.panels.geometryAttributes} />
+      </div>
       {open ? (!selectedEntityId ? (
         <p className="muted">No entity selected.</p>
       ) : !graph.geometry_attributes ? (
@@ -983,14 +1184,14 @@ function GeometryAttributesPanel({
         <table className="field-table geometry-table">
           <thead>
             <tr>
-              <th>Field</th>
-              <th>Value</th>
+              <th><HelpLabel label="Field" tooltip={TOOLTIP_TEXT.entity.field} /></th>
+              <th><HelpLabel label="Value" tooltip={TOOLTIP_TEXT.entity.value} /></th>
             </tr>
           </thead>
           <tbody>
             {Object.entries(attr).map(([field, value]) => (
               <tr key={field}>
-                <td>{field}</td>
+                <td><HelpLabel label={field} tooltip={geometryTooltip(field)} /></td>
                 <td className="geometry-value">
                   <ValueView
                     value={value}
@@ -1008,13 +1209,253 @@ function GeometryAttributesPanel({
   )
 }
 
+function MappingEvidencePanel({
+  graph,
+  selectedEntityId,
+  modelMesh,
+  setSelectedEntityId,
+  setPreviewEntityId,
+}: {
+  graph: GraphData
+  selectedEntityId: string | null
+  modelMesh: ModelMeshData | null
+  setSelectedEntityId: EntitySelect
+  setPreviewEntityId: EntityPreviewSelect
+}) {
+  const [open, setOpen] = useState(true)
+  const visualElements = useMemo(
+    () => getVisualElementsForStepId(modelMesh, selectedEntityId),
+    [modelMesh, selectedEntityId],
+  )
+  const visualElement = visualElements[0]
+  const evidence = asRecord(visualElement?.mappingEvidence)
+
+  return (
+    <section className="panel mapping-evidence-panel collapsible-panel">
+      <button
+        type="button"
+        className="panel-header-button"
+        onClick={() => setOpen((value) => !value)}
+      >
+        Mapping Evidence {open ? '▲' : '▼'}
+      </button>
+      <div className="panel-help">
+        <HelpLabel label="Mapping Evidence help" tooltip={TOOLTIP_TEXT.panels.mappingEvidence} />
+      </div>
+      {open ? (!selectedEntityId ? (
+        <p className="muted">No entity selected.</p>
+      ) : !modelMesh ? (
+        <p className="muted">3D mapping data not available.</p>
+      ) : !visualElement ? (
+        <p className="muted">No visual mapping evidence for this entity.</p>
+      ) : (
+        <>
+          <div className="mapping-evidence-grid">
+            <MappingEvidenceRow
+              label="Mapping source"
+              value={<HelpLabel label={visualElement.mappingSource} tooltip={mappingValueTooltip(visualElement.mappingSource)} />}
+            />
+            <MappingEvidenceRow
+              label="Mapping method"
+              value={<HelpLabel label={visualElement.mappingMethod} tooltip={mappingValueTooltip(visualElement.mappingMethod)} />}
+            />
+            <MappingEvidenceRow
+              label="Mapping confidence"
+              value={<HelpLabel label={visualElement.mappingConfidence} tooltip={mappingValueTooltip(visualElement.mappingConfidence)} />}
+            />
+            <MappingEvidenceRow label="Step id" value={visualElement.stepId ?? '-'} />
+            <MappingEvidenceRow label="Kind" value={<HelpLabel label={visualElement.kind} tooltip={TOOLTIP_TEXT.mapping.kind} />} />
+            <MappingEvidenceRow label={indexLabelForVisualElement(visualElement)} value={visualElement.index ?? '-'} />
+          </div>
+
+          <MappingWarnings visualElement={visualElement} />
+
+          {Object.keys(evidence).length > 0 ? (
+            <div className="mapping-evidence-detail">
+              <div className="detail-label">Evidence detail</div>
+              <MappingIdList
+                title="Boundary edges used"
+                ids={stringArrayFromUnknown(evidence.boundary_edge_step_ids)}
+                graph={graph}
+                setSelectedEntityId={setSelectedEntityId}
+                setPreviewEntityId={setPreviewEntityId}
+              />
+              <MappingIdList
+                title="Matched STEP face edges"
+                ids={stringArrayFromUnknown(evidence.matched_step_face_edge_ids)}
+                graph={graph}
+                setSelectedEntityId={setSelectedEntityId}
+                setPreviewEntityId={setPreviewEntityId}
+              />
+              <MappingEvidenceRow
+                label="Edge set Jaccard"
+                value={formatNullableEvidenceValue(evidence.edge_set_jaccard)}
+              />
+              <MappingCandidateList
+                candidates={asArray(evidence.candidate_step_faces)}
+                graph={graph}
+                setSelectedEntityId={setSelectedEntityId}
+                setPreviewEntityId={setPreviewEntityId}
+              />
+              <MappingEvidenceRow
+                label="Surface type match"
+                value={formatNullableEvidenceValue(evidence.surface_type_match)}
+              />
+              <MappingEvidenceRow
+                label="BBox similarity"
+                value={formatNullableEvidenceValue(evidence.bbox_similarity, 'not used')}
+              />
+              <MappingEvidenceRow
+                label="Reason"
+                value={formatNullableEvidenceValue(evidence.reason)}
+              />
+            </div>
+          ) : (
+            <p className="muted">No detailed mapping_evidence for this visual element.</p>
+          )}
+
+          {visualElements.length > 1 ? (
+            <p className="muted">Visual instances for this STEP id: {visualElements.length}</p>
+          ) : null}
+        </>
+      )) : null}
+    </section>
+  )
+}
+
+function MappingEvidenceRow({ label, value }: { label: string; value: ReactNode }) {
+  return (
+    <div className="mapping-evidence-row">
+      <span><HelpLabel label={label} tooltip={mappingEvidenceLabelTooltip(label)} /></span>
+      <strong>{value}</strong>
+    </div>
+  )
+}
+
+function MappingWarnings({ visualElement }: { visualElement: VisualElement }) {
+  if (visualElement.mappingSource === 'frontend_fallback') {
+    return (
+      <div className="mapping-warning">
+        ⚠ Frontend fallback mapping
+        <br />
+        This mapping was inferred in the browser and is not backend-confirmed.
+      </div>
+    )
+  }
+
+  if (visualElement.mappingConfidence === 'ambiguous') {
+    return (
+      <div className="mapping-warning">
+        Mapping is ambiguous. No backend-confirmed STEP id should be assumed unless explicitly assigned.
+      </div>
+    )
+  }
+
+  if (visualElement.mappingConfidence === 'unmapped') {
+    return (
+      <div className="mapping-warning">
+        No STEP entity mapping is available for this visual element.
+      </div>
+    )
+  }
+
+  return null
+}
+
+function MappingIdList({
+  title,
+  ids,
+  graph,
+  setSelectedEntityId,
+  setPreviewEntityId,
+}: {
+  title: string
+  ids: string[]
+  graph: GraphData
+  setSelectedEntityId: EntitySelect
+  setPreviewEntityId: EntityPreviewSelect
+}) {
+  return (
+    <div className="mapping-evidence-list">
+      <div className="detail-label"><HelpLabel label={title} tooltip={mappingEvidenceLabelTooltip(title)} /></div>
+      {ids.length > 0 ? (
+        <div className="button-list">
+          {ids.map((id) => (
+            <EntityIdButton
+              key={id}
+              id={id}
+              graph={graph}
+              setSelectedEntityId={setSelectedEntityId}
+              setPreviewEntityId={setPreviewEntityId}
+            />
+          ))}
+        </div>
+      ) : (
+        <p className="muted">not available</p>
+      )}
+    </div>
+  )
+}
+
+function MappingCandidateList({
+  candidates,
+  graph,
+  setSelectedEntityId,
+  setPreviewEntityId,
+}: {
+  candidates: unknown[]
+  graph: GraphData
+  setSelectedEntityId: EntitySelect
+  setPreviewEntityId: EntityPreviewSelect
+}) {
+  return (
+    <div className="mapping-evidence-list">
+      <div className="detail-label">
+        <HelpLabel label="Candidate faces" tooltip={TOOLTIP_TEXT.evidence.candidate_step_faces} />
+      </div>
+      {candidates.length > 0 ? (
+        <div className="mapping-candidate-list">
+          {candidates.map((candidate, index) => {
+            const record = asRecord(candidate)
+            const stepId = typeof record.step_id === 'string' ? record.step_id : null
+            return (
+              <div className="mapping-candidate" key={`${stepId ?? 'candidate'}-${index}`}>
+                {stepId ? (
+                  <EntityIdButton
+                    id={stepId}
+                    graph={graph}
+                    setSelectedEntityId={setSelectedEntityId}
+                    setPreviewEntityId={setPreviewEntityId}
+                  />
+                ) : (
+                  <span className="muted">unknown face</span>
+                )}
+                <HelpLabel label={`score=${formatNullableEvidenceValue(record.score)}`} tooltip={TOOLTIP_TEXT.evidence.score} />
+                <HelpLabel label={formatNullableEvidenceValue(record.reason)} tooltip={TOOLTIP_TEXT.evidence.reason} />
+              </div>
+            )
+          })}
+        </div>
+      ) : (
+        <p className="muted">not available</p>
+      )}
+    </div>
+  )
+}
+
 function ThreeDViewer({
   graph,
+  modelMesh,
+  modelMeshLoading,
+  modelMeshError,
   selectedEntityId,
   previewEntityId,
   setSelectedEntityId,
 }: {
   graph: GraphData
+  modelMesh: ModelMeshData | null
+  modelMeshLoading: boolean
+  modelMeshError: string | null
   selectedEntityId: string | null
   previewEntityId: string | null
   setSelectedEntityId: EntitySelect
@@ -1024,54 +1465,32 @@ function ThreeDViewer({
   const visualObjectMapsRef = useRef<VisualObjectMaps>(createVisualObjectMaps())
   const visualPickGroupsRef = useRef<VisualPickGroups>(createVisualPickGroups())
   const transparentFacesRef = useRef(false)
+  const pickModeRef = useRef<PickMode>('auto')
   const graphEdgeStepIdsBySignature = useMemo(() => buildGraphEdgeSignatureMap(graph), [graph])
   const graphFaceCandidates = useMemo(() => buildGraphFaceCandidates(graph), [graph])
-  const [meshData, setMeshData] = useState<ModelMeshData | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const meshData = modelMesh
+  const loading = modelMeshLoading
+  const error = modelMeshError
   const [visualStepIds, setVisualStepIds] = useState<Set<string>>(new Set())
   const [transparentFaces, setTransparentFaces] = useState(false)
+  const [pickMode, setPickMode] = useState<PickMode>('auto')
   const [hoveredEntityId, setHoveredEntityId] = useState<string | null>(null)
   const [hoveredKind, setHoveredKind] = useState<string | null>(null)
   const [hoveredUnmappedText, setHoveredUnmappedText] = useState<string | null>(null)
   const [lastPickedText, setLastPickedText] = useState<string | null>(null)
   const [viewerNotice, setViewerNotice] = useState<string | null>(null)
+  const visualUserDataByStepId = useMemo(
+    () => buildVisualUserDataByStepId(meshData, graphFaceCandidates, graphEdgeStepIdsBySignature),
+    [graphEdgeStepIdsBySignature, graphFaceCandidates, meshData],
+  )
 
   useEffect(() => {
     transparentFacesRef.current = transparentFaces
   }, [transparentFaces])
 
   useEffect(() => {
-    let cancelled = false
-
-    async function loadMesh() {
-      try {
-        const response = await fetch('/model_mesh.json')
-        if (!response.ok) {
-          throw new Error('3D mesh not available. Please generate public/model_mesh.json first.')
-        }
-
-        const parsed = (await response.json()) as ModelMeshData
-        if (!cancelled) {
-          setMeshData(parsed)
-          setError(null)
-        }
-      } catch (err) {
-        if (!cancelled) {
-          setMeshData(null)
-          setError(err instanceof Error ? err.message : '3D mesh not available.')
-        }
-      } finally {
-        if (!cancelled) setLoading(false)
-      }
-    }
-
-    loadMesh()
-
-    return () => {
-      cancelled = true
-    }
-  }, [])
+    pickModeRef.current = pickMode
+  }, [pickMode])
 
   useEffect(() => {
     const container = containerRef.current
@@ -1087,6 +1506,7 @@ function ThreeDViewer({
     const renderer = new THREE.WebGLRenderer({ antialias: true })
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     renderer.outputColorSpace = THREE.SRGBColorSpace
+    renderer.domElement.tabIndex = -1
     viewerContainer.appendChild(renderer.domElement)
 
     const controls = new OrbitControls(camera, renderer.domElement)
@@ -1110,35 +1530,36 @@ function ThreeDViewer({
     const vertexRadius = Math.max(modelSize * 0.016, 0.025)
 
     for (const face of meshData.faces ?? []) {
-      const faceStepId = getResolvedFaceStepId(face, graphFaceCandidates)
-      const mesh = createFaceMesh(face, faceStepId)
+      const faceMapping = getResolvedFaceMapping(face, graphFaceCandidates)
+      const mesh = createFaceMesh(face, faceMapping)
       if (!mesh) continue
       root.add(mesh)
       selectableObjects.push(mesh)
       visualPickGroups.face.push(mesh)
-      registerVisualObject(visualObjectMaps, 'face', faceStepId, mesh)
-      if (faceStepId) stepIds.add(faceStepId)
+      registerVisualObject(visualObjectMaps, 'face', faceMapping.stepId, mesh)
+      if (faceMapping.stepId) stepIds.add(faceMapping.stepId)
     }
 
     for (const edge of meshData.edges ?? []) {
-      const edgeStepId = getResolvedEdgeStepId(edge, graphEdgeStepIdsBySignature)
-      const line = createEdgeLine(edge, edgeStepId)
+      const edgeMapping = getResolvedEdgeMapping(edge, graphEdgeStepIdsBySignature)
+      const line = createEdgeLine(edge, edgeMapping)
       if (!line) continue
       root.add(line)
       selectableObjects.push(line)
       visualPickGroups.edge.push(...getPickObjects(line, 'edge'))
-      registerVisualObject(visualObjectMaps, 'edge', edgeStepId, line)
-      if (edgeStepId) stepIds.add(edgeStepId)
+      registerVisualObject(visualObjectMaps, 'edge', edgeMapping.stepId, line)
+      if (edgeMapping.stepId) stepIds.add(edgeMapping.stepId)
     }
 
     for (const vertex of meshData.vertices ?? []) {
-      const marker = createVertexMarker(vertex, vertexRadius)
+      const vertexMapping = getExplicitVisualMapping(vertex.step_id, vertex)
+      const marker = createVertexMarker(vertex, vertexRadius, vertexMapping)
       if (!marker) continue
       root.add(marker)
       selectableObjects.push(marker)
       visualPickGroups.vertex.push(marker)
-      registerVisualObject(visualObjectMaps, 'vertex', vertex.step_id, marker)
-      if (typeof vertex.step_id === 'string' && vertex.step_id.length > 0) stepIds.add(vertex.step_id)
+      registerVisualObject(visualObjectMaps, 'vertex', vertexMapping.stepId, marker)
+      if (vertexMapping.stepId) stepIds.add(vertexMapping.stepId)
     }
 
     selectableObjectsRef.current = selectableObjects
@@ -1160,6 +1581,7 @@ function ThreeDViewer({
     }
 
     function handleClick(event: MouseEvent) {
+      event.preventDefault()
       const rect = renderer.domElement.getBoundingClientRect()
       mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1
       mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1
@@ -1168,12 +1590,13 @@ function ThreeDViewer({
       const result = pickVisualObject(
         raycaster,
         visualPickGroups,
+        pickModeRef.current,
         transparentFacesRef.current,
         modelSize,
       )
       const data = result?.data ?? null
       const stepId = getUserDataStepId(data)
-      console.debug('3D pick', result?.debug ?? createEmptyPickDebug(transparentFacesRef.current))
+      console.debug('3D pick', result?.debug ?? createEmptyPickDebug(pickModeRef.current, transparentFacesRef.current))
 
       if (stepId) {
         setViewerNotice(null)
@@ -1192,6 +1615,7 @@ function ThreeDViewer({
 
     let lastHoverKey = ''
     function handlePointerMove(event: PointerEvent) {
+      event.preventDefault()
       const rect = renderer.domElement.getBoundingClientRect()
       mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1
       mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1
@@ -1200,6 +1624,7 @@ function ThreeDViewer({
       const result = pickVisualObject(
         raycaster,
         visualPickGroups,
+        pickModeRef.current,
         transparentFacesRef.current,
         modelSize,
       )
@@ -1228,6 +1653,13 @@ function ThreeDViewer({
       setHoveredUnmappedText(null)
     }
 
+    function preventViewerDefault(event: Event) {
+      event.preventDefault()
+    }
+
+    renderer.domElement.addEventListener('pointerdown', preventViewerDefault)
+    renderer.domElement.addEventListener('mousedown', preventViewerDefault)
+    renderer.domElement.addEventListener('wheel', preventViewerDefault, { passive: false })
     renderer.domElement.addEventListener('click', handleClick)
     renderer.domElement.addEventListener('pointermove', handlePointerMove)
     renderer.domElement.addEventListener('pointerleave', handlePointerLeave)
@@ -1247,6 +1679,9 @@ function ThreeDViewer({
     return () => {
       window.cancelAnimationFrame(animationFrame)
       resizeObserver.disconnect()
+      renderer.domElement.removeEventListener('pointerdown', preventViewerDefault)
+      renderer.domElement.removeEventListener('mousedown', preventViewerDefault)
+      renderer.domElement.removeEventListener('wheel', preventViewerDefault)
       renderer.domElement.removeEventListener('click', handleClick)
       renderer.domElement.removeEventListener('pointermove', handlePointerMove)
       renderer.domElement.removeEventListener('pointerleave', handlePointerLeave)
@@ -1274,33 +1709,65 @@ function ThreeDViewer({
   const faceCount = meshData?.faces?.length ?? 0
   const edgeCount = meshData?.edges?.length ?? 0
   const vertexCount = meshData?.vertices?.length ?? 0
+  const sourceConsistency = getSourceConsistency(graph.source, meshData?.source)
   const hasSelectedVisual = Boolean(selectedEntityId && visualStepIds.has(selectedEntityId))
   const previewVisualId = hoveredEntityId ?? previewEntityId
   const hasPreviewVisual = Boolean(previewVisualId && visualStepIds.has(previewVisualId))
+  const selectedVisualData = selectedEntityId
+    ? visualUserDataByStepId.get(selectedEntityId) ?? null
+    : null
+  const selectedMappingSource = selectedVisualData?.mappingSource ?? (hasSelectedVisual ? 'unknown' : '-')
+  const selectedMappingMethod = selectedVisualData?.mappingMethod ?? (hasSelectedVisual ? 'unknown' : '-')
+  const selectedMappingConfidence = selectedVisualData?.mappingConfidence ?? (hasSelectedVisual ? 'unknown' : '-')
 
   return (
     <section className="panel viewer-panel">
       <div className="viewer-header">
-        <h2 className="panel-title">3D Model</h2>
+        <h2 className="panel-title">
+          <HelpLabel label="3D Model" tooltip={TOOLTIP_TEXT.panels.viewer} />
+        </h2>
         <div className="viewer-status">
-          <span className="viewer-badge">Faces: {faceCount}</span>
-          <span className="viewer-badge">Edges: {edgeCount}</span>
-          <span className="viewer-badge">Vertices: {vertexCount}</span>
+          <HelpBadge label={`Faces: ${faceCount}`} tooltip={summaryTooltip('faces')} />
+          <HelpBadge label={`Edges: ${edgeCount}`} tooltip={summaryTooltip('edges')} />
+          <HelpBadge label={`Vertices: ${vertexCount}`} tooltip={summaryTooltip('vertices')} />
         </div>
       </div>
       <div className="viewer-toolbar">
+        <label className="viewer-toggle">
+          <HelpLabel label="Pick mode:" tooltip={TOOLTIP_TEXT.viewer.pickMode} />
+          <select
+            className="viewer-select"
+            value={pickMode}
+            onChange={(event) => {
+              setPickMode(event.currentTarget.value as PickMode)
+              setHoveredEntityId(null)
+              setHoveredKind(null)
+              setHoveredUnmappedText(null)
+            }}
+          >
+            <option value="auto">Auto</option>
+            <option value="face">Face</option>
+            <option value="edge">Edge</option>
+            <option value="vertex">Vertex</option>
+          </select>
+        </label>
         <label className="viewer-toggle">
           <input
             type="checkbox"
             checked={transparentFaces}
             onChange={(event) => setTransparentFaces(event.currentTarget.checked)}
           />
-          Transparent faces
+          <HelpLabel label="Transparent faces" tooltip={TOOLTIP_TEXT.viewer.transparentFaces} />
         </label>
-        <span className="viewer-badge">
-          Display: {transparentFaces ? 'Transparent' : 'Opaque'}
-        </span>
+        <HelpBadge
+          label={`Display: ${transparentFaces ? 'Transparent' : 'Opaque'}`}
+          tooltip={transparentFaces ? TOOLTIP_TEXT.viewer.transparentFaces : TOOLTIP_TEXT.viewer.opaque}
+        />
+        <HelpBadge label={`Pick mode: ${formatPickMode(pickMode)}`} tooltip={pickModeTooltip(pickMode)} />
       </div>
+      {!loading && !error ? (
+        <DataConsistencyPanel consistency={sourceConsistency} />
+      ) : null}
 
       {loading ? <p className="muted">Loading model_mesh.json...</p> : null}
       {!loading && error ? (
@@ -1314,17 +1781,35 @@ function ThreeDViewer({
         <>
           <div className="viewer-canvas-container" ref={containerRef} />
           <div className="viewer-status viewer-selection">
-            <span>
-              {hasSelectedVisual
-                ? `Selected visual: ${selectedEntityId}`
-                : 'No visual object for selected entity'}
-            </span>
-            <span>
-              {hasPreviewVisual
-                ? `Preview visual: ${previewVisualId}${hoveredKind ? ` (${hoveredKind})` : ''}`
-                : 'Preview visual: none'}
-            </span>
-            <span>Last picked: {lastPickedText ?? 'none'}</span>
+            <HelpLabel
+              label={
+                hasSelectedVisual
+                  ? `Selected visual: ${selectedEntityId}`
+                  : 'No visual object for selected entity'
+              }
+              tooltip={hasSelectedVisual ? TOOLTIP_TEXT.viewer.selectedVisual : TOOLTIP_TEXT.viewer.noVisualObject}
+            />
+            <HelpLabel label={`Kind: ${selectedVisualData?.kind ?? '-'}`} tooltip={TOOLTIP_TEXT.mapping.kind} />
+            <HelpLabel label={`Mapping source: ${selectedMappingSource}`} tooltip={TOOLTIP_TEXT.mapping.source} />
+            <HelpLabel label={`Mapping method: ${selectedMappingMethod}`} tooltip={TOOLTIP_TEXT.mapping.method} />
+            <HelpLabel label={`Mapping confidence: ${selectedMappingConfidence}`} tooltip={TOOLTIP_TEXT.mapping.confidence} />
+            <HelpLabel
+              label={
+                hasPreviewVisual
+                  ? `Preview visual: ${previewVisualId}${hoveredKind ? ` (${hoveredKind})` : ''}`
+                  : 'Preview visual: none'
+              }
+              tooltip={TOOLTIP_TEXT.viewer.previewVisual}
+            />
+            <HelpLabel label={`Last picked: ${lastPickedText ?? 'none'}`} tooltip={TOOLTIP_TEXT.viewer.lastPicked} />
+            {pickMode !== 'auto' ? (
+              <HelpLabel label={`${formatPickMode(pickMode)}-only selection enabled.`} tooltip={pickModeTooltip(pickMode)} />
+            ) : null}
+            {selectedMappingSource === 'frontend_fallback' ? (
+              <span className="viewer-warning viewer-warning-block">
+                ⚠ Frontend fallback mapping. This mapping was inferred in the browser and is not backend-confirmed.
+              </span>
+            ) : null}
             {hoveredUnmappedText ? <span className="viewer-warning">{hoveredUnmappedText}</span> : null}
             {viewerNotice ? <span className="viewer-warning">{viewerNotice}</span> : null}
           </div>
@@ -1361,6 +1846,9 @@ function RelationPanel({
       >
         Relations {open ? '▲' : '▼'}
       </button>
+      <div className="panel-help">
+        <HelpLabel label="Relations help" tooltip={TOOLTIP_TEXT.panels.relations} />
+      </div>
       {open ? (!selectedEntityId ? (
         <p className="muted">No entity selected.</p>
       ) : (
@@ -1369,7 +1857,9 @@ function RelationPanel({
             {outgoing.length > 0 ? (
               outgoing.map((relation, index) => (
                 <div className="relation-item" key={`${relation.to}-${relation.role}-${index}`}>
-                  <span className="relation-role">{relation.role ?? 'ref'}</span>
+                  <Tooltip text={TOOLTIP_TEXT.relation.role}>
+                    <span className="relation-role">{relation.role ?? 'ref'}</span>
+                  </Tooltip>
                   <span>→</span>
                   <EntityIdButton
                     id={relation.to}
@@ -1426,7 +1916,7 @@ function RelationPanel({
                       />
                     </div>
                     <div>
-                      shared_edge_curve{' '}
+                      <HelpLabel label="shared_edge_curve" tooltip={TOOLTIP_TEXT.relation.sharedEdge} />{' '}
                       <EntityIdButton
                         id={String(neighborNode.shared_edge_curve ?? 'UNKNOWN')}
                         graph={graph}
@@ -1461,7 +1951,7 @@ function RelationSection({
 }) {
   return (
     <div className="relation-section">
-      <h3>{title}</h3>
+      <h3><HelpLabel label={title} tooltip={relationSectionTooltip(title)} /></h3>
       {children}
     </div>
   )
@@ -1486,7 +1976,12 @@ function RawStepPanel({
       >
         Raw STEP {open ? '▲' : '▼'}
       </button>
-      {open ? <pre className="raw-block">{entity?.raw || 'No raw STEP text.'}</pre> : null}
+      {open ? (
+        <>
+          <div className="detail-label"><HelpLabel label="Raw STEP" tooltip={TOOLTIP_TEXT.panels.rawStep} /></div>
+          <pre className="raw-block">{entity?.raw || 'No raw STEP text.'}</pre>
+        </>
+      ) : null}
     </section>
   )
 }
@@ -1563,22 +2058,138 @@ function EntityIdButton({
   const exists = Boolean(graph.entities?.[id])
 
   return (
-    <button
-      type="button"
-      className={`entity-id-button${exists ? '' : ' entity-id-button-missing'}`}
-      onClick={() => setSelectedEntityId(id)}
-      onFocus={() => setPreviewEntityId(id)}
-      onBlur={() => setPreviewEntityId(null)}
-      onMouseEnter={() => setPreviewEntityId(id)}
-      onMouseLeave={() => setPreviewEntityId(null)}
-      title={exists ? `Open ${id}` : `${id} not found in entities`}
-    >
-      {id}
-    </button>
+    <Tooltip text={exists ? TOOLTIP_TEXT.entity.referenceButton : `${id} not found in entities.`}>
+      <button
+        type="button"
+        className={`entity-id-button${exists ? '' : ' entity-id-button-missing'}`}
+        onClick={() => setSelectedEntityId(id)}
+        onFocus={() => setPreviewEntityId(id)}
+        onBlur={() => setPreviewEntityId(null)}
+        onMouseEnter={() => setPreviewEntityId(id)}
+        onMouseLeave={() => setPreviewEntityId(null)}
+      >
+        {id}
+      </button>
+    </Tooltip>
   )
 }
 
-function createFaceMesh(face: MeshFace, stepId: string | null): THREE.Mesh | null {
+function buildVisualUserDataByStepId(
+  meshData: ModelMeshData | null,
+  graphFaceCandidates: GraphFaceCandidate[],
+  graphEdgeStepIdsBySignature: Map<string, string>,
+): Map<string, SelectableUserData> {
+  const userDataByStepId = new Map<string, SelectableUserData>()
+  if (!meshData) return userDataByStepId
+
+  for (const face of meshData.faces ?? []) {
+    const mapping = getResolvedFaceMapping(face, graphFaceCandidates)
+    registerVisualUserData(userDataByStepId, mapping, {
+      kind: 'face',
+      faceIndex: face.face_index,
+    })
+  }
+
+  for (const edge of meshData.edges ?? []) {
+    const mapping = getResolvedEdgeMapping(edge, graphEdgeStepIdsBySignature)
+    registerVisualUserData(userDataByStepId, mapping, {
+      kind: 'edge',
+      edgeIndex: edge.edge_index,
+    })
+  }
+
+  for (const vertex of meshData.vertices ?? []) {
+    const mapping = getExplicitVisualMapping(vertex.step_id, vertex)
+    registerVisualUserData(userDataByStepId, mapping, {
+      kind: 'vertex',
+      vertexIndex: vertex.vertex_index,
+    })
+  }
+
+  return userDataByStepId
+}
+
+function getVisualElementsForStepId(
+  modelMesh: ModelMeshData | null,
+  selectedEntityId: string | null,
+): VisualElement[] {
+  if (!modelMesh || !selectedEntityId) return []
+  const elements: VisualElement[] = []
+
+  for (const face of modelMesh.faces ?? []) {
+    if (face.step_id === selectedEntityId) {
+      elements.push(createVisualElement('face', face, face.face_index))
+    }
+  }
+
+  for (const edge of modelMesh.edges ?? []) {
+    if (edge.step_id === selectedEntityId) {
+      elements.push(createVisualElement('edge', edge, edge.edge_index))
+    }
+  }
+
+  for (const vertex of modelMesh.vertices ?? []) {
+    if (vertex.step_id === selectedEntityId) {
+      elements.push(createVisualElement('vertex', vertex, vertex.vertex_index))
+    }
+  }
+
+  return elements
+}
+
+function createVisualElement(
+  kind: VisualKind,
+  raw: MeshFace | MeshEdge | MeshVertex,
+  index?: number,
+): VisualElement {
+  return {
+    stepId: raw.step_id ?? null,
+    kind,
+    index,
+    mappingSource: getMappingText(raw.mapping_source, raw.step_id ? 'unknown' : 'none'),
+    mappingMethod: getMappingText(raw.mapping_method, raw.step_id ? 'unknown' : 'unmapped'),
+    mappingConfidence: getMappingText(raw.mapping_confidence, raw.step_id ? 'unknown' : 'unmapped'),
+    mappingEvidence: raw.mapping_evidence,
+    raw,
+  }
+}
+
+function indexLabelForVisualElement(visualElement: VisualElement): string {
+  if (visualElement.kind === 'face') return 'Face index'
+  if (visualElement.kind === 'edge') return 'Edge index'
+  return 'Vertex index'
+}
+
+function stringArrayFromUnknown(value: unknown): string[] {
+  return Array.isArray(value)
+    ? value.filter((item): item is string => typeof item === 'string')
+    : []
+}
+
+function formatNullableEvidenceValue(value: unknown, nullText = 'not available'): string {
+  if (value === null || value === undefined || value === '') return nullText
+  if (typeof value === 'number') return formatNumber(value)
+  if (typeof value === 'boolean') return String(value)
+  if (typeof value === 'string') return value
+  return safeStringify(value, 0)
+}
+
+function registerVisualUserData(
+  userDataByStepId: Map<string, SelectableUserData>,
+  mapping: ResolvedVisualMapping,
+  data: Pick<SelectableUserData, 'kind' | 'faceIndex' | 'edgeIndex' | 'vertexIndex'>,
+) {
+  if (!mapping.stepId || userDataByStepId.has(mapping.stepId)) return
+  userDataByStepId.set(mapping.stepId, {
+    ...data,
+    stepId: mapping.stepId,
+    mappingSource: mapping.mappingSource,
+    mappingMethod: mapping.mappingMethod,
+    mappingConfidence: mapping.mappingConfidence,
+  })
+}
+
+function createFaceMesh(face: MeshFace, mapping: ResolvedVisualMapping): THREE.Mesh | null {
   if (!Array.isArray(face.vertices) || !Array.isArray(face.triangles)) {
     return null
   }
@@ -1610,9 +2221,12 @@ function createFaceMesh(face: MeshFace, stepId: string | null): THREE.Mesh | nul
   })
   const mesh = new THREE.Mesh(geometry, material)
   mesh.userData = {
-    stepId,
+    stepId: mapping.stepId,
     kind: 'face' satisfies VisualKind,
     faceIndex: face.face_index,
+    mappingSource: mapping.mappingSource,
+    mappingMethod: mapping.mappingMethod,
+    mappingConfidence: mapping.mappingConfidence,
     normalColor: 0x9db2c8,
     previewColor: 0x38bdf8,
     selectedColor: 0xffb020,
@@ -1623,7 +2237,7 @@ function createFaceMesh(face: MeshFace, stepId: string | null): THREE.Mesh | nul
   return mesh
 }
 
-function createEdgeLine(edge: MeshEdge, stepId: string | null): THREE.Object3D | null {
+function createEdgeLine(edge: MeshEdge, mapping: ResolvedVisualMapping): THREE.Object3D | null {
   if (!Array.isArray(edge.points)) return null
 
   const points = edge.points.filter(isVector3)
@@ -1656,9 +2270,12 @@ function createEdgeLine(edge: MeshEdge, stepId: string | null): THREE.Object3D |
 
   const group = new THREE.Group()
   const edgeUserData: SelectableUserData = {
-    stepId,
+    stepId: mapping.stepId,
     kind: 'edge' satisfies VisualKind,
     edgeIndex: edge.edge_index,
+    mappingSource: mapping.mappingSource,
+    mappingMethod: mapping.mappingMethod,
+    mappingConfidence: mapping.mappingConfidence,
     normalColor: 0x334155,
     previewColor: 0x06b6d4,
     selectedColor: 0xef4444,
@@ -1671,7 +2288,11 @@ function createEdgeLine(edge: MeshEdge, stepId: string | null): THREE.Object3D |
   return group
 }
 
-function createVertexMarker(vertex: MeshVertex, radius: number): THREE.Mesh | null {
+function createVertexMarker(
+  vertex: MeshVertex,
+  radius: number,
+  mapping: ResolvedVisualMapping,
+): THREE.Mesh | null {
   if (!isVector3(vertex.position)) return null
 
   const geometry = new THREE.SphereGeometry(radius, 16, 12)
@@ -1679,9 +2300,12 @@ function createVertexMarker(vertex: MeshVertex, radius: number): THREE.Mesh | nu
   const marker = new THREE.Mesh(geometry, material)
   marker.position.set(vertex.position[0], vertex.position[1], vertex.position[2])
   marker.userData = {
-    stepId: vertex.step_id ?? null,
+    stepId: mapping.stepId,
     kind: 'vertex' satisfies VisualKind,
     vertexIndex: vertex.vertex_index,
+    mappingSource: mapping.mappingSource,
+    mappingMethod: mapping.mappingMethod,
+    mappingConfidence: mapping.mappingConfidence,
     normalColor: 0x1d4ed8,
     previewColor: 0x06b6d4,
     selectedColor: 0xff4d00,
@@ -1838,17 +2462,17 @@ function collectFaceBoundaryPoints(faceNode: UnknownRecord, graph: GraphData): A
   return points
 }
 
-function getResolvedFaceStepId(
+function getResolvedFaceMapping(
   face: MeshFace,
   graphFaceCandidates: GraphFaceCandidate[],
-): string | null {
+): ResolvedVisualMapping {
   const explicitStepId = normalizeStepId(face.step_id)
-  if (explicitStepId) return explicitStepId
+  if (explicitStepId) return getExplicitVisualMapping(explicitStepId, face)
 
   const meshBbox = bboxFromValue(face.bbox) ?? bboxFromPoints(
     (face.vertices ?? []).filter(isVector3),
   )
-  if (!meshBbox) return null
+  if (!meshBbox) return getUnmappedVisualMapping(face)
 
   const surfaceType = typeof face.surface_type === 'string' ? face.surface_type : undefined
   const origin = vector3OrUndefined(face.surface?.origin)
@@ -1863,15 +2487,20 @@ function getResolvedFaceStepId(
     .filter((entry) => entry.score !== null)
     .sort((first, second) => (first.score ?? 0) - (second.score ?? 0))
 
-  if (matches.length === 0) return null
+  if (matches.length === 0) return getUnmappedVisualMapping(face)
   const best = matches[0]
   const second = matches[1]
-  if (best.score === null) return null
+  if (best.score === null) return getUnmappedVisualMapping(face)
   if (second?.score !== null && second?.score !== undefined && Math.abs(second.score - best.score) <= tolerance) {
-    return null
+    return getUnmappedVisualMapping(face, 'ambiguous')
   }
 
-  return best.candidate.stepId
+  return {
+    stepId: best.candidate.stepId,
+    mappingSource: 'frontend_fallback',
+    mappingMethod: 'boundary_bbox',
+    mappingConfidence: 'fallback',
+  }
 }
 
 function scoreFaceCandidate(
@@ -2000,19 +2629,26 @@ function buildGraphEdgeSignatureMap(graph: GraphData): Map<string, string> {
   return uniqueMatches
 }
 
-function getResolvedEdgeStepId(
+function getResolvedEdgeMapping(
   edge: MeshEdge,
   graphEdgeStepIdsBySignature: Map<string, string>,
-): string | null {
+): ResolvedVisualMapping {
   const explicitStepId = normalizeStepId(edge.step_id)
-  if (explicitStepId) return explicitStepId
+  if (explicitStepId) return getExplicitVisualMapping(explicitStepId, edge)
 
   for (const signature of getMeshEdgeSignatures(edge)) {
     const stepId = graphEdgeStepIdsBySignature.get(signature)
-    if (stepId) return stepId
+    if (stepId) {
+      return {
+        stepId,
+        mappingSource: 'frontend_fallback',
+        mappingMethod: 'endpoint_curve_signature_frontend',
+        mappingConfidence: 'fallback',
+      }
+    }
   }
 
-  return null
+  return getUnmappedVisualMapping(edge)
 }
 
 function getGraphEdgeSignatures(attr: GeometryAttribute, graph: GraphData): string[] {
@@ -2105,6 +2741,43 @@ function normalizeStepId(value: string | null | undefined): string | null {
   return typeof value === 'string' && value.length > 0 ? value : null
 }
 
+function getExplicitVisualMapping(
+  stepId: string | null | undefined,
+  source: {
+    mapping_source?: string | null
+    mapping_method?: string | null
+    mapping_confidence?: string | null
+  },
+): ResolvedVisualMapping {
+  const normalizedStepId = normalizeStepId(stepId)
+  return {
+    stepId: normalizedStepId,
+    mappingSource: getMappingText(source.mapping_source, normalizedStepId ? 'unknown' : 'none'),
+    mappingMethod: getMappingText(source.mapping_method, normalizedStepId ? 'unknown' : 'unmapped'),
+    mappingConfidence: getMappingText(source.mapping_confidence, normalizedStepId ? 'unknown' : 'unmapped'),
+  }
+}
+
+function getUnmappedVisualMapping(
+  source: {
+    mapping_source?: string | null
+    mapping_method?: string | null
+    mapping_confidence?: string | null
+  },
+  reason: 'unmapped' | 'ambiguous' = 'unmapped',
+): ResolvedVisualMapping {
+  return {
+    stepId: null,
+    mappingSource: getMappingText(source.mapping_source, 'none'),
+    mappingMethod: getMappingText(source.mapping_method, reason),
+    mappingConfidence: getMappingText(source.mapping_confidence, reason),
+  }
+}
+
+function getMappingText(value: string | null | undefined, fallback: string): string {
+  return typeof value === 'string' && value.length > 0 ? value : fallback
+}
+
 function createVisualObjectMaps(): VisualObjectMaps {
   return {
     face: new Map(),
@@ -2149,44 +2822,55 @@ function getPickObjects(object: THREE.Object3D, kind: VisualKind): THREE.Object3
 function pickVisualObject(
   raycaster: THREE.Raycaster,
   pickGroups: VisualPickGroups,
+  pickMode: PickMode,
   transparentFaces: boolean,
   modelSize: number,
 ): VisualPickResult | null {
-  const faceHits = getPickHits(raycaster, pickGroups.face, 'face')
-  const edgeHits = getPickHits(raycaster, pickGroups.edge, 'edge')
-  const vertexHits = getPickHits(raycaster, pickGroups.vertex, 'vertex')
+  const needsFaceHits = pickMode === 'auto' || pickMode === 'face' || !transparentFaces
+  const faceHits = needsFaceHits ? getPickHits(raycaster, pickGroups.face, 'face') : []
+  const edgeHits = pickMode === 'auto' || pickMode === 'edge'
+    ? getPickHits(raycaster, pickGroups.edge, 'edge')
+    : []
+  const vertexHits = pickMode === 'auto' || pickMode === 'vertex'
+    ? getPickHits(raycaster, pickGroups.vertex, 'vertex')
+    : []
   const nearestFaceDistance = faceHits[0]?.distance ?? null
   const occlusionEpsilon = Math.max(modelSize * 0.001, 1e-6)
 
-  const visibleEdgeHits = transparentFaces || nearestFaceDistance === null
+  const visibleEdgeHits = transparentFaces || pickMode === 'face' || nearestFaceDistance === null
     ? edgeHits
     : edgeHits.filter((hit) => hit.distance <= nearestFaceDistance + occlusionEpsilon)
-  const visibleVertexHits = transparentFaces || nearestFaceDistance === null
+  const visibleVertexHits = transparentFaces || pickMode === 'face' || nearestFaceDistance === null
     ? vertexHits
     : vertexHits.filter((hit) => hit.distance <= nearestFaceDistance + occlusionEpsilon)
+  const selectableFaceHits = pickMode === 'auto' || pickMode === 'face' ? faceHits : []
+  const selectableEdgeHits = pickMode === 'auto' || pickMode === 'edge' ? visibleEdgeHits : []
+  const selectableVertexHits = pickMode === 'auto' || pickMode === 'vertex' ? visibleVertexHits : []
 
   const candidates = [
-    ...visibleVertexHits,
-    ...faceHits,
-    ...visibleEdgeHits,
+    ...selectableVertexHits,
+    ...selectableFaceHits,
+    ...selectableEdgeHits,
   ]
 
-  const nearestFace = faceHits[0]
-  const nearestEdge = visibleEdgeHits[0]
+  const nearestFace = selectableFaceHits[0]
+  const nearestEdge = selectableEdgeHits[0]
   const edgeFaceTieEpsilon = Math.max(modelSize * 0.0008, 1e-6)
   if (
-    visibleVertexHits.length === 0
+    pickMode === 'auto'
+    && selectableVertexHits.length === 0
     && nearestFace
     && nearestEdge
     && nearestEdge.distance <= nearestFace.distance + edgeFaceTieEpsilon
   ) {
     const debug: VisualPickDebug = {
+      pickMode,
       transparentFaces,
       faceHitsCount: faceHits.length,
       edgeHitsCount: edgeHits.length,
       vertexHitsCount: vertexHits.length,
-      filteredEdgeHitsCount: visibleEdgeHits.length,
-      filteredVertexHitsCount: visibleVertexHits.length,
+      filteredEdgeHitsCount: selectableEdgeHits.length,
+      filteredVertexHitsCount: selectableVertexHits.length,
       nearestFaceDistance,
       selectedKind: typeof nearestEdge.data.kind === 'string' ? nearestEdge.data.kind : null,
       selectedStepId: getUserDataStepId(nearestEdge.data),
@@ -2201,12 +2885,13 @@ function pickVisualObject(
   })
   const selected = candidates[0] ?? null
   const debug: VisualPickDebug = {
+    pickMode,
     transparentFaces,
     faceHitsCount: faceHits.length,
     edgeHitsCount: edgeHits.length,
     vertexHitsCount: vertexHits.length,
-    filteredEdgeHitsCount: visibleEdgeHits.length,
-    filteredVertexHitsCount: visibleVertexHits.length,
+    filteredEdgeHitsCount: selectableEdgeHits.length,
+    filteredVertexHitsCount: selectableVertexHits.length,
     nearestFaceDistance,
     selectedKind: typeof selected?.data.kind === 'string' ? selected.data.kind : null,
     selectedStepId: getUserDataStepId(selected?.data ?? null),
@@ -2243,8 +2928,9 @@ function visualPriority(kind: unknown): number {
   return 2
 }
 
-function createEmptyPickDebug(transparentFaces: boolean): VisualPickDebug {
+function createEmptyPickDebug(pickMode: PickMode, transparentFaces: boolean): VisualPickDebug {
   return {
+    pickMode,
     transparentFaces,
     faceHitsCount: 0,
     edgeHitsCount: 0,
@@ -2499,9 +3185,100 @@ function getDefaultEntityId(graph: GraphData): string | null {
 function getSourceText(source: GraphData['source']): string {
   if (typeof source === 'string' && source.length > 0) return source
   if (source && typeof source === 'object') {
-    return source.file ?? source.file_name ?? '-'
+    return source.step_file ?? source.file ?? source.step_file_name ?? source.file_name ?? '-'
   }
   return '-'
+}
+
+function getSourceHash(source: string | SourceMetadata | undefined): string | null {
+  if (!source || typeof source === 'string') return null
+  return typeof source.step_file_sha256 === 'string' && source.step_file_sha256.length > 0
+    ? source.step_file_sha256
+    : null
+}
+
+function getGraphFileHash(source: SourceMetadata | undefined): string | null {
+  return typeof source?.graph_file_sha256 === 'string' && source.graph_file_sha256.length > 0
+    ? source.graph_file_sha256
+    : null
+}
+
+function getSourceConsistency(
+  graphSource: GraphData['source'],
+  meshSource: SourceMetadata | undefined,
+): SourceConsistency {
+  const graphStepHash = getSourceHash(graphSource)
+  const meshStepHash = getSourceHash(meshSource)
+  const meshGraphHash = getGraphFileHash(meshSource)
+
+  if (!graphStepHash || !meshStepHash) {
+    return {
+      status: 'unknown',
+      graphStepHash,
+      meshStepHash,
+      meshGraphHash,
+      message: 'Missing source hash metadata.',
+    }
+  }
+
+  if (graphStepHash !== meshStepHash) {
+    return {
+      status: 'mismatch',
+      graphStepHash,
+      meshStepHash,
+      meshGraphHash,
+      message: 'graph.json and model_mesh.json may be generated from different STEP files. 3D mapping may be unreliable.',
+    }
+  }
+
+  return {
+    status: 'ok',
+    graphStepHash,
+    meshStepHash,
+    meshGraphHash,
+    message: 'Source STEP hashes match.',
+  }
+}
+
+function shortHash(value: string | null): string {
+  return value ? value.slice(0, 12) : '-'
+}
+
+function formatPickMode(mode: PickMode): string {
+  if (mode === 'auto') return 'Auto'
+  if (mode === 'face') return 'Face'
+  if (mode === 'edge') return 'Edge'
+  return 'Vertex'
+}
+
+function pickModeTooltip(mode: PickMode): string {
+  if (mode === 'auto') return TOOLTIP_TEXT.viewer.auto
+  if (mode === 'face') return TOOLTIP_TEXT.viewer.face
+  if (mode === 'edge') return TOOLTIP_TEXT.viewer.edge
+  return TOOLTIP_TEXT.viewer.vertex
+}
+
+function relationSectionTooltip(title: string): string | undefined {
+  if (title === 'References') return TOOLTIP_TEXT.relation.references
+  if (title === 'Referenced By') return TOOLTIP_TEXT.relation.referencedBy
+  if (title === 'Face Neighbors') return TOOLTIP_TEXT.relation.faceNeighbors
+  return undefined
+}
+
+function mappingEvidenceLabelTooltip(label: string): string | undefined {
+  if (label === 'Mapping source') return TOOLTIP_TEXT.mapping.source
+  if (label === 'Mapping method') return TOOLTIP_TEXT.mapping.method
+  if (label === 'Mapping confidence') return TOOLTIP_TEXT.mapping.confidence
+  if (label === 'Step id') return TOOLTIP_TEXT.mapping.stepId
+  if (label === 'Kind') return TOOLTIP_TEXT.mapping.kind
+  if (label.includes('index')) return TOOLTIP_TEXT.mapping.index
+  if (label === 'Boundary edges used') return TOOLTIP_TEXT.evidence.boundary_edge_step_ids
+  if (label === 'Matched STEP face edges') return TOOLTIP_TEXT.evidence.matched_step_face_edge_ids
+  if (label === 'Edge set Jaccard') return TOOLTIP_TEXT.evidence.edge_set_jaccard
+  if (label === 'Surface type match') return TOOLTIP_TEXT.evidence.surface_type_match
+  if (label === 'BBox similarity') return TOOLTIP_TEXT.evidence.bbox_similarity
+  if (label === 'Reason') return TOOLTIP_TEXT.evidence.reason
+  return undefined
 }
 
 function getEntityType(graph: GraphData, id: string): string {

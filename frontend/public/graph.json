@@ -1,5 +1,11 @@
 {
-  "source": "examples\\example.step",
+  "source": {
+    "step_file": "examples\\example.step",
+    "step_file_name": "example.step",
+    "step_file_sha256": "dcb0d5674adbf3eecb6afbf970ed3d470313e1fde6495cd20ecfd33712257379",
+    "generator": "step_entity_graph.py",
+    "generated_at": "2026-05-20T10:45:07.914715+00:00"
+  },
   "header_raw": "FILE_DESCRIPTION(('Open CASCADE Model'),'2;1');\nFILE_NAME('Open CASCADE Shape Model','2026-03-18T20:12:41',('Author'),(\n    'Open CASCADE'),'Open CASCADE STEP processor 7.8','build123d',\n  'Unknown');\nFILE_SCHEMA(('AUTOMOTIVE_DESIGN { 1 0 10303 214 1 1 1 1 }'));",
   "entities": {
     "#1": {
