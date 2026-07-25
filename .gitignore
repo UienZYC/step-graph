@@ -3,6 +3,17 @@ __pycache__/
 *.py[cod]
 .venv/
 .env
+.env.*
+!.env.example
+
+# Python tooling and coverage
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+coverage/
 
 # uv
 # This app keeps backend/uv.lock for reproducible backend runs.
@@ -13,6 +24,10 @@ uv.lock
 # Backend outputs
 backend/outputs/
 outputs/
+
+# Local workspace user data
+backend/local_workspace/
+local_workspace/
 
 # Node / frontend
 frontend/node_modules/
