@@ -2,6 +2,8 @@
 
 用来查看 STEP Part 21 文件里的 entity、引用关系和 B-Rep 拓扑。
 
+[打开示例](https://uienzyc.github.io/step-graph/)
+
 仓库里有两条数据生成链路：
 
 ```text
