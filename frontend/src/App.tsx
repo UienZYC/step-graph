@@ -228,7 +228,7 @@ function App() {
 
     async function loadGraph() {
       try {
-        const response = await fetch('/graph.json')
+        const response = await fetch(`${import.meta.env.BASE_URL}graph.json`)
         if (!response.ok) {
           throw new Error(`HTTP ${response.status} while loading /graph.json`)
         }
@@ -263,7 +263,7 @@ function App() {
 
     async function loadModelMesh() {
       try {
-        const response = await fetch('/model_mesh.json')
+        const response = await fetch(`${import.meta.env.BASE_URL}model_mesh.json`)
         if (!response.ok) {
           throw new Error('3D mesh not available. Please generate public/model_mesh.json first.')
         }
